@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -7,9 +8,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('intro');
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
-Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('login/{provider}', [LoginController::class, 'redirectToProvider'])->name('login');
+Route::get('login/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('home', 'HomeController@index')->name('home');

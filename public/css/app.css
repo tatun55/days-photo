@@ -1,1 +1,31 @@
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl {
+    padding-right: var(--bs-gutter-x, .8rem);
+    padding-left: var(--bs-gutter-x, .8rem);
+}
 
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+.wrapper {
+    min-height: 100%;
+
+    /* footerの高さで調整 */
+    margin-bottom: -168px;
+}
+
+.footer,
+.push {
+    height: 168px;
+}
+
+main {
+    overflow: visible !important;
+}

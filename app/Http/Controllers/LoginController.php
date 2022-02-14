@@ -7,23 +7,11 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use App\Models\User;
+use App\Models\LineUser;
+use Jdenticon\Identicon;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
     /**
      * Where to redirect users after login.
      *
@@ -70,18 +58,23 @@ class LoginController extends Controller
 
         $providedUser = Socialite::driver($provider)->user();
 
+        $user = LineUser::find($providedUser->id);
 
-        $user = User::firstOrCreate(
+        if (!$user) {
+        }
+
+        $user = LineUser::firstOrCreate(
             [
-                'provider'           => $provider,
-                'provided_user_id'   => $providedUser->id,
+                'id' => $providedUser->id,
             ],
             [
-                'name'               => $providedUser->name,
-                'avatar'               => $providedUser->avatar,
+                'id' => $providedUser->id,
+                'name' => $providedUser->name ?? 'ノーネーム',
+                'avatar' => $providedUser->avatar ?? asset('img/q.svg'),
             ]
         );
         Auth::login($user);
+
         return redirect()->route('home');
     }
 
