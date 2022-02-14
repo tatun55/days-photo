@@ -79,29 +79,6 @@ class LineEventController extends Controller
         }
     }
 
-    public function storeImageToS3($messageId)
-    {
-        $bot = $this->initBot();
-        $response = $bot->getMessageContent($messageId);
-        if ($response->isSucceeded()) {
-            $path = \Str::random(32) . '.jpg';
-            $image = \Image::make($response->getRawBody());
-            $width = 2500; // max width
-            $height = 2000; // max height
-            $image->height() > $image->width() ? $width = null : $height = null;
-            $image->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
-            $image = (string) $image->encode('jpg', 90);
-            Storage::disk('s3')->put('image-message/' . $path, $image, 'public');
-        } else {
-            \Log::error($response->getHTTPStatus() . ' ' . $response->getRawBody());
-        }
-
-        return Storage::disk('s3')->url('image-message/' . $path);
-    }
-
     public function unfollowed(Type $var = null)
     {
     }

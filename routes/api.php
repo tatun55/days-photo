@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LineEventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('line-events', 'LineEventController@process');
+Route::post('line-events', [LineEventController::class, 'process']);
