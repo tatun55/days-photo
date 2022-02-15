@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class LineUser extends Authenticatable
 {
     protected $fillable = [
-        'id', 'name', 'avatar',
+        'id',
+        'name',
+        'avatar',
     ];
 }

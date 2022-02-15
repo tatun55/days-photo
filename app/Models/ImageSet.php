@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Album extends Model
+class ImageSet extends Model
 {
     protected $fillable = [
         'id',

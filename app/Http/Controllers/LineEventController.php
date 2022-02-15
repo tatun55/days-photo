@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\StoreLineImageMessageToS3Job;
-use App\Models\LineGroup;
-use App\Models\LineGroupUser;
-use App\Models\PostedImage;
+use App\Models\ImageFromUser;
 use App\Models\LineUser;
-use App\Models\LineUserLineGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\FacadesLog;
@@ -43,13 +40,17 @@ class LineEventController extends Controller
                     $this->verifySignature($request);
                     $this->accountLinked($event);
                     break;
-                case 'join':
+                case 'join': // getting event when invited to group
                     $this->joined($event);
                     break;
                 case 'message':
                     switch ($event->message->type) {
                         case 'image':
-                            $this->postedImageFromRegistedUser($event);
+                            $this->verifySignature($request);
+                            $isFromUser = $event->source->type === 'user';
+                            if ($isFromUser && $this->isRegisted($event->source->userId)) {
+                                $this->postedImageFromUser($event);
+                            }
                             break;
                     }
                     break;
@@ -72,29 +73,31 @@ class LineEventController extends Controller
             $multiMessage->add(new TextMessageBuilder($text));
             $text = "『days.』は、30秒でアルバムが作れる ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントにまとめて画像を送信すると、自動でアルバム・コラージュ画像が作成されます✨";
             $multiMessage->add(new TextMessageBuilder($text));
-            $text = "ほかにも様々な便利機能を準備中です（現在、β版）\n\n完成まで、お楽しみに☺️";
+            $text = "ほかにも様々な便利機能を準備中です（現在、β版）";
             $multiMessage->add(new TextMessageBuilder($text));
             $bot->replyMessage($event->replyToken, $multiMessage);
         }
     }
 
-    public function postedImageFromRegistedUser()
+    public function isRegisted($userId)
     {
-        if (LineUser::where('line_user_id', $event->source->userId)->exists()) {
-            $isFromGroup = $event->source->type === 'group';
-            $postedImage = PostedImage::create([
-                'uuid' => (string) \Str::uuid(),
-                'line_user_id' => $event->source->userId,
-                'line_group_id' => $isFromGroup ? $event->source->groupId : null,
-                'line_message_id' => $event->message->id,
-            ]);
-            StoreLineImageMessageToS3Job::dispatch($postedImage->id);
-            if ($isFromGroup) {
-                LineGroupLineUser::firstOrCreate([
-                    'line_user_id' => $event->source->userId,
-                    'line_group_id' => $event->source->groupId,
-                ]);
-            }
+        return LineUser::where('id', $userId)->exists();
+    }
+
+    public function postedImageFromUser($event)
+    {
+        $imageFromUser = ImageFromUser::create([
+            'id' => (string) \Str::uuid(),
+            'message_id' => $event->message->id,
+            'image_set_id' => $event->message->imageSet->id ?? null,
+        ]);
+        if (isset($event->message->imageSet)) {
+            $isLast = $event->message->imageSet->index === $event->message->imageSet->total;
+        }
+        $isNotLast = isset($event->message->imageSet) && $event->message->imageSet->index !== $event->message->imageSet->total;
+        if (!$isNotLast) {
+            $bot = $this->initBot();
+            $bot->replyText($event->replyToken, '画像を受信しました。');
         }
     }
 
@@ -108,7 +111,9 @@ class LineEventController extends Controller
         $multiMessage = new MultiMessageBuilder();
         $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\nこのアカウントは、フォト管理に役立つ機能を提供します。"));
         $multiMessage = $this->addTermsMessage($multiMessage);
-        $multiMessage->add(new TextMessageBuilder("下記のリンクで、スグにサービスに登録できます。\n\n※ 登録の際に、LINEのユーザー名とプロフィール画像が使用されます。\n\nhttps://days.photo/login/line"));
+        $multiMessage->add(new TextMessageBuilder("下記のリンクから、スグにサービスに登録できます。\n\n※ 登録の際に、LINEのユーザー名とプロフィール画像が使用されます。"));
+        $multiMessage = $this->addTermsMessage($multiMessage);
+        $multiMessage->add(new TextMessageBuilder("https://days.photo/login/line"));
         $bot->replyMessage($event->replyToken, $multiMessage);
     }
 
@@ -147,7 +152,7 @@ class LineEventController extends Controller
         return $multiMessage;
     }
 
-    public function initBot()
+    public function initBot(): LINEBot
     {
         $httpClient = new CurlHTTPClient(config('services.line.messaging_api.access_token'));
         return new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);

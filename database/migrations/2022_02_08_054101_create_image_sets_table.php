@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAlbumsTable extends Migration
+class CreateImageSetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateAlbumsTable extends Migration
      */
     public function up()
     {
-        Schema::create('albums', function (Blueprint $table) {
-            $table->string('id', 36)->primary();
+        Schema::create('image_sets', function (Blueprint $table) {
+            $table->string('id', 64)->primary();
             $table->string('line_user_id', 33)->index();
             $table->string('name', 50)->nullable();
             $table->timestamps();
