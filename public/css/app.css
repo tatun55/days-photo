@@ -18,12 +18,16 @@ body {
     min-height: 100%;
 
     /* footerの高さで調整 */
-    margin-bottom: -168px;
+    margin-bottom: -240px;
 }
 
 .footer,
 .push {
-    height: 168px;
+    height: 240px;
+}
+
+.footer a {
+    color: #6dc234 !important;
 }
 
 main {

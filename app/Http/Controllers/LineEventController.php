@@ -34,10 +34,14 @@ class LineEventController extends Controller
 
             switch ($event->type) {
                 case 'follow':
-                    $this->followed($event->replyToken);
+                    $this->followed($event);
                     break;
                 case 'unfollow':
-                    $this->unfollowed($event->replyToken);
+                    $this->unfollowed($event);
+                    break;
+                case 'accountLink':
+                    $this->verifySignature($request);
+                    $this->accountLinked($event);
                     break;
                 case 'join':
                     $this->joined($event);
@@ -57,6 +61,21 @@ class LineEventController extends Controller
         }
 
         return response()->json('ok', 200);
+    }
+
+    public function accountLinked($event)
+    {
+        if ($event->link->result === 'ok') {
+            $bot = $this->initBot();
+            $multiMessage = new MultiMessageBuilder();
+            $text = "アカウント登録が完了しました 🎉";
+            $multiMessage->add(new TextMessageBuilder($text));
+            $text = "『days.』は、30秒でアルバムが作れる ”かんたんフォト管理” サービス。\n\n✅ 機能①\n\nこのアカウントにまとめて画像を送信すると、自動でアルバム・コラージュ画像が作成されます✨";
+            $multiMessage->add(new TextMessageBuilder($text));
+            $text = "ほかにも様々な便利機能を準備中です（現在、β版）\n\n完成まで、お楽しみに☺️";
+            $multiMessage->add(new TextMessageBuilder($text));
+            $bot->replyMessage($event->replyToken, $multiMessage);
+        }
     }
 
     public function postedImageFromRegistedUser()
@@ -83,20 +102,23 @@ class LineEventController extends Controller
     {
     }
 
-    public function followed($replyToken)
+    public function followed($event)
     {
         $bot = $this->initBot();
         $multiMessage = new MultiMessageBuilder();
         $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\nこのアカウントは、フォト管理に役立つ機能を提供します。"));
         $multiMessage = $this->addTermsMessage($multiMessage);
         $multiMessage->add(new TextMessageBuilder("下記のリンクで、スグにサービスに登録できます。\n\n※ 登録の際に、LINEのユーザー名とプロフィール画像が使用されます。\n\nhttps://days.photo/login/line"));
-        $bot->replyMessage($replyToken, $multiMessage);
+        $bot->replyMessage($event->replyToken, $multiMessage);
     }
 
     public function joined($event)
     {
         $bot = $this->initBot();
-        $this->replyMultiText($event->replyToken, ["こんにちは。\n\n新しいタイプの 'かんたんフォト管理サービス' 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nただし、グループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを使用したい場合は、下のリンクから友だち登録をお願いします。", 'https://lin.ee/O6NF5rk']);
+        $multiMessage = new MultiMessageBuilder();
+        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの 'かんたんフォト管理サービス' 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nただし、グループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを使用したい場合は、下のリンクから友だち登録をお願いします。"));
+        $multiMessage->add(new TextMessageBuilder('https://lin.ee/O6NF5rk'));
+        $bot->replyMessage($event->replyToken, $multiMessage);
 
         $groupSummaryJson = $bot->getGroupSummary($event->source->groupId);
         $groupSummary = json_decode($groupSummaryJson, false);
@@ -123,25 +145,6 @@ class LineEventController extends Controller
         $templateMessage = new TemplateMessageBuilder('テンプレートタイトル', $buttonTemplage);
         $multiMessage->add($templateMessage);
         return $multiMessage;
-    }
-
-
-    public function replyMultiText($replyToken, $texts)
-    {
-        $bot = $this->initBot();
-        $multiMessage = new MultiMessageBuilder();
-
-        foreach ($texts as $text) {
-            $multiMessage->add(new TextMessageBuilder($text));
-        }
-
-        $bot->replyMessage($replyToken, $multiMessage);
-    }
-
-    public function replySimpleText($replyToken, $text)
-    {
-        $bot = $this->initBot();
-        $bot->replyText($replyToken, $text);
     }
 
     public function initBot()

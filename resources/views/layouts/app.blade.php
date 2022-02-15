@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta name="title" content="days. - かんたんフォト管理 - ">
     <meta name="author" content="COLORBOX Inc.">
-    <meta name="description" content="いつか消えてしまう、あの写真も、ずっと残る。 days.は新しいタイプの “かんたんフォト管理” サービス。30秒でアルバムが完成✅ 無料で印刷・発送✅">
+    <meta name="description" content="いつか消えてしまう、あの写真も、ずっと残る。 days.は新しいタイプの “かんたんフォト管理” サービス。30秒でアルバムが完成✅ 無料で印刷・郵送✅">
     <link type="text/css" href="./vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link type="text/css" href="./css/pixel.css" rel="stylesheet">
     <link type="text/css" href="./css/app.css" rel="stylesheet">
@@ -43,8 +43,12 @@
     <footer class="footer pt-5 pb-6 bg-white text-gray">
         <div class="container">
             <div class="row">
+                <div class="d-flex justify-content-center mb-3">
+                    <a class="px-2 mx-5" href="./terms" type="button">利用規約</a>
+                    <a class="px-2 mx-5" href="./pp" type="button">プライバシーポリシー</a>
+                </div>
                 <div class="col-md-12 text-center">
-                    <p>2022 © <a href="https://colorbox.tech">COLORBOX Inc.</a></p>
+                    <p>2022 © <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></p>
                 </div>
             </div>
         </div>
