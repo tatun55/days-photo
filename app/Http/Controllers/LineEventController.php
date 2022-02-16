@@ -76,7 +76,7 @@ class LineEventController extends Controller
         $data = (object)$dataArr;
         switch ($data->action) {
             case 'save':
-                // TODO: サイトでみる、名前を変える、デザインタイプ変更、注文する、印刷する、なにもしない、を選べる
+                // TODO: サイトでみる、名前を変える、デザインタイプ変更、注文する、印刷する、今はなにもしない、を選べる
                 $imageSet = ImageSet::find($data->id);
                 $imageSet->done = true;
                 $imageSet->save();
