@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\StoreImageJob;
 use App\Jobs\StoreLineImageMessageToS3Job;
 use App\Models\ImageFromUser;
 use App\Models\ImageSet;
@@ -19,6 +20,9 @@ use LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder;
 use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\RawMessageBuilder;
+use Illuminate\Bus\Batch;
+use Illuminate\Support\Facades\Bus;
+use Throwable;
 
 class LineEventController extends Controller
 {
@@ -77,14 +81,7 @@ class LineEventController extends Controller
         $data = (object)$dataArr;
         switch ($data->action) {
             case 'save':
-                // TODO: サイトでみる、名前を変える、デザインタイプ変更、注文する、印刷する、今はなにもしない、を選べる
-                $imageSet = ImageSet::find($data->id);
-                $imageSet->done = true;
-                $imageSet->save();
-                $dateStr = Carbon::today()->format('Y年n月j日');
-                $message = "✅ アルバム『{$dateStr}に作成』が保存されました。";
-                $bot = $this->initBot();
-                $bot->replyText($event->replyToken, $message);
+                $this->postbackedSave($event, $data->id);
                 break;
             case 'cancel':
                 $imageSet = ImageSet::destroy($data->id);
@@ -101,8 +98,45 @@ class LineEventController extends Controller
         }
     }
 
-    public function getRawMessageForPostbackedSave($message)
+    /**
+     * TODO: 以下を選べるようにする
+     * - サイトでみる
+     * - 名前を変える
+     * - デザインタイプ変更
+     * - 注文する、印刷する
+     * - 今はなにもしない
+     */
+    public function postbackedSave($event, $imageSetId)
     {
+        $replyToken = $event->replyToken;
+        $dateStr = Carbon::today()->format('Y年n月j日');
+        $title = "{$dateStr}に作成";
+        $message = "✅ アルバム『{$title}』が保存されました。";
+
+        // update ImageSet 
+        $imageSet = ImageSet::find($imageSetId);
+        $imageSet->status = 'unstored';
+        $imageSet->title = $title;
+        $imageSet->save();
+
+        // dispatch store image jobs
+        $jobs = [];
+        $imageFromUsers = ImageFromUser::where('image_set_id', $imageSetId)->get();
+        foreach ($imageFromUsers as $imageFromUser) {
+            $jobs[] = new StoreImageJob($imageFromUser->id, $imageFromUser->message_id);
+        }
+        $batch = Bus::batch($jobs)
+            ->then(function (Batch $batch) use ($imageSetId) {
+                $imageSet = ImageSet::find($imageSetId);
+                $imageSet->status = 'stored';
+                $imageSet->save();
+            })->catch(function (Batch $batch, Throwable $e) {
+                Log::error($e->getMessage());
+            })->finally(function (Batch $batch) use ($replyToken, $message) {
+                $httpClient = new CurlHTTPClient(config('services.line.messaging_api.access_token'));
+                $bot = new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
+                $bot->replyText($replyToken, $message);
+            })->dispatch();
     }
 
     public function accountLinked($event)
@@ -114,7 +148,7 @@ class LineEventController extends Controller
             $multiMessage->add(new TextMessageBuilder($text));
             $text = "『days.』は、30秒でアルバムが作れる ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントにまとめて画像を送信すると、自動でアルバム・コラージュ画像が作成されます✨";
             $multiMessage->add(new TextMessageBuilder($text));
-            $text = "ほかにも様々な便利機能を準備中です（現在、β版）";
+            $text = "様々な便利機能を準備中です（現在、β版）";
             $multiMessage->add(new TextMessageBuilder($text));
             $bot->replyMessage($event->replyToken, $multiMessage);
         }
@@ -131,7 +165,7 @@ class LineEventController extends Controller
         $imageSet = ImageSet::firstOrCreate(
             [
                 'line_user_id' => $event->source->userId,
-                'done' => false,
+                'status' => 'default',
             ],
             [
                 'id' => (string) \Str::uuid(),

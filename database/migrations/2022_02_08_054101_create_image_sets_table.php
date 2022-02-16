@@ -15,9 +15,9 @@ class CreateImageSetsTable extends Migration
     {
         Schema::create('image_sets', function (Blueprint $table) {
             $table->string('id', 36)->primary();
-            $table->boolean('done')->default(false);
+            $table->enum('status', ['default', 'unstored', 'stored'])->default('default');
             $table->string('line_user_id', 33)->index();
-            $table->string('name', 50)->nullable();
+            $table->string('title', 50)->nullable();
             $table->timestamps();
         });
     }

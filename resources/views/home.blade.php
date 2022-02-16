@@ -40,34 +40,22 @@
                     <div class="row">
                         <div class="col-12">
                             <ul class="list-unstyled news-list">
-                                <li class="row mx-0 mb-4">
-                                    <a href="#" class="col-4">
-                                        <img src="../../assets/img/blog/image-1.jpg" alt="Designer desk" class="rounded">
-                                    </a>
-                                    <div class="col">
-                                        <a href="#">
-                                            <h2 class="h6 mb-1">Experience the sound of a modern and clean.</h2>
+                                @foreach($imageSetList as $imageSet)
+                                    <li class="row mx-0 mb-4">
+                                        <a href="#" class="col-5">
+                                            <img src="../../assets/img/blog/image-1.jpg" alt="Designer desk" class="rounded">
                                         </a>
-                                        <div class="post-meta font-small">
-                                            <a class="text-secondary me-3" href="#"><span class="far fa-comments me-2"></span>50</a>
-                                            <span><span class="far fa-clock me-2"></span>Apr 03, 2019</span>
+                                        <div class="col">
+                                            <a href="#">
+                                                <h2 class="h6 mb-1">{{ $imageSet->title }}</h2>
+                                            </a>
+                                            <div class="post-meta font-small">
+                                                <span class="me-3"><span class="far fa-clock me-2"></span>{{ $imageSet->created_at->format('Y-m-d H:i') }}</span>
+                                                <a class="text-secondary" href="#"><span class="fa fa-camera me-2"></span>{{ $imageSet->images_count }}</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="row mx-0 mb-4">
-                                    <a href="#" class="col-4">
-                                        <img src="../../assets/img/blog/image-1.jpg" alt="Designer desk" class="rounded">
-                                    </a>
-                                    <div class="col">
-                                        <a href="#">
-                                            <h2 class="h6 mb-1">Experience the sound of a modern and clean.</h2>
-                                        </a>
-                                        <div class="post-meta font-small">
-                                            <a class="text-secondary me-3" href="#"><span class="far fa-comments me-2"></span>50</a>
-                                            <span><span class="far fa-clock me-2"></span>Apr 03, 2019</span>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

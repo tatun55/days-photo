@@ -13,6 +13,11 @@ class ImageSet extends Model
     protected $fillable = [
         'id',
         'line_user_id',
-        'name',
+        'title',
     ];
+
+    public function images()
+    {
+        return $this->hasMany(ImageFromUser::class);
+    }
 }
