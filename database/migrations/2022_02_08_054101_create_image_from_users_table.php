@@ -16,7 +16,7 @@ class CreateImageFromUsersTable extends Migration
         Schema::create('image_from_users', function (Blueprint $table) {
             $table->string('id', 36)->primary();
             $table->string('message_id', 36);
-            $table->string('image_set_id', 64)->nullable();
+            $table->string('image_set_id', 36)->nullable();
             $table->string('url')->nullable();
             $table->timestamps();
         });

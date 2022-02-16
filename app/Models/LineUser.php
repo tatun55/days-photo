@@ -8,6 +8,10 @@ use Illuminate\Notifications\Notifiable;
 
 class LineUser extends Authenticatable
 {
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     protected $fillable = [
         'id',
         'name',

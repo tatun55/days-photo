@@ -18,7 +18,10 @@
                                 <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
-                            <div class="dropdown-menu"><a href="./my-items.html" class="list-group-item list-group-item-action d-sm-none border-0">My Items</a> <a href="./security.html" class="list-group-item list-group-item-action d-md-none border-0">Security</a> <a href="./billing.html" class="list-group-item list-group-item-action border-0">Billing</a> <a href="./messages.html" class="list-group-item list-group-item-action border-0">Messages</a></div>
+                            <div class="dropdown-menu">
+                                <a href="./my-items.html" class="list-group-item list-group-item-action d-sm-none border-0">プロフィール</a>
+                                <a href="./my-items.html" class="list-group-item list-group-item-action d-sm-none border-0">設定</a>
+                            </div>
 
                             {{-- <a href="#" class="btn btn-gray-300 btn-xs"><span class="me-2"><span class="fas fa-sign-out-alt"></span></span>Sign Out</a> --}}
                         </div>
@@ -26,12 +29,8 @@
                         {{-- LG幅以上のサイドメニュー --}}
                         <div class="card-body p-2 d-none d-lg-block">
                             <div class="list-group dashboard-menu list-group-sm">
-                                <a href="./account.html" class="d-flex list-group-item border-0 list-group-item-action active">Overview <span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="./settings.html" class="d-flex list-group-item border-0 list-group-item-action">Settings<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="./my-items.html" class="d-flex list-group-item border-0 list-group-item-action">My Items<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="./security.html" class="d-flex list-group-item border-0 list-group-item-action">Security<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="./billing.html" class="d-flex list-group-item border-0 list-group-item-action">Billing<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="./messages.html" class="d-flex list-group-item border-0 list-group-item-action border-0">Messages<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
+                                <a href="./account.html" class="d-flex list-group-item border-0 list-group-item-action active">プロフィール<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
+                                <a href="./settings.html" class="d-flex list-group-item border-0 list-group-item-action">設定<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
                             </div>
                         </div>
                     </div>

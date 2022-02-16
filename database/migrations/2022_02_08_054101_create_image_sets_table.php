@@ -14,7 +14,8 @@ class CreateImageSetsTable extends Migration
     public function up()
     {
         Schema::create('image_sets', function (Blueprint $table) {
-            $table->string('id', 64)->primary();
+            $table->string('id', 36)->primary();
+            $table->boolean('done')->default(false);
             $table->string('line_user_id', 33)->index();
             $table->string('name', 50)->nullable();
             $table->timestamps();
