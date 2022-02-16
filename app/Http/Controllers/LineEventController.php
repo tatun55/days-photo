@@ -6,6 +6,7 @@ use App\Jobs\StoreLineImageMessageToS3Job;
 use App\Models\ImageFromUser;
 use App\Models\ImageSet;
 use App\Models\LineUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\FacadesLog;
@@ -100,7 +101,7 @@ class LineEventController extends Controller
         }
     }
 
-    public function getPostbackedSaveRawMessage($message)
+    public function getRawMessageForPostbackedSave($message)
     {
     }
 
@@ -150,12 +151,12 @@ class LineEventController extends Controller
         if (!$isNotLast) {
             $bot = $this->initBot();
             $total = ImageFromUser::where('image_set_id', $imageSet->id)->get()->count();
-            $rawMessage = $this->getPostedImageFromUserRawMessage();
+            $rawMessage = $this->getRawMessageForPostedImageFromUser($total, $imageSet);
             $bot->replyMessage($event->replyToken, $rawMessage);
         }
     }
 
-    public function getPostedImageFromUserRawMessage()
+    public function getRawMessageForPostedImageFromUser($total, $imageSet)
     {
         $array = [
             'type' => 'text',

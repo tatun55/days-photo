@@ -19,18 +19,18 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a href="./my-items.html" class="list-group-item list-group-item-action d-sm-none border-0">プロフィール</a>
-                                <a href="./my-items.html" class="list-group-item list-group-item-action d-sm-none border-0">設定</a>
+                                <a href="" class="list-group-item list-group-item-action d-sm-none border-0"><span class="me-2"><span class="fas fa-user"></span></span>プロフィール</a>
+                                <a href="" class="list-group-item list-group-item-action d-sm-none border-0"><span class="me-2"><span class="fas fa-cog"></span></span>設定</a>
+                                <a href="{{ route('logout') }}" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-sign-out-alt"></span></span>ログアウト</a>
                             </div>
-
-                            {{-- <a href="#" class="btn btn-gray-300 btn-xs"><span class="me-2"><span class="fas fa-sign-out-alt"></span></span>Sign Out</a> --}}
                         </div>
 
                         {{-- LG幅以上のサイドメニュー --}}
                         <div class="card-body p-2 d-none d-lg-block">
                             <div class="list-group dashboard-menu list-group-sm">
-                                <a href="./account.html" class="d-flex list-group-item border-0 list-group-item-action active">プロフィール<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="./settings.html" class="d-flex list-group-item border-0 list-group-item-action">設定<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
+                                <a href="" class="d-flex list-group-item border-0 list-group-item-action active"><span class="me-2"><span class="fas fa-user"></span></span>プロフィール<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
+                                <a href="" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-cog"></span></span>設定<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
+                                <a href="{{ route('logout') }}" class="mt-2 btn btn-gray-200 btn-sm"><span class="me-2"><span class="fas fa-sign-out-alt"></span></span>ログアウト</a>
                             </div>
                         </div>
                     </div>

@@ -36,7 +36,7 @@ class LoginController extends Controller
      * @param string $provider
      * @return \Illuminate\Http\Response
      */
-    public function redirectToProvider($provider)
+    public function redirectToProvider()
     {
         // $clientId = config('services.line.client_id');
         // $clientSecret = config('services.line.client_secret');
@@ -45,7 +45,7 @@ class LoginController extends Controller
         // $config = new \SocialiteProviders\Manager\Config($clientId, $clientSecret, $redirectUrl, $additionalProviderConfig);
         // return Socialite::driver($provider)->setConfig($config)->redirect();
 
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver('line')->redirect();
     }
 
     /**
@@ -54,10 +54,10 @@ class LoginController extends Controller
      * @param string $provider
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback()
     {
 
-        $providedUser = Socialite::driver($provider)->user();
+        $providedUser = Socialite::driver('line')->user();
 
         $user = LineUser::find($providedUser->id);
 
@@ -87,6 +87,6 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('home');
+        return redirect()->route('intro');
     }
 }
