@@ -81,7 +81,8 @@ class LineEventController extends Controller
         $data = (object)$dataArr;
         switch ($data->action) {
             case 'save':
-                $this->postbackedSave($event, $data->id);
+            case 'temporary-save':
+                $this->postbackedSave($event, $data->id, $data->action);
                 break;
             case 'cancel':
                 $imageSet = ImageSet::destroy($data->id);
@@ -106,17 +107,27 @@ class LineEventController extends Controller
      * - 注文する、印刷する
      * - 今はなにもしない
      */
-    public function postbackedSave($event, $imageSetId)
+    public function postbackedSave($event, $imageSetId, $type)
     {
         $replyToken = $event->replyToken;
         $dateStr = Carbon::today()->format('Y年n月j日');
         $title = "{$dateStr}に作成";
-        $message = "✅ アルバム『{$title}』が保存されました。";
+        switch ($type) {
+            case 'save':
+                $deleteDate = null;
+                $message = "✅ アルバム『{$title}』が保存されました。";
+                break;
+            case 'temporary-save':
+                $deleteDate = Carbon::today()->addDays(3);
+                $message = "✅ アルバム『{$title}』が一時保存されました。\n\n保存期間は、3日間です。";
+                break;
+        }
 
         // update ImageSet 
         $imageSet = ImageSet::find($imageSetId);
         $imageSet->status = 'unstored';
         $imageSet->title = $title;
+        $imageSet->delete_date = $deleteDate;
         $imageSet->save();
 
         // dispatch store image jobs
@@ -161,6 +172,9 @@ class LineEventController extends Controller
 
     public function postedImageFromUser($event)
     {
+        $isImageSet = isset($event->message->imageSet);
+        $storedImagesCount = ImageFromUser::where('image_set_id', $imageSet->id)->get()->count();
+
         // 作成途中のImageSetを取得、なければ作成
         $imageSet = ImageSet::firstOrCreate(
             [
@@ -178,14 +192,14 @@ class LineEventController extends Controller
             'id' => (string) \Str::uuid(),
             'message_id' => $event->message->id,
             'image_set_id' => $imageSet->id,
+            'index' => $count + 1,
         ]);
 
         // 複数画像の同時送信の最後、もしくは画像の単独送信である場合に、クイックリプライ付き返信を返す
         $isNotLast = isset($event->message->imageSet) && $event->message->imageSet->index !== $event->message->imageSet->total;
         if (!$isNotLast) {
             $bot = $this->initBot();
-            $total = ImageFromUser::where('image_set_id', $imageSet->id)->get()->count();
-            $rawMessage = $this->getRawMessageForPostedImageFromUser($total, $imageSet);
+            $rawMessage = $this->getRawMessageForPostedImageFromUser($count + 1, $imageSet);
             $bot->replyMessage($event->replyToken, $rawMessage);
         }
     }
@@ -201,9 +215,18 @@ class LineEventController extends Controller
                         'type' => 'action',
                         'action' => [
                             'type' => 'postback',
-                            'label' => '💾 保存',
+                            'label' => '💎 ずっと残る保存',
                             'data' => "action=save&id={$imageSet->id}",
                             'text' => "保存",
+                        ]
+                    ],
+                    [
+                        'type' => 'action',
+                        'action' => [
+                            'type' => 'postback',
+                            'label' => '🌠 スグ消える保存',
+                            'data' => "action=temporary-save&id={$imageSet->id}",
+                            'text' => "一時保存",
                         ]
                     ],
                     [
@@ -250,7 +273,7 @@ class LineEventController extends Controller
     {
         $bot = $this->initBot();
         $multiMessage = new MultiMessageBuilder();
-        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの 'かんたんフォト管理サービス' 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nただし、グループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを使用したい場合は、下のリンクから友だち登録をお願いします。"));
+        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの 'かんたんフォト管理サービス' 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nただし、グループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
         $multiMessage->add(new TextMessageBuilder('https://lin.ee/O6NF5rk'));
         $bot->replyMessage($event->replyToken, $multiMessage);
 

@@ -27,7 +27,13 @@ body {
 }
 
 .footer a {
-    color: #6dc234 !important;
+    color: #1F2937 !important;
+    font-size: .92rem;
+    font-weight: 300 !important;
+}
+
+.footer a:hover {
+    text-decoration: underline;
 }
 
 
@@ -43,4 +49,16 @@ i {
     font-variant: normal;
     text-rendering: auto;
     line-height: 1;
+}
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 13px;
+    }
 }

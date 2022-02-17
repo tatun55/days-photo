@@ -3,17 +3,15 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use LINE\LINEBot\HTTPClient\CurlHTTPClient;
-use LINE\LINEBot;
 
-class GetImageSet extends Command
+class S3FileSystemTest extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:getImageSet';
+    protected $signature = 'command:s3';
 
     /**
      * The console command description.
@@ -39,11 +37,12 @@ class GetImageSet extends Command
      */
     public function handle()
     {
-        $httpClient = new CurlHTTPClient(config('services.line.messaging_api.access_token'));
-        $bot = new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
-        $res = $bot->getMessageContent('15590933101690');
-        $data = $res->getRawBody();
-        $type = finfo_buffer(finfo_open(), $data, FILEINFO_EXTENSION);
-        dd($type); // string(17) "jpeg/jpg/jpe/jfif"
+        $files = \Storage::disk('s3')->files('/');
+        $res = \Storage::disk('s3')->delete($files);
+        // $res = \Storage::disk('s3')->allFiles('');
+        // $res = \Storage::disk('s3')->copy('dev/a7634974-b580-4e32-b409-19e2b41d918b.jpg', 'a7634974-b580-4e32-b409-19e2b41d918b.jpg');
+        // $res = \Storage::disk('s3')->deleteDirectory('');
+        // $res = \Storage::disk('s3')->get('dev/a7634974-b580-4e32-b409-19e2b41d918b.jpg');
+        // dump(\Image::make($res)->exif());
     }
 }

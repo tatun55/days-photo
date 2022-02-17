@@ -15,5 +15,6 @@ class ImageFromUser extends Model
         'message_id',
         'line_user_id',
         'image_set_id',
+        'index',
     ];
 }

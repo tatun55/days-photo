@@ -9,6 +9,16 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        $this->call(MyAccountSeeder::class);
+        if (config('app.env') !== 'production') {
+            $deleteFlag = true && $this->deleteAllS3Files();
+            $this->call(MyAccountSeeder::class);
+        }
+    }
+
+    public function deleteAllS3Files()
+    {
+        $files = \Storage::disk('s3')->files('/');
+        \Storage::disk('s3')->delete($files);
+        echo "\033[31m\nAll S3 Files are DELETED!\n\n";
     }
 }
