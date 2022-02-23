@@ -14,13 +14,10 @@ class AlbumController extends Controller
         return view('pages.albums.show', compact('album'));
     }
 
-    public function pp()
+    public function title(Request $request, Album $album)
     {
-        return view('pp');
-    }
-
-    public function terms()
-    {
-        return view('terms');
+        $album->title = $request->title;
+        $album->save();
+        return back();
     }
 }

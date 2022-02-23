@@ -9,12 +9,11 @@
                 <!--Breadcrumb-->
                 <nav class="ms-2 mb-0" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}"><span class="fas fa-home"></span></span> ホーム</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{$album->title}}</li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}"><span class="fas fa-home"></span></span> ホーム</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $album->title }}</li>
                     </ol>
                 </nav>
                 <!--End of Breadcrumb-->
-
                 <div class="col-12 col-lg-4 mb-3 mb-lg-0">
                     <div class="card border-gray-300 px-3 py-2">
                         <div class="card-header bg-white border-0 text-center d-flex flex-row flex-lg-column align-items-center justify-content-between justify-lg-content-center px-1 px-lg-4">
@@ -29,20 +28,40 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu d-lg-none">
-                                <a href="" class="list-group-item list-group-item-action border-0"><span class="me-2"><span class="fas fa-user"></span></span>プロフィール</a>
-                                <a href="" class="list-group-item list-group-item-action border-0"><span class="me-2"><span class="fas fa-cog"></span></span>設定</a>
-                                <a href="{{ route('logout') }}" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-sign-out-alt"></span></span>ログアウト</a>
+                                <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-default-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
+                                <a href="" class="list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-trash"></span></span>削除 (ごみ箱へ移動)</a>
+                                <a href="" class="list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-times-circle"></span></span>削除 (データの消去)</a>
                             </div>
                         </div>
 
                         {{-- LG幅以上のサイドメニュー --}}
                         <div class="card-body p-2 d-none d-lg-block">
                             <div class="list-group dashboard-menu list-group-sm">
-                                <a href="" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-user"></span></span>プロフィール<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-cog"></span></span>設定<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="{{ route('logout') }}" class="mt-2 btn btn-gray-200 btn-sm"><span class="me-2"><span class="fas fa-sign-out-alt"></span></span>ログアウト</a>
+                                <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-default-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
+                                <a href="" class="list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-trash"></span></span>削除 (ごみ箱へ移動)</a>
+                                <a href="" class="list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-times-circle"></span></span>削除 (データの消去)</a>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="modal-default-{{ $album->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <form method="POST" action="{{ route('albums.title',$album->id) }}" class="modal-content">
+                            @csrf
+                            @method('put')
+                            <div class="modal-header">
+                                <h2 class="h6 modal-title">アルバムのタイトルを入力</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control" name="title" value="{{ $album->title }}">
+                                <div class="form-text text-gray text-right text-sm">50字以内</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-secondary text-white">変更</button>
+                                <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -50,7 +69,7 @@
                     <div class="row">
                         <div class="col-12">
                             <ul class="list-unstyled news-list d-flex flex-wrap">
-                                @foreach($album->images()->get() as $image)
+                                @foreach($album->images()->orderBy('index','asc')->get() as $image)
                                     <li class="" style="width:33.3%; padding:0.5%;">
                                         <a href="" class="col-5">
                                             <img class="img-1x1" src="{{ \Storage::disk('s3')->url("/t/{$image->id}.jpg") }}">

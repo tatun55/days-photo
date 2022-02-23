@@ -18,7 +18,7 @@
     <header class="header-global">
         <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg nav-theme-white navbar-light">
             <div class="container position-relative">
-                <a class="me-lg-5 display-3 px-2 px-lg-0" href="{{route('home')}}">days.</a>
+                <a class="me-lg-5 display-3 px-2 px-lg-0" href="{{ route('home') }}">days.</a>
                 <div class="navbar-collapse collapse me-auto" id="navbar_global">
                     <div class="navbar-collapse-header">
                         <div class="row">
@@ -44,11 +44,12 @@
         <div class="container">
             <div class="row">
                 <div class="d-flex justify-content-center mb-3">
-                    <a class="px-2 mx-5" href="{{route('terms')}}" type="button">利用規約</a>
-                    <a class="px-2 mx-5" href="{{route('pp')}}" type="button">プライバシーポリシー</a>
+                    <a class="px-2 mx-2" href="{{ route('terms') }}" type="button">利用規約</a>
+                    <a class="px-2 mx-2" href="{{ route('pp') }}" type="button">プライバシーポリシー</a>
                 </div>
                 <div class="col-md-12 text-center">
-                    <p>2022 © <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></p>
+                    <div class="brand mb-1"><small>2022 - ©</small> <a class="btn-light" href="https://days.photo">days. </a><small>かんたんフォト管理</small></div>
+                    <div class="produce">produced by <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></div>
                 </div>
             </div>
         </div>

@@ -42,16 +42,16 @@
                             <ul class="list-unstyled news-list">
                                 @foreach($albums as $album)
                                     <li class="row mx-0 mb-4">
-                                        <a href="{{ route('album.show',$album->id) }}" class="col-5">
+                                        <a href="{{ route('albums.show',$album->id) }}" class="col-5">
                                             <img class="img-1x1 shadow rounded" src="{{ \Storage::disk('s3')->url("/t/{$album->cover}.jpg") }}">
                                         </a>
                                         <div class="col">
-                                            <a href="{{ route('album.show',$album->id) }}">
-                                                <h2 class="h6 mb-1">{{ $album->title }}</h2>
+                                            <a href="{{ route('albums.show',$album->id) }}">
+                                                <h5 class="h5 m-0 me-2 p-0">{{ $album->title }}</h5>
                                             </a>
                                             <div class="post-meta font-small">
                                                 <span class="me-3"><span class="far fa-clock me-2"></span>{{ $album->created_at->format('Y-m-d H:i') }}</span>
-                                                <a class="text-secondary" href="{{ route('album.show',$album->id) }}"><span class="fa fa-camera me-2"></span>{{ $album->images_count }}</a>
+                                                <a class="text-secondary" href="{{ route('albums.show',$album->id) }}"><span class="fa fa-camera me-2"></span>{{ $album->images_count }}</a>
                                             </div>
                                         </div>
                                     </li>

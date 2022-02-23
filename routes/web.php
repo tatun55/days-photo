@@ -15,7 +15,8 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('home', [HomeController::class, 'home'])->name('home');
-    Route::get('albums/{album}', [AlbumController::class, 'show'])->name('album.show');
+    Route::get('albums/{album}', [AlbumController::class, 'show'])->name('albums.show');
+    Route::put('albums/{album}/title', [AlbumController::class, 'title'])->name('albums.title');
 });
 
 Route::get('pp', [HomeController::class, 'pp'])->name('pp');
