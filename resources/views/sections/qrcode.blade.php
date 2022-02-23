@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="d-md-flex d-block justify-content-center align-items-center">
-                @guest
+                    @guest
                     <div>
                         <div class="text-center">
                             {{-- <img class="qrcode" src="https://qr-official.line.me/sid/L/645yuzex.png"> --}}
