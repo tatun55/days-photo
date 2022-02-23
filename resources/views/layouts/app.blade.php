@@ -8,9 +8,9 @@
     <meta name="title" content="days. - かんたんフォト管理 - ">
     <meta name="author" content="COLORBOX Inc.">
     <meta name="description" content="いつか消えてしまう、あの写真も、ずっと残る。 days.は新しいタイプの “かんたんフォト管理” サービス。30秒でアルバムが完成✅ 無料で印刷・郵送✅">
-    <link type="text/css" href="./vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link type="text/css" href="./css/pixel.css" rel="stylesheet">
-    <link type="text/css" href="./css/app.css" rel="stylesheet">
+    <link type="text/css" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
 
@@ -18,7 +18,7 @@
     <header class="header-global">
         <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg nav-theme-white navbar-light">
             <div class="container position-relative">
-                <a class="me-lg-5 display-4 px-2 px-lg-0" href="/">days.</a>
+                <a class="me-lg-5 display-3 px-2 px-lg-0" href="{{route('home')}}">days.</a>
                 <div class="navbar-collapse collapse me-auto" id="navbar_global">
                     <div class="navbar-collapse-header">
                         <div class="row">
@@ -44,8 +44,8 @@
         <div class="container">
             <div class="row">
                 <div class="d-flex justify-content-center mb-3">
-                    <a class="px-2 mx-5" href="./terms" type="button">利用規約</a>
-                    <a class="px-2 mx-5" href="./pp" type="button">プライバシーポリシー</a>
+                    <a class="px-2 mx-5" href="{{route('terms')}}" type="button">利用規約</a>
+                    <a class="px-2 mx-5" href="{{route('pp')}}" type="button">プライバシーポリシー</a>
                 </div>
                 <div class="col-md-12 text-center">
                     <p>2022 © <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></p>
@@ -54,18 +54,18 @@
         </div>
     </footer>
     <!-- Core -->
-    <script src="./vendor/@popperjs/core/dist/umd/popper.min.js"></script>
-    <script src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="./vendor/headroom.js/dist/headroom.min.js"></script>
+    <script src="{{ asset('vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('vendor/headroom.js/dist/headroom.min.js') }}"></script>
     <!-- Vendor JS -->
-    <script src="./vendor/onscreen/dist/on-screen.umd.min.js"></script>
-    <script src="./vendor/jarallax/dist/jarallax.min.js"></script>
-    <script src="./vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-    <script src="./vendor/vivus/dist/vivus.min.js"></script>
-    <script src="./vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
-    <script async defer="defer" src="https://buttons.github.io/buttons.js"></script>
+    <script src="{{ asset('vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
+    <script src="{{ asset('vendor/jarallax/dist/jarallax.min.js') }}"></script>
+    <script src="{{ asset('vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js') }}"></script>
+    <script src="{{ asset('vendor/vivus/dist/vivus.min.js') }}"></script>
+    <script src="{{ asset('vendor/vanillajs-datepicker/dist/js/datepicker.min.js') }}"></script>
+    <script async defer="defer" src="{{ asset('https://buttons.github.io/buttons.js') }}"></script>
     <!-- Pixel JS -->
-    <script src="./assets/js/pixel.js"></script>
+    <script src="{{ asset('assets/js/pixel.js') }}"></script>
     @yield('script')
 </body>
 

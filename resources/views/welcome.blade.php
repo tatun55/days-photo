@@ -79,6 +79,9 @@
     <div class="nav">
         <div class="nav__content">
             <ul class="nav__list">
+                @auth('web')
+                <li class="nav__list-item"><a href="/home">home</a></li>
+                @endauth
                 <li class="nav__list-item active-nav"><a href="/">intro</a></li>
                 <li class="nav__list-item"><a href="/">about</a></li>
                 <li class="nav__list-item"><a href="/">contact</a></li>
@@ -286,16 +289,6 @@
         </div>
     </div>
 
-    <!-- <div class="social-fixed-left-no-change">
-        <a href="#">twitter</a>
-        <a href="#">facebook</a>
-        <a href="#">behance</a>
-        <a href="#">github</a>
-    </div> -->
-
-
-    <!-- JAVASCRIPT
-    ================================================== -->
     <script src="lp/js/jquery.min.js"></script>
     <script src="lp/js/royal_preloader.min.js"></script>
     <script src="lp/js/popper.min.js"></script>
@@ -303,8 +296,7 @@
     <script src="lp/js/plugins.js"></script>
     <script src="lp/js/animated-grid-portfolio.js"></script>
     <script src="lp/js/custom.js"></script>
-    <!-- End Document
-================================================== -->
+    
 </body>
 
 </html>

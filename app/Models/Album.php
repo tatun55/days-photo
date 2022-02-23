@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ImageSet extends Model
+class Album extends Model
 {
     protected $primaryKey = 'id';
     protected $keyType = 'string';
@@ -12,6 +12,11 @@ class ImageSet extends Model
 
     protected $fillable = [
         'id',
-        'count',
+        'line_user_id',
     ];
+
+    public function images()
+    {
+        return $this->hasMany(ImageFromUser::class);
+    }
 }

@@ -2,16 +2,18 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ImageFromUser;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
-class S3FileSystemTest extends Command
+class MyTest extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:s3';
+    protected $signature = 'command:mytest';
 
     /**
      * The console command description.
@@ -37,12 +39,8 @@ class S3FileSystemTest extends Command
      */
     public function handle()
     {
-        $res = \Storage::disk('s3')->files('/');
-        // $res = \Storage::disk('s3')->delete($files);
-        // $res = \Storage::disk('s3')->allFiles('');
-        // $res = \Storage::disk('s3')->copy('dev/a7634974-b580-4e32-b409-19e2b41d918b.jpg', 'a7634974-b580-4e32-b409-19e2b41d918b.jpg');
-        // $res = \Storage::disk('s3')->deleteDirectory('');
-        // $res = \Storage::disk('s3')->get('dev/a7634974-b580-4e32-b409-19e2b41d918b.jpg');
-        dump($res);
+        $filePath = storage_path('image_from_user.json');
+        $json = file_get_contents($filePath);
+        $data = json_decode($json, true);
     }
 }

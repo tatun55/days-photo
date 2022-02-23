@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\ImageSet;
+use App\Models\Album;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -44,16 +44,22 @@ class StoreImageJob implements ShouldQueue
         $bot = new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
         $response = $bot->getMessageContent($this->messageId);
         if ($response->isSucceeded()) {
+            $path = $this->imageId . '.jpg';
+            $stream = $response->getRawBody();
             switch ($response->getHeader('content-type')) {
-                case 'image/jpeg':
-                    $ext = '.jpg';
-                    break;
                 case 'image/png':
-                    $ext = '.png';
+                    $stream = \Image::make($stream)->stream('jpg');
                     break;
             };
-            $path = $this->imageId . $ext;
-            Storage::disk('s3')->put($path, $response->getRawBody(), 'public');
+            Storage::disk('s3')->put($path, $stream, 'public');
+
+            // upload thumbnail
+            $tStream = \Image::make($stream)
+                ->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->stream('jpg', '30');
+            Storage::disk('s3')->put("/t/{$path}", $tStream, 'public');
         } else {
             Log::error($response->getHTTPStatus() . ' ' . $response->getRawBody());
         }

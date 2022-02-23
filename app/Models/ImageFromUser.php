@@ -12,9 +12,11 @@ class ImageFromUser extends Model
 
     protected $fillable = [
         'id',
-        'message_id',
+        'album_id',
         'line_user_id',
-        'image_set_id',
+        'message_id',
         'index',
+        'created_at',
+        'updated_at',
     ];
 }

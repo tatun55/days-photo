@@ -7,16 +7,11 @@ use App\Models\ImageSet;
 use App\Models\PostedImage;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class AlbumController extends Controller
 {
-    public function home()
+    public function show(Album $album)
     {
-        $albums = Album::query()
-            ->withCount('images')
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get();
-        return view('home', compact('albums'));
+        return view('pages.albums.show', compact('album'));
     }
 
     public function pp()

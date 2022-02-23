@@ -7,6 +7,7 @@ use App\Jobs\StoreLineImageMessageToS3Job;
 use App\Models\ImageFromUser;
 use App\Models\ImageSet;
 use App\Models\LineUser;
+use App\Models\Album;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,6 +23,7 @@ use LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder;
 use LINE\LINEBot\MessageBuilder\RawMessageBuilder;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Session;
 use Throwable;
 
 class LineEventController extends Controller
@@ -85,8 +87,8 @@ class LineEventController extends Controller
                 $this->postbackedSave($event, $data->id, $data->action);
                 break;
             case 'cancel':
-                $imageSet = ImageSet::destroy($data->id);
-                ImageFromUser::where('image_set_id', $data->id)->delete();
+                $album = Album::destroy($data->id);
+                ImageFromUser::where('album_id', $data->id)->delete();
                 $message = "✅ 保存前のアルバムが削除されました。";
                 $bot = $this->initBot();
                 $bot->replyText($event->replyToken, $message);
@@ -107,7 +109,7 @@ class LineEventController extends Controller
      * - 注文する、印刷する
      * - 今はなにもしない
      */
-    public function postbackedSave($event, $imageSetId, $type)
+    public function postbackedSave($event, $albumId, $type)
     {
         $replyToken = $event->replyToken;
         $dateStr = Carbon::today()->format('Y年n月j日');
@@ -118,29 +120,31 @@ class LineEventController extends Controller
                 $message = "✅ アルバム『{$title}』が保存されました。";
                 break;
             case 'temporary-save':
-                $deleteDate = Carbon::today()->addDays(3);
-                $message = "✅ アルバム『{$title}』が一時保存されました。\n\n保存期間は、3日間です。";
+                $daysForStore = 14;
+                $deleteDate = Carbon::today()->addDays($daysForStore);
+                $message = "✅ アルバム『{$title}』が一時保存されました。\n\n保存期間は、{$daysForStore}日間です。";
                 break;
         }
 
-        // update ImageSet 
-        $imageSet = ImageSet::find($imageSetId);
-        $imageSet->status = 'unstored';
-        $imageSet->title = $title;
-        $imageSet->delete_date = $deleteDate;
-        $imageSet->save();
+        // update Album 
+        $album = Album::find($albumId);
+        $album->status = 'uploading';
+        $album->title = $title;
+        $album->delete_date = $deleteDate;
+        $album->cover = ImageFromUser::where('album_id', $albumId)->first()->id;
+        $album->save();
 
         // dispatch store image jobs
         $jobs = [];
-        $imageFromUsers = ImageFromUser::where('image_set_id', $imageSetId)->get();
+        $imageFromUsers = ImageFromUser::where('album_id', $albumId)->get();
         foreach ($imageFromUsers as $imageFromUser) {
             $jobs[] = new StoreImageJob($imageFromUser->id, $imageFromUser->message_id);
         }
         $batch = Bus::batch($jobs)
-            ->then(function (Batch $batch) use ($imageSetId) {
-                $imageSet = ImageSet::find($imageSetId);
-                $imageSet->status = 'stored';
-                $imageSet->save();
+            ->then(function (Batch $batch) use ($albumId) {
+                $album = Album::find($albumId);
+                $album->status = 'uploaded';
+                $album->save();
             })->catch(function (Batch $batch, Throwable $e) {
                 Log::error($e->getMessage());
             })->finally(function (Batch $batch) use ($replyToken, $message) {
@@ -172,11 +176,8 @@ class LineEventController extends Controller
 
     public function postedImageFromUser($event)
     {
-        $isImageSet = isset($event->message->imageSet);
-        $storedImagesCount = ImageFromUser::where('image_set_id', $imageSet->id)->get()->count();
-
-        // 作成途中のImageSetを取得、なければ作成
-        $imageSet = ImageSet::firstOrCreate(
+        // 作成途中のAlbumを取得、なければ作成
+        $album = Album::firstOrCreate(
             [
                 'line_user_id' => $event->source->userId,
                 'status' => 'default',
@@ -187,25 +188,45 @@ class LineEventController extends Controller
             ]
         );
 
+        if (isset($event->message->imageSet)) {
+            /**
+             * ImageSetの序列管理
+             * 
+             * 画像がImageSetとして複数同時投稿される場合、Event受信が順不同になりうる問題
+             * Sessionとは、UserごとにCookieと併用する一時データ管理方法であり、LINE WebHookサーバーとのやり取りでは使えない
+             * そのためDatabaseを使用している
+             */
+
+            $imageSetId = $event->message->imageSet->id;
+            $imageSetTotal = $event->message->imageSet->total;
+            $imageSetIndex = $event->message->imageSet->index;
+            $imageSet = ImageSet::firstOrCreate(['id' => $event->message->imageSet->id,]);
+            $imageSet->increment('count', 1);
+            $index = $album->total + $imageSetIndex;
+            if ($imageSet->count === $imageSetTotal) {
+                $imageSet->delete();
+                $album->increment('total', $imageSetTotal);
+                $this->replyForPostedImageFromUser($album->total, $album->id, $event->replyToken);
+            }
+        } else {
+            $album->increment('total', 1);
+            $index = $album->total;
+            $this->replyForPostedImageFromUser($album->total, $album->id, $event->replyToken);
+        }
+
         // 投稿された画像情報を保存
         $imageFromUser = ImageFromUser::create([
             'id' => (string) \Str::uuid(),
+            'album_id' => $album->id,
+            'line_user_id' => $event->source->userId,
             'message_id' => $event->message->id,
-            'image_set_id' => $imageSet->id,
-            'index' => $count + 1,
+            'index' => $index,
         ]);
-
-        // 複数画像の同時送信の最後、もしくは画像の単独送信である場合に、クイックリプライ付き返信を返す
-        $isNotLast = isset($event->message->imageSet) && $event->message->imageSet->index !== $event->message->imageSet->total;
-        if (!$isNotLast) {
-            $bot = $this->initBot();
-            $rawMessage = $this->getRawMessageForPostedImageFromUser($count + 1, $imageSet);
-            $bot->replyMessage($event->replyToken, $rawMessage);
-        }
     }
 
-    public function getRawMessageForPostedImageFromUser($total, $imageSet)
+    public function replyForPostedImageFromUser($total, $albumId, $replyToken)
     {
+        $bot = $this->initBot();
         $array = [
             'type' => 'text',
             'text' => "画像を受信しました（トータル {$total}枚）",
@@ -216,7 +237,7 @@ class LineEventController extends Controller
                         'action' => [
                             'type' => 'postback',
                             'label' => '💎 ずっと残る保存',
-                            'data' => "action=save&id={$imageSet->id}",
+                            'data' => "action=save&id={$albumId}",
                             'text' => "保存",
                         ]
                     ],
@@ -225,7 +246,7 @@ class LineEventController extends Controller
                         'action' => [
                             'type' => 'postback',
                             'label' => '🌠 スグ消える保存',
-                            'data' => "action=temporary-save&id={$imageSet->id}",
+                            'data' => "action=temporary-save&id={$albumId}",
                             'text' => "一時保存",
                         ]
                     ],
@@ -234,7 +255,7 @@ class LineEventController extends Controller
                         'action' => [
                             'type' => 'postback',
                             'label' => '❌ キャンセル',
-                            'data' => "action=cancel&id={$imageSet->id}",
+                            'data' => "action=cancel&id={$albumId}",
                             'text' => "キャンセル",
                         ]
                     ],
@@ -243,14 +264,15 @@ class LineEventController extends Controller
                         'action' => [
                             'type' => 'postback',
                             'label' => '🖼️ 画像を追加',
-                            'data' => "action=add&id={$imageSet->id}",
+                            'data' => "action=add&id={$albumId}",
                             'text' => "画像を追加",
                         ]
                     ],
                 ]
             ]
         ];
-        return new RawMessageBuilder($array);
+        $rawMessage = new RawMessageBuilder($array);
+        $bot->replyMessage($replyToken, $rawMessage);
     }
 
     public function unfollowed(Type $var = null)

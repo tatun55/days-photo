@@ -39,19 +39,9 @@ class GetMessageContent extends Command
      */
     public function handle()
     {
-        // $httpClient = new CurlHTTPClient(config('services.line.messaging_api.access_token'));
-        // $bot = new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
-        // // $response = $bot->getMessageContent('15598606786645');
-        // $response = $bot->getMessageContent('15599138809517');
-        // dump(\Image::make($response->getRawBody())->exif());
-        // 画像ファイルのパス
-        $img = 'https://days-photo.s3.ap-northeast-1.amazonaws.com/a7634974-b580-4e32-b409-19e2b41d918b.jpg';
-
-        // Exifを取得し、[$exif]に代入する
-        $exif = @exif_read_data($img);
-        echo '<pre>';
-        // 取得したデータを出力する
-        var_dump($exif);
-        echo '</pre>';
+        $httpClient = new CurlHTTPClient(config('services.line.messaging_api.access_token'));
+        $bot = new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
+        $response = $bot->getMessageContent('15614895789526');
+        dump($response->getHeaders());
     }
 }

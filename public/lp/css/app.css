@@ -28,6 +28,13 @@
     box-shadow: none;
 }
 
+a.link {
+    color:#6dc234 !important;
+}
+a.link:hover{
+    color:#6dc234 !important;
+}
+
 @media screen and (max-width:960px) {
     .grid {
         height: calc(var(--grigheight) * 0.9);

@@ -4,14 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class S3FileSystemTest extends Command
+class Session extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:s3';
+    protected $signature = 'command:session';
 
     /**
      * The console command description.
@@ -37,12 +37,15 @@ class S3FileSystemTest extends Command
      */
     public function handle()
     {
-        $res = \Storage::disk('s3')->files('/');
-        // $res = \Storage::disk('s3')->delete($files);
-        // $res = \Storage::disk('s3')->allFiles('');
-        // $res = \Storage::disk('s3')->copy('dev/a7634974-b580-4e32-b409-19e2b41d918b.jpg', 'a7634974-b580-4e32-b409-19e2b41d918b.jpg');
-        // $res = \Storage::disk('s3')->deleteDirectory('');
-        // $res = \Storage::disk('s3')->get('dev/a7634974-b580-4e32-b409-19e2b41d918b.jpg');
-        dump($res);
+        // session(['nameB' => 'testB']);
+        // session()->forget(['aaa', 'aaa_index']);
+        // session()->forget('aaa_index');
+        // if (!session()->has('aaa')) {
+        //     session(['aaa' => 3]);
+        //     session()->push('aaa_index', 'a');
+        //     session()->push('aaa_index', 'b');
+        //     dump(session('aaa'));
+        //     dump(session('aaa_index'));
+        // }
     }
 }
