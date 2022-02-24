@@ -18,6 +18,24 @@ class AlbumController extends Controller
     {
         $album->title = $request->title;
         $album->save();
-        return back();
+        return back()->with('status', 'タイトルを変更しました');
+    }
+
+    public function delete(Album $album)
+    {
+        $album->delete();
+        return redirect('home')->with('status', 'アルバムをごみ箱に移動しました');
+    }
+
+    public function forceDelete(Album $album)
+    {
+        $album->forceDelete();
+        return redirect('home')->with('status', 'アルバムを完全に削除しました');
+    }
+
+    public function restore(Album $album)
+    {
+        $album->restore();
+        return redirect('home')->with('status', 'アルバムを元に戻しました');
     }
 }

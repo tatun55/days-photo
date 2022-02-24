@@ -28,4 +28,8 @@ class HomeController extends Controller
     {
         return view('terms');
     }
+    public function ld()
+    {
+        return view('ld');
+    }
 }

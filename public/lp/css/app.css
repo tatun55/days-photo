@@ -29,10 +29,44 @@
 }
 
 a.link {
-    color:#6dc234 !important;
+    color: #6dc234 !important;
 }
-a.link:hover{
-    color:#6dc234 !important;
+
+a.link:hover {
+    color: #6dc234 !important;
+}
+
+/* フッターのデザイン */
+.footer {
+    color: #1F2937 !important;
+    font-size: 0.9rem;
+    font-weight: 300 !important;
+}
+
+.footer a {
+    color: #1F2937 !important;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+    color: #1F2937 !important;
+}
+
+.footer .brand {
+    color: #1F2937 !important;
+    font-size: 1.2rem;
+    font-weight: 300 !important;
+}
+
+.footer .brand small {
+    font-weight: 300 !important;
+    font-size: 1rem;
+}
+
+.footer .produce {
+    color: #1F2937 !important;
+    font-size: 0.8rem;
+    font-weight: 300 !important;
 }
 
 @media screen and (max-width:960px) {
@@ -55,12 +89,27 @@ a.link:hover{
     h5 {
         font-size: 4vw;
     }
+
     .lead {
         font-size: 3.2vw;
     }
+
     .grid {
         height: calc(var(--grigheight) * 0.8);
         grid-template-rows: repeat(10, calc(var(--gridheight) / 14 - var(--gridgap)));
         grid-template-columns: repeat(10, calc(var(--gridwidth) / 6 - var(--gridgap)));
+    }
+}
+
+/* フォントサイズ調整 */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 13px;
     }
 }

@@ -37,13 +37,26 @@
                 </div>
 
                 <div class="col-12 col-lg-8 mt-4 mt-lg-0">
+
+                    {{-- タブメニュー --}}
+                    <nav>
+                        <div class="nav nav-tabs mb-4" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active"><span class="fas fa-images me-1"></span>アルバム</a>
+                            <a href="{{ route('trashbox') }}" class="nav-item nav-link"><span class="fas fa-trash me-1"></span>ごみ箱</a>
+                        </div>
+                    </nav>
+
                     <div class="row">
                         <div class="col-12">
                             <ul class="list-unstyled news-list">
                                 @foreach($albums as $album)
                                     <li class="row mx-0 mb-4">
                                         <a href="{{ route('albums.show',$album->id) }}" class="col-5">
-                                            <img class="img-1x1 shadow rounded" src="{{ \Storage::disk('s3')->url("/t/{$album->cover}.jpg") }}">
+                                            <div class="img-wrapper-1x1">
+                                                <div class="img-content">
+                                                    <img class="rounded" src="{{ \Storage::disk('s3')->url("/t/{$album->cover}.jpg") }}">
+                                                </div>
+                                            </div>
                                         </a>
                                         <div class="col">
                                             <a href="{{ route('albums.show',$album->id) }}">
@@ -60,6 +73,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

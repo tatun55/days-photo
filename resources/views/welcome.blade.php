@@ -71,7 +71,7 @@
         <div class="row">
             <div class="col-md-12 parallax-fade-top">
                 <h5 class="text-center mt-22">いつか消えてしまう、あの写真も、ずっと残る。</h5>
-                <p class="lead text-center">『days.』は新しいタイプの "かんたんフォト管理" サービス<br>友だちとシェアした写真の加工・アルバム化が無料でスグに</p>
+                <p class="lead text-center">『days.』は新しいタイプの <b>かんたんフォト管理</b> サービス<br>アルバムの <b>ワンクリック作成</b> や <b>ずっと残る保存</b> が無料でスグに</p>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
         <div class="nav__content">
             <ul class="nav__list">
                 @auth('web')
-                <li class="nav__list-item"><a href="/home">home</a></li>
+                    <li class="nav__list-item"><a href="/home">home</a></li>
                 @endauth
                 <li class="nav__list-item active-nav"><a href="/">intro</a></li>
                 <li class="nav__list-item"><a href="/">about</a></li>
@@ -281,13 +281,26 @@
 
     @include('sections.qrcode')
 
-    <div class="container padding-top padding-bottom">
+    {{-- <div class="container padding-top padding-bottom">
         <div class="row">
             <div class="col-md-12 footer">
                 <p>2022 © <a href="https://colorbox.tech">COLORBOX Inc.</a></p>
             </div>
         </div>
-    </div>
+    </div> --}}
+    <footer class="footer pt-5 pb-5 bg-white text-gray">
+        <div class="container">
+            <div class="d-flex justify-content-center text-center">
+                <a class="px-2" href="{{ route('terms') }}" type="button">利用規約</a>
+                <a class="px-2" href="{{ route('pp') }}" type="button">プライバシーポリシー</a>
+                <a class="px-2" href="{{ route('ld') }}" type="button">特定商取引法表示</a>
+            </div>
+            <div class="text-center mt-4">
+                <div class="brand mb-1"><small>2022 - ©</small> <a class="px-3 d-inline-block" href="https://days.photo">days. </a><small>かんたんフォト管理</small></div>
+                <div class="produce">produced by <a href="https://colorbox.tech">COLORBOX Inc.</a></div>
+            </div>
+        </div>
+    </footer>
 
     <script src="lp/js/jquery.min.js"></script>
     <script src="lp/js/royal_preloader.min.js"></script>
@@ -296,7 +309,7 @@
     <script src="lp/js/plugins.js"></script>
     <script src="lp/js/animated-grid-portfolio.js"></script>
     <script src="lp/js/custom.js"></script>
-    
+
 </body>
 
 </html>

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     public function deleteAllS3Files()
     {
         $files = \Storage::disk('s3')->files('/');
+        $files = \Storage::disk('s3')->files('/t/');
         \Storage::disk('s3')->delete($files);
         echo "\033[31m\nAll S3 Files are DELETED!\n\n";
     }

@@ -19,8 +19,9 @@ class CreateAlbumsTable extends Migration
             $table->string('line_user_id', 33)->index();
             $table->string('title', 50)->nullable();
             $table->unsignedSmallInteger('total')->default(0);
-            $table->date('delete_date')->nullable();
+            $table->date('date_to_delete')->nullable();
             $table->string('cover', 36)->default(null)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

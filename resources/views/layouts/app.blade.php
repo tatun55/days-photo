@@ -18,7 +18,7 @@
     <header class="header-global">
         <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg nav-theme-white navbar-light">
             <div class="container position-relative">
-                <a class="me-lg-5 display-3 px-2 px-lg-0" href="{{ route('home') }}">days.</a>
+                <a class="brand-name me-lg-5 px-2 px-lg-0" href="{{ route('home') }}">days.</a>
                 <div class="navbar-collapse collapse me-auto" id="navbar_global">
                     <div class="navbar-collapse-header">
                         <div class="row">
@@ -35,20 +35,23 @@
         </nav>
     </header>
 
+    @include('sections.toast')
+
     <div class="wrapper bg-white">
         @yield('content')
         <div class="push"></div>
     </div>
 
-    <footer class="footer pt-5 pb-6 bg-white text-gray">
+    <footer class="footer pt-5 pb-5 bg-white text-gray">
         <div class="container">
             <div class="row">
-                <div class="d-flex justify-content-center mb-3">
-                    <a class="px-2 mx-2" href="{{ route('terms') }}" type="button">利用規約</a>
-                    <a class="px-2 mx-2" href="{{ route('pp') }}" type="button">プライバシーポリシー</a>
+                <div class="d-flex justify-content-center mb-4">
+                    <a class="px-2" href="{{ route('terms') }}" type="button">利用規約</a>
+                    <a class="px-2" href="{{ route('pp') }}" type="button">プライバシーポリシー</a>
+                    <a class="px-2" href="{{ route('ld') }}" type="button">特定商取引法表示</a>
                 </div>
                 <div class="col-md-12 text-center">
-                    <div class="brand mb-1"><small>2022 - ©</small> <a class="btn-light" href="https://days.photo">days. </a><small>かんたんフォト管理</small></div>
+                    <div class="brand mb-1"><small>2022 - ©</small> <a class="btn-light px-3 d-inline-block" href="https://days.photo">days. </a><small>かんたんフォト管理</small></div>
                     <div class="produce">produced by <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></div>
                 </div>
             </div>
@@ -67,6 +70,7 @@
     <script async defer="defer" src="{{ asset('https://buttons.github.io/buttons.js') }}"></script>
     <!-- Pixel JS -->
     <script src="{{ asset('assets/js/pixel.js') }}"></script>
+    <script src="{{ asset('js/toast.js') }}" type="module"></script>
     @yield('script')
 </body>
 
