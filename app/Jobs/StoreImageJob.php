@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Album;
+use App\Models\ImageFromUser;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -46,20 +47,40 @@ class StoreImageJob implements ShouldQueue
         if ($response->isSucceeded()) {
             $path = $this->imageId . '.jpg';
             $stream = $response->getRawBody();
+
+            // pngならjpgに変換
+            $image = \Image::make($stream);
             switch ($response->getHeader('content-type')) {
                 case 'image/png':
-                    $stream = \Image::make($stream)->stream('jpg');
+                    $stream = $image->stream('jpg', 95);
                     break;
             };
-            Storage::disk('s3')->put($path, $stream, 'public');
 
-            // upload thumbnail
-            $tStream = \Image::make($stream)
-                ->resize(400, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                })->stream('jpg', '30');
-            Storage::disk('s3')->put("/t/{$path}", $tStream, 'public');
+            // オリジナルをアップロード
+            Storage::disk('s3')->put("/o/{$path}", $stream, 'public');
+
+            // width,heightを保存
+            $imageFromUser = ImageFromUser::find($this->imageId);
+            $imageFromUser->width = $image->width();
+            $imageFromUser->height = $image->height();
+            $imageFromUser->save();
+
+            // upload thumbnail (Small,Medium,Large)
+            $sizes = [
+                's' => 320,
+                'm' => 960,
+                'l' => 1600,
+            ];
+            $image->backup();
+            foreach ($sizes as $key => $value) {
+                $stream = $image
+                    ->resize($value, $value, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })->stream('jpg', '70');
+                Storage::disk('s3')->put("/{$key}/{$path}", $stream, 'public');
+                $image->reset();
+            }
         } else {
             Log::error($response->getHTTPStatus() . ' ' . $response->getRawBody());
         }

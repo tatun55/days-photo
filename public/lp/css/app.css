@@ -69,6 +69,12 @@ a.link:hover {
     font-weight: 300 !important;
 }
 
+/* ヒーローデザイン */
+.text-colored {
+    color: #64B330;
+    font-weight: 600;
+}
+
 @media screen and (max-width:960px) {
     .grid {
         height: calc(var(--grigheight) * 0.9);

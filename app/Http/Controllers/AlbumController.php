@@ -6,12 +6,13 @@ use App\Models\Album;
 use App\Models\ImageSet;
 use App\Models\PostedImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AlbumController extends Controller
 {
     public function show(Album $album)
     {
-        return view('pages.albums.show', compact('album'));
+        return view('pages.albums.show', compact(['album']));
     }
 
     public function title(Request $request, Album $album)
@@ -24,7 +25,7 @@ class AlbumController extends Controller
     public function delete(Album $album)
     {
         $album->delete();
-        return redirect('home')->with('status', 'アルバムをごみ箱に移動しました');
+        return redirect('home')->with('status', 'アルバムをアーカイブに移動しました');
     }
 
     public function forceDelete(Album $album)

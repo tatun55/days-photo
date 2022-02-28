@@ -11,7 +11,7 @@
             </div>
         </div>
     </section>
-    <section class="section section-lg pt-8">
+    <section class="section section-lg pt-7">
         <div class="container mt-n8 mt-lg-n12 z-2">
             <div class="row justify-content-center">
                 <div class="col">
@@ -124,7 +124,8 @@
                         <h5 class="pt-4 pb-2">第10条（お問い合わせ窓口）</h5>
                         <p>本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。</p>
                         <div class="pl-3 pt-2" style="">
-                            <div>住所：〒150-0001 東京都渋谷区神宮前６丁目２３−４</div>
+                            <div>郵便番号：〒150-0001</div>
+                            <div>住所：東京都渋谷区神宮前６丁目２３−４</div>
                             <div>責任者：高井昭彦</div>
                             <div>Eメールアドレス：info@colorbox.tech</div>
                         </div>

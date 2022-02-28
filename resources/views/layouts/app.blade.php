@@ -11,7 +11,10 @@
     <link type="text/css" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    @isset($photoSwipe)
+        <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe.css') }}">
+        <link rel="stylesheet" href="{{ asset('photoswipe/default-skin/default-skin.css') }}">
+    @endisset
 </head>
 
 <body>
@@ -51,7 +54,7 @@
                     <a class="px-2" href="{{ route('ld') }}" type="button">特定商取引法表示</a>
                 </div>
                 <div class="col-md-12 text-center">
-                    <div class="brand mb-1"><small>2022 - ©</small> <a class="btn-light px-3 d-inline-block" href="https://days.photo">days. </a><small>かんたんフォト管理</small></div>
+                    <div class="brand mb-1"><small>2022 - ©</small><a class="btn-light px-2 d-inline-block" href="https://days.photo">days.</a><small>かんたんフォト管理</small></div>
                     <div class="produce">produced by <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></div>
                 </div>
             </div>
@@ -71,6 +74,9 @@
     <!-- Pixel JS -->
     <script src="{{ asset('assets/js/pixel.js') }}"></script>
     <script src="{{ asset('js/toast.js') }}" type="module"></script>
+    @isset($photoSwipe)
+        @include('sections.photoswipe.script')
+    @endisset
     @yield('script')
 </body>
 

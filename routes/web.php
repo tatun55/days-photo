@@ -29,3 +29,10 @@ Route::middleware(['auth'])->group(function () {
 Route::get('pp', [HomeController::class, 'pp'])->name('pp');
 Route::get('terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('ld', [HomeController::class, 'ld'])->name('ld');
+
+Route::get('test', function () {
+    return view('test');
+});
+Route::get('test2', function () {
+    return view('test2');
+});

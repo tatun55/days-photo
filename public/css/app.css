@@ -140,12 +140,49 @@ main {
 
 /* ブランドロゴ */
 .brand-name {
-    font-size: 1.4rem;
-    font-weight: 500;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-left: .4rem;
+    margin-top: .8rem;
 }
 
+/* テーブル調整 */
 @media (max-width: 768px) {
-    .brand-name {
-        font-size: 1.6rem;
+
+    .table,
+    .table td,
+    .table th {
+        border-collapse: collapse;
+        text-align: center;
     }
+
+    .table th {
+        display: block;
+        width: 100%;
+        border: 0;
+        padding: 1.5rem 0.5rem .1rem;
+    }
+
+    .table td {
+        display: block;
+        width: 100%;
+        padding: 0 0.5rem 1.5rem;
+
+    }
+}
+
+/* リスト調整 */
+ol,
+ul {
+    padding-left: 1.2rem
+}
+
+ol li {
+    padding-bottom: .2rem;
+}
+
+/* トースト調整 */
+.toast {
+    /* max-width: 95%; */
+    margin: 0 8px;
 }

@@ -71,7 +71,7 @@
         <div class="row">
             <div class="col-md-12 parallax-fade-top">
                 <h5 class="text-center mt-22">いつか消えてしまう、あの写真も、ずっと残る。</h5>
-                <p class="lead text-center">『days.』は新しいタイプの <b>かんたんフォト管理</b> サービス<br>アルバムの <b>ワンクリック作成</b> や <b>ずっと残る保存</b> が無料でスグに</p>
+                <p class="lead text-center">『days.』は新しいタイプの<b>かんたんフォト管理</b>サービス<br><b>ずっと残る保存</b>が無料 & 部屋に飾れる<b>ミニアルバム</b>をスグに</p>
             </div>
         </div>
     </div>
@@ -296,7 +296,7 @@
                 <a class="px-2" href="{{ route('ld') }}" type="button">特定商取引法表示</a>
             </div>
             <div class="text-center mt-4">
-                <div class="brand mb-1"><small>2022 - ©</small> <a class="px-3 d-inline-block" href="https://days.photo">days. </a><small>かんたんフォト管理</small></div>
+                <div class="brand mb-1"><small>2022 - ©</small><a class="px-2 d-inline-block" href="https://days.photo">days.</a><small>かんたんフォト管理</small></div>
                 <div class="produce">produced by <a href="https://colorbox.tech">COLORBOX Inc.</a></div>
             </div>
         </div>

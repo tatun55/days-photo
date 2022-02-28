@@ -39,8 +39,7 @@ class MyTest extends Command
      */
     public function handle()
     {
-        $filePath = storage_path('image_from_user.json');
-        $json = file_get_contents($filePath);
-        $data = json_decode($json, true);
+        $dir_list = \Storage::disk('s3')->directories('/');
+        dump($dir_list);
     }
 }

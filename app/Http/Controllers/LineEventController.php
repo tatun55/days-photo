@@ -126,6 +126,11 @@ class LineEventController extends Controller
                 break;
         }
 
+        $this->replyForSavedImage($replyToken, $message, $albumId);
+
+        // $bot = $this->initBot();
+        // $bot->replyText($replyToken, $message);
+
         // update Album 
         $album = Album::find($albumId);
         $album->status = 'uploading';
@@ -147,11 +152,49 @@ class LineEventController extends Controller
                 $album->save();
             })->catch(function (Batch $batch, Throwable $e) {
                 Log::error($e->getMessage());
-            })->finally(function (Batch $batch) use ($replyToken, $message) {
-                $httpClient = new CurlHTTPClient(config('services.line.messaging_api.access_token'));
-                $bot = new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
-                $bot->replyText($replyToken, $message);
+            })->finally(function (Batch $batch) {
             })->dispatch();
+    }
+
+    public function replyForSavedImage($replyToken, $message, $albumId)
+    {
+        $bot = $this->initBot();
+        $array = [
+            'type' => 'text',
+            'text' => $message,
+            'quickReply' => [
+                'items' => [
+                    [
+                        'type' => 'action',
+                        'action' => [
+                            'type' => 'postback',
+                            'label' => '📓 部屋に飾れるミニアルバム化',
+                            'data' => "action=album&id={$albumId}",
+                            'text' => "ミニアルバム",
+                        ]
+                    ],
+                    [
+                        'type' => 'action',
+                        'action' => [
+                            'type' => 'uri',
+                            'label' => '🌐 サイトでみる',
+                            'uri' => route('albums.show', $albumId),
+                        ]
+                    ],
+                    [
+                        'type' => 'action',
+                        'action' => [
+                            'type' => 'postback',
+                            'label' => '✖️ なにもしない',
+                            'data' => "action=nothing&id={$albumId}",
+                            'text' => "なにもしない",
+                        ]
+                    ],
+                ]
+            ]
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $bot->replyMessage($replyToken, $rawMessage);
     }
 
     public function accountLinked($event)
@@ -288,7 +331,7 @@ class LineEventController extends Controller
     {
         $bot = $this->initBot();
         $multiMessage = new MultiMessageBuilder();
-        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの 'かんたんフォト管理サービス' 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nただし、グループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
+        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nグループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
         $multiMessage->add(new TextMessageBuilder('https://lin.ee/O6NF5rk'));
         $bot->replyMessage($event->replyToken, $multiMessage);
 

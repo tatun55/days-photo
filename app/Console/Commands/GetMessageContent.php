@@ -43,5 +43,8 @@ class GetMessageContent extends Command
         $bot = new LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
         $response = $bot->getMessageContent('15614895789526');
         dump($response->getHeaders());
+        $body = $response->getRawBody();
+        $image = \Image::make($body);
+        dump($image->exif());
     }
 }

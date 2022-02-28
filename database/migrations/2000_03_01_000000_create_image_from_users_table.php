@@ -18,7 +18,9 @@ class CreateImageFromUsersTable extends Migration
             $table->string('album_id', 36)->index();
             $table->string('line_user_id', 36)->index();
             $table->string('message_id', 36);
-            $table->unsignedSmallInteger('index');
+            $table->unsignedTinyInteger('index');
+            $table->unsignedSmallInteger('width')->nullable();
+            $table->unsignedSmallInteger('height')->nullable();
             $table->timestamps();
         });
     }
