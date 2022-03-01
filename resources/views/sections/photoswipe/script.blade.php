@@ -29,13 +29,80 @@
         }
     });
 
-    lightbox.init();
-
-    document.querySelectorAll('.item').forEach(elem => {
-        elem.addEventListener('click', e => {
-            let i = e.target.getAttribute('data-index') - 1;
-            lightbox.loadAndOpen(i);
-        });
+    // custumize button
+    lightbox.on('uiRegister', function() {
+        let nextBtnElem = {
+            name: 'next-button',
+            order: 9,
+            isButton: true,
+            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-right text-white h3 m-0 me-6"></span></button>`,
+            onClick: (event, el) => {
+                lightbox.pswp.next();
+            }
+        };
+        let prevBtnElem = {
+            name: 'prev-button',
+            order: 5,
+            isButton: true,
+            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-left text-white h3 m-0 ms-4"></span></button>`,
+            onClick: (event, el) => {
+                lightbox.pswp.prev();
+            }
+        };
+        lightbox.pswp.ui.registerElement(nextBtnElem);
+        lightbox.pswp.ui.registerElement(prevBtnElem);
     });
 
+    lightbox.init();
+
+
+    var slideShowEvent = function (e) {
+        let i = e.target.getAttribute('data-index') - 1;
+        lightbox.loadAndOpen(i);
+    };
+    
+    function addSlideShowEvents() {
+        document.querySelectorAll('.item').forEach(elem => {
+            elem.addEventListener('click', slideShowEvent, false);
+        });
+    }
+
+    function removeSlideShowEvents() {
+        document.querySelectorAll('.item').forEach(elem => {
+            elem.removeEventListener('click', slideShowEvent, false);
+        });
+    }
+
+    addSlideShowEvents();
+
+    // item-menus
+    const selectBtn = document.querySelector('#select-btn');
+    const selectDesc = document.querySelector('#select-desc');
+    const cancelBtn = document.querySelector('#cancel-btn');
+    const moveBtn = document.querySelector('#move-btn');
+    const archiveBtn = document.querySelector('#archive-btn');
+    selectBtn.onclick = () => {
+        selectMode();
+    };
+    cancelBtn.onclick = () => {
+        normalMode();
+        addSlideShowEvents();
+    };
+
+    function selectMode() {
+        console.log('select mode');
+        selectBtn.classList.toggle('show');
+        selectDesc.classList.toggle('show');
+        cancelBtn.classList.toggle('show');
+        removeSlideShowEvents();
+        // moveBtn.classList.toggle('show');
+        // archiveBtn.classList.toggle('show');
+    }
+
+    function normalMode() {
+        console.log('normal mode');
+        selectBtn.classList.toggle('show');
+        selectDesc.classList.toggle('show');
+        cancelBtn.classList.toggle('show');
+    }
 </script>

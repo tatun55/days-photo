@@ -184,3 +184,39 @@ ol li {
     /* max-width: 95%; */
     margin: 0 8px;
 }
+
+/* スライドショー調整 */
+.pswp__top-bar {
+    top: unset;
+    bottom: 0;
+}
+
+.pswp__button--arrow--next,
+.pswp__button--arrow--prev,
+.pswp__button--zoom {
+    display: none !important;
+}
+
+/* 写真メニュー調整 */
+#item-menus .btn {
+    transition: opacity 1s;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.hide.show {
+    display: block;
+    animation: show .4s linear 0s;
+}

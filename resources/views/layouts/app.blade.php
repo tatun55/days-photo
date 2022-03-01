@@ -10,10 +10,10 @@
     <meta name="description" content="いつか消えてしまう、あの写真も、ずっと残る。 days.は新しいタイプの “かんたんフォト管理” サービス。30秒でアルバムが完成✅ 無料で印刷・郵送✅">
     <link type="text/css" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
     @isset($photoSwipe)
         <link rel="stylesheet" href="{{ asset('photoswipe/v5/photoswipe.css') }}" />
     @endisset
+    <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -59,6 +59,7 @@
             </div>
         </div>
     </footer>
+
     <!-- Core -->
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
     <script src="{{ asset('vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
