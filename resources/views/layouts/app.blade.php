@@ -12,8 +12,7 @@
     <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
     @isset($photoSwipe)
-        <link rel="stylesheet" href="{{ asset('photoswipe/photoswipe.css') }}">
-        <link rel="stylesheet" href="{{ asset('photoswipe/default-skin/default-skin.css') }}">
+        <link rel="stylesheet" href="{{ asset('photoswipe/v5/photoswipe.css') }}" />
     @endisset
 </head>
 
@@ -61,6 +60,7 @@
         </div>
     </footer>
     <!-- Core -->
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
     <script src="{{ asset('vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/headroom.js/dist/headroom.min.js') }}"></script>

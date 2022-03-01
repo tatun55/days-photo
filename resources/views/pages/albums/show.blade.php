@@ -3,9 +3,9 @@
 @section('content')
 <main>
     <div class="section section-lg pt-5 pt-md-6">
+
         <div class="container">
             <div class="row pt-4 pt-md-0">
-
                 <!--Breadcrumb-->
                 <nav class="ms-2 mb-0 mt-5" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
@@ -27,7 +27,7 @@
                             </a>
                             <div class="col col-lg-12">
                                 <div class="d-flex justify-content-between">
-                                    <h5 class="h5 m-0 me-2 p-0">{{ $album->title }}</h5>
+                                    <h5 class="h5 m-0 me-2 p-0 mt-lg-3">{{ $album->title }}</h5>
                                     <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0 d-lg-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
                                         <span class="sr-only">Toggle Dropdown</span>
@@ -53,19 +53,29 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-8 mt-4 mt-lg-0 pt-2">
+                <div class="col-12 col-lg-8 mt-4 mt-lg-0">
+                    {{-- タブメニュー --}}
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active"><span class="fas fa-images me-1"></span>フォト</a>
+                            <a class="nav-item nav-link"><span class="fas fa-trash me-1"></span>アーカイブ</a>
+                        </div>
+                    </nav>
+
+                    <div class="d-flex justify-content-end p-3">
+                        <div class="btn btn-primary select-btn">選択</div>
+                    </div>
+
                     <div class="row">
                         <div class="col-12">
                             <ul class="list-unstyled news-list d-flex flex-wrap">
                                 @foreach($album->images()->orderBy('index','asc')->get() as $image)
-                                    <li class="" style="width:33.3%; padding:0.5%;">
-                                        <a href="">
-                                            <div class="img-wrapper-1x1">
-                                                <div class="img-content">
-                                                    <img src="{{ \Storage::disk('s3')->url("/s/{$image->id}.jpg") }}">
-                                                </div>
+                                    <li class="item" style="width:33.3%; padding:0.5%;">
+                                        <div class="img-wrapper-1x1">
+                                            <div class="img-content">
+                                                <img data-index="{{ $image->index }}" src="{{ \Storage::disk('s3')->url("/s/{$image->id}.jpg") }}">
                                             </div>
-                                        </a>
+                                        </div>
                                     </li>
                                 @endforeach
                             </ul>
@@ -115,4 +125,11 @@
         </div>
     </div>
 </main>
+@endsection
+
+
+@section('script')
+<script type="module">
+
+</script>
 @endsection

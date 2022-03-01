@@ -59,8 +59,8 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <div class="d-flex justigy-content-between">
-                                                <h5 class="h5 m-0 me-2 p-0">{{ $album->title }}</h5>
+                                            <div class="d-flex justify-content-between">
+                                                <h5 class="h5 m-0 me-2 p-0 mt-lg-3">{{ $album->title }}</h5>
                                                 <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0 d-lg-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
                                                     <span class="sr-only">Toggle Dropdown</span>

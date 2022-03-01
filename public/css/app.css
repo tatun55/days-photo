@@ -19,8 +19,6 @@ body {
 
 .wrapper {
     min-height: 100%;
-
-    /* footerの高さで調整 */
     margin-bottom: -200px;
 }
 

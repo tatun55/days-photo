@@ -12,7 +12,8 @@ class AlbumController extends Controller
 {
     public function show(Album $album)
     {
-        return view('pages.albums.show', compact(['album']));
+        $items = $album->images()->get(['id', 'index', 'width', 'height'])->keyBy('index');
+        return view('pages.albums.show', compact(['album', 'items']));
     }
 
     public function title(Request $request, Album $album)

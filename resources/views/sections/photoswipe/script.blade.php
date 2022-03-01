@@ -1,26 +1,41 @@
-<script src="{{ asset('photoswipe/photoswipe.min.js') }}"></script>
-<script src="{{ asset('photoswipe/photoswipe-ui-default.min.js') }}"></script>
 <script type="module">
-    var pswpElement = document.querySelectorAll('.pswp')[0];
-    // build items array
-    var items = @json($album->images()->pluck('id'));
-    // var items = JSON.parse(itemsJson);
-    console.log(items);
-    var images = [];
-    items.forEach(item => {
-        console.log(`https://days-photo.s3.ap-northeast-1.amazonaws.com/${item}.jpg`);
-        images.push({src : `https://days-photo.s3.ap-northeast-1.amazonaws.com/${item}.jpg`});
+    import PhotoSwipeLightbox from '{{ asset('photoswipe/v5/photoswipe-lightbox.esm.js') }}';
+
+    const items = @json($items);
+    const url = 'https://days-photo.s3.ap-northeast-1.amazonaws.com';
+    const options = {
+        showHideAnimationType: 'fade',
+        pswpModule: '{{ asset('photoswipe/v5/photoswipe.esm.js') }}',
+        preload: [1,2]
+    };
+    const lightbox = new PhotoSwipeLightbox(options);
+
+    // total count of items
+    lightbox.on('numItems', (e) => {
+        e.numItems = Object.keys(items).length;
     });
 
-    console.log(images);
+    // generate data event
+    lightbox.on('itemData', (e) => {
+        let index = e.index + 1;
+        let id = items[index].id;
+        let width = items[index]["width"];
+        let height = items[index]["height"];
+        e.itemData = {
+            src: `${url}/l/${id}.jpg`, // biggest size one
+            srcset: `${url}/l/${id}.jpg 1600w, ${url}/m/${id}.jpg 960w`,
+            w: width,
+            h: height
+        }
+    });
 
-    // define options (if needed)
-    var options = {
-        // optionName: 'option value'
-        // for example:
-        index: 0 // start at first slide
-    };
-    // Initializes and opens PhotoSwipe
-    var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-    gallery.init();
+    lightbox.init();
+
+    document.querySelectorAll('.item').forEach(elem => {
+        elem.addEventListener('click', e => {
+            let i = e.target.getAttribute('data-index') - 1;
+            lightbox.loadAndOpen(i);
+        });
+    });
+
 </script>
