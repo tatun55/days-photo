@@ -5,7 +5,7 @@
     <div class="section section-lg pt-5 pt-md-6">
         <div class="container">
             <div class="row pt-4 pt-md-0">
-                <div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-2">
+                <div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-3">
                     <div class="card border-gray-300 px-3 py-2">
                         <div class="card-header bg-white border-0 text-center d-flex flex-row flex-lg-column align-items-center justify-content-between justify-lg-content-center px-1 px-lg-4">
                             <div class="d-flex justyfy-content-between d-lg-inline flex-row align-items-center">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-8 mt-4 mt-lg-0 pt-2">
+                <div class="col-12 col-lg-8 mt-4 mt-lg-0">
 
                     {{-- タブメニュー --}}
                     <nav>

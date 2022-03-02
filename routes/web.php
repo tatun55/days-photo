@@ -23,13 +23,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('albums/{album}/force', [AlbumController::class, 'forceDelete'])->withTrashed()->name('albums.delete.force');
     Route::put('albums/{album}/title', [AlbumController::class, 'title'])->name('albums.title');
 
+    Route::delete('albums/{album}/photos', [AlbumController::class, 'photosDelete'])->name('albums.photos.delete');
+
     Route::get('trashbox', [TrashController::class, 'index'])->name('trashbox');
 });
 
 Route::get('pp', [HomeController::class, 'pp'])->name('pp');
 Route::get('terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('ld', [HomeController::class, 'ld'])->name('ld');
-
-Route::get('photoswipe/test', function () {
-    return view('photoswipe.test');
-});

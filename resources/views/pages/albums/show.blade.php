@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row pt-4 pt-md-0">
                 <!--Breadcrumb-->
-                <nav class="ms-2 mb-0 mt-5" aria-label="breadcrumb">
+                <nav class="ms-2 mb-0 mt-4" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}"><span class="fas fa-home"></span></span> ホーム</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $album->title }}</li>
@@ -14,7 +14,7 @@
                 </nav>
                 <!--End of Breadcrumb-->
 
-                <div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-2">
+                <div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-3">
                     <div class="list-unstyled news-list">
                         <li class="row">
                             <a href="{{ route('albums.show',$album->id) }}" class="col-4 col-lg-12">
@@ -61,31 +61,36 @@
                         </div>
                     </nav>
 
-                    <div id="item-menus" class="d-flex p-3 position-sticky bg-white" style="z-index: 999;top:0">
-                        <div id="left-btns" class="d-flex justify-content-start w-100">
-                            <div id="select-desc" class="form-control-plaintext w-auto mx-2 hide"><span class="fas fa-info-circle me-1"></span>写真を選択してください</div>
-                            <div id="move-btn" class="btn btn-secondary text-white mx-2 hide">移動</div>
-                            <div id="archive-btn" class="btn btn-secondary mx-2 text-white hide">アーカイブ</div>
+                    <form id="items-form" action="{{ route('albums.photos.delete',$album->id) }}" method="post">
+                        @csrf
+                        @method('delete')
+                        <div id="item-menus" class="d-flex p-3 position-sticky bg-white" style="z-index: 999;top:0">
+                            <div id="left-btns" class="d-flex justify-content-start w-100">
+                                <div id="select-desc" class="form-control-plaintext w-auto mx-2 hide"><span class="fas fa-info-circle me-1"></span>写真を選択してください</div>
+                                <div id="move-btn" class="btn btn-secondary text-white mx-2 hide">移動</div>
+                                <button type="submit" id="archive-btn" class="btn btn-secondary mx-2 text-white hide">アーカイブ</button>
+                            </div>
+                            <div id="cancel-btn" class="btn btn-outline-primary w-auto flex-shrink-0 hide">キャンセル</div>
+                            <div id="select-btn" class="btn btn-primary flex-shrink-0 hide show">選択</div>
                         </div>
-                        <div id="cancel-btn" class="btn btn-outline-primary w-auto flex-shrink-0 hide">キャンセル</div>
-                        <div id="select-btn" class="btn btn-primary flex-shrink-0 hide show">選択</div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <ul class="list-unstyled news-list d-flex flex-wrap">
-                                @foreach($album->images()->orderBy('index','asc')->get() as $image)
-                                    <li class="item" style="width:33.3%; padding:0.5%;">
-                                        <div class="img-wrapper-1x1">
-                                            <div class="img-content">
-                                                <img data-index="{{ $image->index }}" src="{{ \Storage::disk('s3')->url("/s/{$image->id}.jpg") }}">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="list-unstyled news-list d-flex flex-wrap">
+                                    @foreach($album->images()->orderBy('index','asc')->get() as $image)
+                                        <li class="item" style="width:33.3%; padding:0.5%;">
+                                            <div class="img-wrapper-1x1">
+                                                <label class="img-content">
+                                                    <input name="items[]" type="checkbox" value="{{ $image->index }}" class="hidden-checkbox" disabled><span></span>
+                                                    <img data-index="{{ $image->index }}" src="{{ \Storage::disk('s3')->url("/s/{$image->id}.jpg") }}">
+                                                </label>
                                             </div>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 

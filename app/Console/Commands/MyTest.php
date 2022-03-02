@@ -39,7 +39,14 @@ class MyTest extends Command
      */
     public function handle()
     {
-        $dir_list = \Storage::disk('s3')->directories('/');
-        dump($dir_list);
+        $count = ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->count();
+        $array = [];
+        for ($i = 1; $i <= $count; $i++) {
+            $array[] = ['index' => $i];
+        }
+        ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->orderBy('index', 'asc')->updateBulk($array);
+        // dump(range(1, ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->count()));
+        // dump(ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->count());
+        dump(ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->orderBy('index', 'asc')->pluck('index'));
     }
 }

@@ -1,21 +1,21 @@
-<script type="module">
-    import PhotoSwipeLightbox from '{{ asset('photoswipe/v5/photoswipe-lightbox.esm.js') }}';
+<script type="module">import PhotoSwipeLightbox from '{{ asset('photoswipe/v5/photoswipe-lightbox.esm.js') }}';
 
-    const items = @json($items);
-    const url = 'https://days-photo.s3.ap-northeast-1.amazonaws.com';
-    const options = {
-        showHideAnimationType: 'fade',
-        pswpModule: '{{ asset('photoswipe/v5/photoswipe.esm.js') }}',
-        preload: [1,2]
-    };
-    const lightbox = new PhotoSwipeLightbox(options);
+const items=@json($items);
+const url='https://days-photo.s3.ap-northeast-1.amazonaws.com';
 
-    // total count of items
-    lightbox.on('numItems', (e) => {
-        e.numItems = Object.keys(items).length;
-    });
+const options= {
+    showHideAnimationType: 'fade',
+    pswpModule: '{{ asset('photoswipe/v5/photoswipe.esm.js') }}',
+    preload: [1, 2]
+};
+const lightbox=new PhotoSwipeLightbox(options);
 
-    // generate data event
+// total count of items
+lightbox.on('numItems', (e)=> {
+    e.numItems=Object.keys(items).length;
+});
+
+// generate data event
     lightbox.on('itemData', (e) => {
         let index = e.index + 1;
         let id = items[index].id;
@@ -27,82 +27,135 @@
             w: width,
             h: height
         }
-    });
+    }
 
-    // custumize button
-    lightbox.on('uiRegister', function() {
-        let nextBtnElem = {
+);
+
+// custumize button
+lightbox.on('uiRegister', function() {
+        let nextBtnElem= {
             name: 'next-button',
             order: 9,
             isButton: true,
-            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-right text-white h3 m-0 me-6"></span></button>`,
-            onClick: (event, el) => {
+            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-right text-white text-white-shadow h1 m-0 me-6"></span></button>`,
+            onClick: (event, el)=> {
                 lightbox.pswp.next();
             }
         };
-        let prevBtnElem = {
+
+        let prevBtnElem= {
             name: 'prev-button',
             order: 5,
             isButton: true,
-            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-left text-white h3 m-0 ms-4"></span></button>`,
-            onClick: (event, el) => {
+            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-left text-white text-white-shadow h1 m-0 ms-4"></span></button>`,
+            onClick: (event, el)=> {
                 lightbox.pswp.prev();
             }
         };
         lightbox.pswp.ui.registerElement(nextBtnElem);
         lightbox.pswp.ui.registerElement(prevBtnElem);
+    }
+);
+
+lightbox.init();
+
+
+var slideShowEvent=function (e) {
+    let i=e.target.getAttribute('data-index') - 1;
+    lightbox.loadAndOpen(i);
+};
+
+function addSlideShowEvents() {
+    document.querySelectorAll('.item').forEach(elem=> {
+        elem.addEventListener('click', slideShowEvent, false);
     });
+}
 
-    lightbox.init();
+function removeSlideShowEvents() {
+    document.querySelectorAll('.item').forEach(elem=> {
+        elem.removeEventListener('click', slideShowEvent, false);
+    });
+}
 
+addSlideShowEvents();
 
-    var slideShowEvent = function (e) {
-        let i = e.target.getAttribute('data-index') - 1;
-        lightbox.loadAndOpen(i);
-    };
-    
-    function addSlideShowEvents() {
-        document.querySelectorAll('.item').forEach(elem => {
-            elem.addEventListener('click', slideShowEvent, false);
-        });
-    }
+// item-menus
+const selectBtn=document.querySelector('#select-btn');
+const selectDesc=document.querySelector('#select-desc');
+const cancelBtn=document.querySelector('#cancel-btn');
+const moveBtn=document.querySelector('#move-btn');
+const archiveBtn=document.querySelector('#archive-btn');
 
-    function removeSlideShowEvents() {
-        document.querySelectorAll('.item').forEach(elem => {
-            elem.removeEventListener('click', slideShowEvent, false);
-        });
-    }
+selectBtn.onclick=()=> {
+    selectMode();
+};
 
+cancelBtn.onclick=()=> {
+    normalMode();
     addSlideShowEvents();
+};
 
-    // item-menus
-    const selectBtn = document.querySelector('#select-btn');
-    const selectDesc = document.querySelector('#select-desc');
-    const cancelBtn = document.querySelector('#cancel-btn');
-    const moveBtn = document.querySelector('#move-btn');
-    const archiveBtn = document.querySelector('#archive-btn');
-    selectBtn.onclick = () => {
-        selectMode();
-    };
-    cancelBtn.onclick = () => {
-        normalMode();
-        addSlideShowEvents();
-    };
+function selectMode() {
+    console.log('select mode');
+    selectBtn.classList.remove('show');
+    selectDesc.classList.add('show');
+    cancelBtn.classList.add('show');
+    removeSlideShowEvents();
+    document.querySelectorAll('form#items-form input[name="items[]"]').forEach(elem=> {
+        // var itemIndex=elem.querySelector('img').getAttribute('data-index');
+        // var checkbox=document.createElement('input');
+        // checkbox.name='items';
+        // checkbox.type='checkbox';
+        // checkbox.value=itemIndex;
+        // checkbox.classList.add('hidden-checkbox');
+        // elem.prepend(checkbox);
+        elem.removeAttribute('disabled');
+        elem.addEventListener("change", isAnyCheckboxChecked, false);
+    });
+}
 
-    function selectMode() {
-        console.log('select mode');
-        selectBtn.classList.toggle('show');
-        selectDesc.classList.toggle('show');
-        cancelBtn.classList.toggle('show');
-        removeSlideShowEvents();
-        // moveBtn.classList.toggle('show');
-        // archiveBtn.classList.toggle('show');
+function isAnyCheckboxChecked() {
+    var flag = false;
+    var itemInputs=document.querySelectorAll('form#items-form input[name="items[]"]');
+    for(let itemInput of itemInputs) {
+        if(itemInput.checked) {
+            console.log('there is checked one.');
+            if(selectDesc.classList.contains('show')) {
+                afterSelected();
+            };
+            flag = true;
+            return;
+        }
     }
-
-    function normalMode() {
-        console.log('normal mode');
-        selectBtn.classList.toggle('show');
-        selectDesc.classList.toggle('show');
-        cancelBtn.classList.toggle('show');
+    if(!flag) {
+        noItemIsSelected();
     }
+}
+
+function afterSelected() {
+    selectDesc.classList.remove('show');
+    moveBtn.classList.add('show');
+    archiveBtn.classList.add('show');
+}
+
+function noItemIsSelected() {
+    selectDesc.classList.add('show');
+    moveBtn.classList.remove('show');
+    archiveBtn.classList.remove('show');
+}
+
+function normalMode() {
+    console.log('normal mode');
+    selectBtn.classList.add('show');
+    selectDesc.classList.remove('show');
+    cancelBtn.classList.remove('show');
+    moveBtn.classList.remove('show');
+    archiveBtn.classList.remove('show');
+    document.querySelectorAll('form#items-form input[name="items[]"]').forEach(elem=> {
+        elem.checked = false;
+        elem.setAttribute('disabled','');
+        elem.removeEventListener("change", isAnyCheckboxChecked, false)
+    });
+}
+
 </script>

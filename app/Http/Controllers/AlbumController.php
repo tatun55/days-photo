@@ -40,4 +40,11 @@ class AlbumController extends Controller
         $album->restore();
         return redirect('home')->with('status', 'アルバムを元に戻しました');
     }
+
+    public function photosDelete(Request $request, Album $album)
+    {
+        // dd($request->items);
+        $album->images()->whereIn('index', $request->items)->delete();
+        return back()->with('status', '写真をアーカイブに移動しました');
+    }
 }

@@ -1,7 +1,7 @@
 <div class="section mt-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" style="font-size: 1rem">
                 @guest
                     <div class="d-md-flex d-block justify-content-center align-items-center">
                         <div class="text-center">

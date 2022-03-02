@@ -71,7 +71,7 @@
         <div class="row">
             <div class="col-md-12 parallax-fade-top">
                 <h5 class="text-center mt-22">いつか消えてしまう、あの写真も、ずっと残る。</h5>
-                <p class="lead text-center">『days.』は新しいタイプの<b>かんたんフォト管理</b>サービス<br><b>ずっと残る保存</b>が無料 & 部屋に飾れる<b>ミニアルバム</b>をスグに</p>
+                <p class="lead text-center">『days.』は新しいタイプの<b>かんたんフォト管理</b>サービス<br><b>ずっと残る保存</b>や<b>部屋に飾れるミニアルバム</b>がスグに</p>
             </div>
         </div>
     </div>
@@ -263,13 +263,13 @@
             <!-- /gridwrap -->
             <div class="content mb-5">
                 <div class="content__item">
-                    <p class="lead">友だちに送った写真をカード型に自動変換<br>写真はポチッと無料印刷 / 郵送 / アルバム化👌</p>
+                    <p class="lead">友だちに送った写真を自動で保存<br>写真はポチッと無料印刷 / 郵送 / アルバム化👌</p>
                 </div>
                 <div class="content__item">
-                    <p class="lead">家族アルバムの作成にも days.（デイズ）<br>ぜったい忘れずに、定期的に自動でできるので安心👌</p>
+                    <p class="lead">家族アルバムの作成にも days.（デイズ）<br>ぜったい忘れずに、定期的に自動でできるので楽チン👌</p>
                 </div>
                 <div class="content__item">
-                    <p class="lead">恋人同士のLINEトークがそのまま記念アルバムに<br>オリジナルスクラップブックもOK👌</p>
+                    <p class="lead">恋人同士でシェアした画像がそのまま記念アルバムに<br>オンラインに <b>“ずっと残る保存”</b> も可👌</p>
                 </div>
                 <div class="content__item">
                     <p class="lead">パーソナルなフォトダイアリーにも最適<br>手作りスクラップブックも簡単👌</p>
@@ -278,16 +278,7 @@
         </div>
         <!-- /page -->
     </main>
-
     @include('sections.qrcode')
-
-    {{-- <div class="container padding-top padding-bottom">
-        <div class="row">
-            <div class="col-md-12 footer">
-                <p>2022 © <a href="https://colorbox.tech">COLORBOX Inc.</a></p>
-            </div>
-        </div>
-    </div> --}}
     <footer class="footer pt-5 pb-5 bg-white text-gray">
         <div class="container">
             <div class="d-flex justify-content-center text-center">
