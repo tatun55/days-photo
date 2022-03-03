@@ -1,4 +1,6 @@
-<script type="module">import PhotoSwipeLightbox from '{{ asset('photoswipe/v5/photoswipe-lightbox.esm.js') }}';
+<script type="module">
+
+    import PhotoSwipeLightbox from '{{ asset('photoswipe/v5/photoswipe-lightbox.esm.js') }}';
 
 const items=@json($items);
 const url='https://days-photo.s3.ap-northeast-1.amazonaws.com';
@@ -61,7 +63,7 @@ lightbox.init();
 
 
 var slideShowEvent=function (e) {
-    let i=e.target.getAttribute('data-index') - 1;
+    let i = e.target.querySelector('img').getAttribute('data-index') - 1;
     lightbox.loadAndOpen(i);
 };
 
