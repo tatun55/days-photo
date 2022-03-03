@@ -237,7 +237,7 @@ ol li {
 
 .hidden-checkbox+span::before {
     position: absolute;
-    z-index: 9999;
+    z-index: 99;
     font-weight: 900;
     font-family: "Font Awesome 5 Free";
     content: '\f058';

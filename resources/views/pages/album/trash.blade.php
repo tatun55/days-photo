@@ -69,7 +69,8 @@
                             <div id="left-btns" class="d-flex justify-content-start w-100">
                                 <div id="select-desc" class="form-control-plaintext w-auto mx-2 hide"><span class="fas fa-info-circle me-1"></span>写真を選択してください</div>
                                 <input type="submit" id="move-btn" name="action_restore" class="btn btn-primary mx-2 text-white hide" value="元に戻す">
-                                <input type="submit" id="archive-btn" name="action_destroy" class="btn btn-danger mx-2 text-white hide" value="完全削除">
+                                <input type="submit" id="action-destroy-btn" name="action_destroy" class="d-none">
+                                <button id="archive-btn" type="button" class="btn btn-danger mx-2 text-white hide" data-bs-toggle="modal" data-bs-target="#modal-destroy">完全削除</button>
                             </div>
                             <div id="cancel-btn" class="btn btn-outline-primary w-auto flex-shrink-0 hide">キャンセル</div>
                             <div id="select-btn" class="btn btn-primary flex-shrink-0 hide show">選択</div>
@@ -133,7 +134,34 @@
                 </div>
             </div>
 
+
         </div>
     </div>
+
+    <div class="modal fade" id="modal-destroy" tabindex="-1" role="dialog" aria-labelledby="modal-destroy" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="h6 modal-title">写真を完全に削除しますか？</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-action-destroy-btn" class="btn btn-danger text-white">完全に削除</button>
+                    <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
+@endsection
+
+@section('script')
+<script type="module">
+    var actionDestroyBtn = document.querySelector('#action-destroy-btn');
+    var modalActionDestroyBtn = document.querySelector('#modal-action-destroy-btn');
+    modalActionDestroyBtn.addEventListener( 'click', function () {
+        actionDestroyBtn.click();
+    }, false );
+</script>
 @endsection

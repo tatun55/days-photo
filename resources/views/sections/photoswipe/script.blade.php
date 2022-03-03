@@ -1,5 +1,4 @@
 <script type="module">
-
     import PhotoSwipeLightbox from '{{ asset('photoswipe/v5/photoswipe-lightbox.esm.js') }}';
 
 const items=@json($items);
@@ -18,20 +17,18 @@ lightbox.on('numItems', (e)=> {
 });
 
 // generate data event
-    lightbox.on('itemData', (e) => {
-        let index = e.index + 1;
-        let id = items[index].id;
-        let width = items[index]["width"];
-        let height = items[index]["height"];
-        e.itemData = {
-            src: `${url}/l/${id}.jpg`, // biggest size one
-            srcset: `${url}/l/${id}.jpg 1600w, ${url}/m/${id}.jpg 960w`,
-            w: width,
-            h: height
-        }
-    }
-
-);
+lightbox.on('itemData', (e) => {
+    let index = e.index + 1;
+    let id = items[index].id;
+    let width = items[index]["width"];
+    let height = items[index]["height"];
+    e.itemData = {
+        src: `${url}/l/${id}.jpg`, // biggest size one
+        srcset: `${url}/l/${id}.jpg 1600w, ${url}/m/${id}.jpg 960w`,
+        w: width,
+        h: height
+    };
+});
 
 // custumize button
 lightbox.on('uiRegister', function() {
