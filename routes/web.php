@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TrashController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('albums/{album}/force', [AlbumController::class, 'forceDelete'])->withTrashed()->name('albums.delete.force');
     Route::put('albums/{album}/title', [AlbumController::class, 'title'])->name('albums.title');
 
-    Route::delete('albums/{album}/photos', [AlbumController::class, 'photosDelete'])->name('albums.photos.delete');
+    Route::delete('albums/{album}/photos', [PhotoController::class, 'delete'])->name('albums.photos.delete');
+    Route::delete('albums/{album}/trashbox', [PhotoController::class, 'trashbox'])->name('albums.photos.trashbox');
 
     Route::get('trashbox', [TrashController::class, 'index'])->name('trashbox');
 });
