@@ -67,8 +67,8 @@
                         <div id="item-menus" class="d-flex p-3 position-sticky bg-white" style="z-index: 999;top:0">
                             <div id="left-btns" class="d-flex justify-content-start w-100">
                                 <div id="select-desc" class="form-control-plaintext w-auto mx-2 hide"><span class="fas fa-info-circle me-1"></span>写真を選択してください</div>
-                                <div id="move-btn" class="btn btn-secondary text-white mx-2 hide">移動</div>
-                                <button type="submit" id="archive-btn" class="btn btn-secondary mx-2 text-white hide">アーカイブ</button>
+                                <div id="move-btn" class="btn btn-primary text-white mx-2 hide">移動</div>
+                                <button type="submit" id="archive-btn" class="btn btn-primary mx-2 text-white hide">アーカイブ</button>
                             </div>
                             <div id="cancel-btn" class="btn btn-outline-primary w-auto flex-shrink-0 hide">キャンセル</div>
                             <div id="select-btn" class="btn btn-primary flex-shrink-0 hide show">選択</div>

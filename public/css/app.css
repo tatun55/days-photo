@@ -241,7 +241,7 @@ ol li {
     font-weight: 900;
     font-family: "Font Awesome 5 Free";
     content: '\f058';
-    color: #6dc234;
+    color: #000;
     bottom: 4%;
     right: 12%;
     font-size: 1.6rem;
@@ -251,6 +251,10 @@ ol li {
 
 .hidden-checkbox:checked+span:before {
     display: block;
+}
+
+.hidden-checkbox:checked+span+img {
+    opacity: 0.5;
 }
 
 .item label {
