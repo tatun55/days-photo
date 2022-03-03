@@ -5,6 +5,7 @@
     <div class="section section-lg pt-5 pt-md-6">
         <div class="container">
             <div class="row pt-4 pt-md-0">
+
                 <!--Breadcrumb-->
                 <nav class="ms-2 mb-0 mt-4" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
@@ -57,18 +58,18 @@
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active"><span class="fas fa-images me-1"></span>フォト</a>
-                            <a class="nav-item nav-link"><span class="fas fa-trash me-1"></span>アーカイブ</a>
+                            <a href="{{ route('albums.photos.trashbox',$album->id) }}" class="nav-item nav-link"><span class="fas fa-trash me-1"></span>アーカイブ</a>
                         </div>
                     </nav>
 
-                    <form id="items-form" action="{{ route('albums.photos.delete',$album->id) }}" method="post">
+                    <form id="items-form" action="{{ route('albums.photos.action',$album->id) }}" method="post">
                         @csrf
-                        @method('delete')
+                        @method('put')
                         <div id="item-menus" class="d-flex p-3 position-sticky bg-white" style="z-index: 999;top:0">
                             <div id="left-btns" class="d-flex justify-content-start w-100">
                                 <div id="select-desc" class="form-control-plaintext w-auto mx-2 hide"><span class="fas fa-info-circle me-1"></span>写真を選択してください</div>
                                 <div id="move-btn" class="btn btn-primary text-white mx-2 hide">移動</div>
-                                <button type="submit" id="archive-btn" class="btn btn-primary mx-2 text-white hide">アーカイブ</button>
+                                <input type="submit" id="archive-btn" name="action_delete" class="btn btn-primary mx-2 text-white hide" value="アーカイブ">
                             </div>
                             <div id="cancel-btn" class="btn btn-outline-primary w-auto flex-shrink-0 hide">キャンセル</div>
                             <div id="select-btn" class="btn btn-primary flex-shrink-0 hide show">選択</div>

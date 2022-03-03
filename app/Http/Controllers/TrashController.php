@@ -11,6 +11,6 @@ class TrashController extends Controller
     public function index(Album $album)
     {
         $trashedAlbums = Album::where('line_user_id', Auth::user()->id)->orderBy('deleted_at', 'desc')->onlyTrashed()->withCount('images')->get();
-        return view('pages.trashes.index', compact('trashedAlbums'));
+        return view('pages.trash.index', compact('trashedAlbums'));
     }
 }
