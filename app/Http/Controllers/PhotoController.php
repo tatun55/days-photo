@@ -16,7 +16,8 @@ class PhotoController extends Controller
                 $this->delete($request, $album);
                 return back()->with('status', '写真をアーカイブに移動しました');
             case $request->has('action_destroy'):
-                return 'destory';
+                $album->images()->onlyTrashed()->whereIn('index', $request->items)->forceDelete();
+                return back()->with('status', '写真を削除しました');
             case $request->has('action_move'):
                 return 'move';
             case $request->has('action_restore'):
