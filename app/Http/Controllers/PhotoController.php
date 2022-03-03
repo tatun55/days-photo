@@ -16,7 +16,7 @@ class PhotoController extends Controller
                 $this->delete($request, $album);
                 return back()->with('status', '写真をアーカイブに移動しました');
             case $request->has('action_destroy'):
-                $album->images()->onlyTrashed()->whereIn('index', $request->items)->forceDelete();
+                $this->destroy($request, $album);
                 return back()->with('status', '写真を削除しました');
             case $request->has('action_move'):
                 return 'move';
@@ -24,6 +24,30 @@ class PhotoController extends Controller
                 $this->restore($request, $album);
                 return back()->with('status', '写真を元に戻しました');
         }
+    }
+
+    private function destroy(Request $request, Album $album)
+    {
+        $album->images()->onlyTrashed()->whereIn('index', $request->items)->forceDelete();
+        $images = $album->images()->onlyTrashed()->orderBy('index', 'asc')->get();
+        if (!$images->isEmpty()) {
+            $this->reIndexing($images->toArray());
+        }
+    }
+
+    private function reIndexing($images)
+    {
+        $arrayToReIndexing = [];
+        foreach ($images as $key => $value) {
+            $merged = array_merge($value, [
+                'index' => $key + 1,
+                'deleted_at' => Carbon::create($value["deleted_at"])->toDateTimeString(),
+                'created_at' => Carbon::create($value["created_at"])->toDateTimeString(),
+                'updated_at' => Carbon::create($value["updated_at"])->toDateTimeString(),
+            ]);
+            $arrayToReIndexing[] = $merged;
+        }
+        ImageFromUser::upsert($arrayToReIndexing, 'id', ['index']);
     }
 
     private function delete(Request $request, Album $album)
