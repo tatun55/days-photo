@@ -19,6 +19,7 @@ class ImageFromUser extends Model
         'line_user_id',
         'message_id',
         'index',
+        'deleted_at',
         'created_at',
         'updated_at',
     ];

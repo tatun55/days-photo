@@ -40,16 +40,19 @@ class Upsert extends Command
      */
     public function handle()
     {
-        // $arr = ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->orderBy('index', 'asc')->get()->toArray();
-        $arr = ImageFromUser::orderBy('index', 'asc')->get()->toArray();
+
+
+
+        $arr = ImageFromUser::where('album_id', '9e5e6590-8aa9-416f-a447-ed244d759565')->orderBy('index', 'asc')->get()->toArray();
+        // $arr = ImageFromUser::orderBy('index', 'asc')->get()->toArray();
         // dd($arr);
         $newArr = [];
         $now = \Carbon\Carbon::now();
         foreach ($arr as $key => $value) {
-            $merged = array_merge($value, ['index' => $key + 1, 'created_at' => $now, 'updated_at' => $now]);
+            $merged = array_merge($value, ['index' => $key + 1, 'created_at' => \Carbon\Carbon::create($value["created_at"])->toDateTimeString(), 'updated_at' => $now]);
             $newArr[] = $merged;
         }
-        // dd($newArr);
+        dd($newArr);
         DB::table('image_from_users')->upsert($newArr, ['id'], ['index']);
         // ImageFromUser::upsert($newArr, 'id', ['index']);
         // $res = ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->orderBy('index', 'asc')->get(['id', 'index'])->toArray();

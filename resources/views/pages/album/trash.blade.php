@@ -64,12 +64,12 @@
 
                     <form id="items-form" action="{{ route('albums.photos.action',$album->id) }}" method="post">
                         @csrf
-                        @method('delete')
+                        @method('put')
                         <div id="item-menus" class="d-flex p-3 position-sticky bg-white" style="z-index: 999;top:0">
                             <div id="left-btns" class="d-flex justify-content-start w-100">
                                 <div id="select-desc" class="form-control-plaintext w-auto mx-2 hide"><span class="fas fa-info-circle me-1"></span>写真を選択してください</div>
-                                <div id="restore-btn" class="btn btn-primary text-white mx-2 hide">元に戻す</div>
-                                <button type="submit" id="delete-btn" class="btn btn-danger mx-2 text-white hide">完全削除</button>
+                                <input type="submit" id="move-btn" name="action_restore" class="btn btn-primary mx-2 text-white hide" value="元に戻す">
+                                <input type="submit" id="archive-btn" name="action_destroy" class="btn btn-danger mx-2 text-white hide" value="完全削除">
                             </div>
                             <div id="cancel-btn" class="btn btn-outline-primary w-auto flex-shrink-0 hide">キャンセル</div>
                             <div id="select-btn" class="btn btn-primary flex-shrink-0 hide show">選択</div>

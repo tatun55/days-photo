@@ -13,31 +13,98 @@ class PhotoController extends Controller
     {
         switch (true) {
             case $request->has('action_delete'):
-                $album->images()->whereIn('index', $request->items)->delete();
-                $this->reIndexing($album);
+                $this->delete($request, $album);
                 return back()->with('status', '写真をアーカイブに移動しました');
             case $request->has('action_destroy'):
-                # code...
-                break;
+                return 'destory';
             case $request->has('action_move'):
-                # code...
-                break;
+                return 'move';
             case $request->has('action_restore'):
-                # code...
-                break;
+                $this->restore($request, $album);
+                return back()->with('status', '写真を元に戻しました');
         }
     }
 
-    private function reIndexing(Album $album)
+    private function delete(Request $request, Album $album)
     {
-        $arr = $album->images()->orderBy('index', 'asc')->get()->toArray();
-        $newArr = [];
-        $now = Carbon::now();
-        foreach ($arr as $key => $value) {
-            $merged = array_merge($value, ['index' => $key + 1, 'created_at' => $now, 'updated_at' => $now]);
-            $newArr[] = $merged;
+        $arrayToDelete = [];
+        $arrayNotToDelete = [];
+
+        $countNotToDelete = 0;
+        $countToDelete = 0;
+        $count = 0;
+
+        $now = Carbon::now()->toDateTimeString();
+
+        // Generate $arrayToDelete
+        $count = $album->images()->onlyTrashed()->count();
+        $imagesToDelete = $album->images()->orderBy('index', 'asc')->whereIn('index', $request->items)->get()->toArray();
+        foreach ($imagesToDelete as $key => $value) {
+            $merged = array_merge($value, [
+                'index' => $key + 1 + $count,
+                'deleted_at' => $now,
+                'created_at' => Carbon::create($value["created_at"])->toDateTimeString(),
+                'updated_at' => Carbon::create($value["updated_at"])->toDateTimeString(),
+            ]);
+            $arrayToDelete[] = $merged;
         }
-        ImageFromUser::upsert($newArr, 'id', ['index']);
+
+        // Generate $arrayNotToDelete
+        $imagesNotToDelete = $album->images()->orderBy('index', 'asc')->whereNotIn('index', $request->items)->get()->toArray();
+        foreach ($imagesNotToDelete as $key => $value) {
+            $merged = array_merge($value, [
+                'index' => $key + 1,
+                'deleted_at' => null,
+                'created_at' => Carbon::create($value["created_at"])->toDateTimeString(),
+                'updated_at' => Carbon::create($value["updated_at"])->toDateTimeString(),
+            ]);
+            $arrayNotToDelete[] = $merged;
+        }
+
+        $arrayMerged = array_merge($arrayToDelete, $arrayNotToDelete);
+
+        ImageFromUser::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
+    }
+
+    private function restore(Request $request, Album $album)
+    {
+        $arrayToRestore = [];
+        $arrayNotToRestore = [];
+
+        $countNotToRestore = 0;
+        $countToRestore = 0;
+        $count = 0;
+
+        $now = Carbon::now()->toDateTimeString();
+
+        // Generate $arrayToRestore
+        $count = $album->images()->count();
+        $imagesToRestore = $album->images()->onlyTrashed()->orderBy('deleted_at', 'desc')->whereIn('index', $request->items)->get()->toArray();
+        foreach ($imagesToRestore as $key => $value) {
+            $merged = array_merge($value, [
+                'index' => $key + 1 + $count,
+                'deleted_at' => null,
+                'created_at' => Carbon::create($value["created_at"])->toDateTimeString(),
+                'updated_at' => Carbon::create($value["updated_at"])->toDateTimeString(),
+            ]);
+            $arrayToRestore[] = $merged;
+        }
+
+        // Generate $arrayNotToRestore
+        $imagesNotToRestore = $album->images()->onlyTrashed()->orderBy('deleted_at', 'desc')->whereNotIn('index', $request->items)->get()->toArray();
+        foreach ($imagesNotToRestore as $key => $value) {
+            $merged = array_merge($value, [
+                'index' => $key + 1,
+                'deleted_at' => Carbon::create($value["created_at"])->toDateTimeString(),
+                'created_at' => Carbon::create($value["created_at"])->toDateTimeString(),
+                'updated_at' => Carbon::create($value["updated_at"])->toDateTimeString(),
+            ]);
+            $arrayNotToRestore[] = $merged;
+        }
+
+        $arrayMerged = array_merge($arrayToRestore, $arrayNotToRestore);
+
+        ImageFromUser::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
     }
 
     public function trashbox(Album $album)
