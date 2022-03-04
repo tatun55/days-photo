@@ -135,6 +135,6 @@ class PhotoController extends Controller
     public function trashbox(Album $album)
     {
         $items = $album->images()->onlyTrashed()->get(['id', 'index', 'width', 'height'])->keyBy('index');
-        return view('pages.album.trash', compact('album', 'items'));
+        return view('pages.user.album.trash', compact('album', 'items'));
     }
 }

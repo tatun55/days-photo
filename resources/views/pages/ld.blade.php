@@ -2,19 +2,11 @@
 
 @section('content')
 <main>
-    <section class="section-header bg-white text-primary pb-4 pb-lg-6 mb-4 mb-lg-6">
+    <section class="section">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8 text-center">
-                    <h1 class="display-4 mb-4">特定商取引法表示</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section pt-7">
-        <div class="container mt-n8 mt-lg-n12 z-2">
-            <div class="row justify-content-center">
-                <div class="col" style="max-width: 800px">
+                <div class="col" style="max-width: 960px">
+                    <h1 class="text-center display-4 mb-4">特定商取引法表示</h1>
                     <div class="card shadow border-gray-300 p-4 p-lg-5">
                         <table class="table">
                             <tbody>

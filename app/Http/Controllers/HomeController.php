@@ -3,33 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
-use App\Models\ImageSet;
-use App\Models\PostedImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function home()
     {
         $albums = Album::query()
+            ->where('line_user_id', Auth::user()->id)
             ->withCount('images')
             ->orderBy('created_at', 'desc')
-            ->limit(10)
             ->get();
-        return view('home', compact('albums'));
+        return view('pages.user.home', compact('albums'));
     }
 
-    public function pp()
+    public function trashbox(Album $album)
     {
-        return view('pp');
-    }
-
-    public function terms()
-    {
-        return view('terms');
-    }
-    public function ld()
-    {
-        return view('ld');
+        $albums = Album::where('line_user_id', Auth::user()->id)->orderBy('deleted_at', 'desc')->onlyTrashed()->withCount('images')->get();
+        return view('pages.user.trash', compact('albums'));
     }
 }

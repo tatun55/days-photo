@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AlbumController extends Controller
 {
     public function show(Album $album)
     {
-        $items = $album->images()->get(['id', 'index', 'width', 'height'])->keyBy('index');
-        return view('pages.album.show', compact(['album', 'items']));
+        $items = $album->images()->where('line_user_id', Auth::user()->id)->get(['id', 'index', 'width', 'height'])->keyBy('index');
+        return view('pages.user.album.show', compact(['album', 'items']));
     }
 
     public function title(Request $request, Album $album)

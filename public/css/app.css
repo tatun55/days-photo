@@ -1,4 +1,5 @@
 /* スマホ画面で左右の余白をせまくする */
+
 .container,
 .container-fluid,
 .container-lg,
@@ -11,6 +12,7 @@
 
 
 /* フッターを下に固定 */
+
 html,
 body {
     height: 100%;
@@ -29,6 +31,7 @@ body {
 
 
 /* フッターのデザイン */
+
 .footer {
     color: #1F2937 !important;
     font-size: 1rem;
@@ -56,12 +59,16 @@ body {
     font-weight: 300 !important;
 }
 
+
 /* ドロップダウンメニューが隠れないようにする */
+
 main {
     overflow: visible !important;
 }
 
+
 /* 画像アスペクト固定 */
+
 .img-wrapper-1x1 {
     position: relative;
     width: 100%;
@@ -90,6 +97,7 @@ main {
 
 
 /* ナブタブ調整 */
+
 .nav-tabs {
     border-bottom: 1px solid #E5E7EB;
 }
@@ -104,13 +112,15 @@ main {
     position: absolute;
     content: '';
     bottom: -2px;
-    margin-left: -13px;
-    width: calc(100%);
-    border-bottom: 4px solid white;
-    z-index: 999;
+    left: 0;
+    width: 100%;
+    border-bottom: 2px solid white;
+    z-index: 11;
 }
 
+
 /* フォントサイズ調整 */
+
 @media (max-width: 768px) {
     html {
         font-size: 14px;
@@ -123,7 +133,9 @@ main {
     }
 }
 
+
 /* ドロップダウンメニューボタンの */
+
 .btn.btn-link.dropdown-toggle {
     box-shadow: unset;
 }
@@ -136,7 +148,9 @@ main {
     box-shadow: unset;
 }
 
+
 /* ブランドロゴ */
+
 .brand-name {
     font-size: 1.6rem;
     font-weight: 600;
@@ -144,32 +158,32 @@ main {
     margin-top: .8rem;
 }
 
-/* テーブル調整 */
-@media (max-width: 768px) {
 
+/* テーブル調整 */
+
+@media (max-width: 768px) {
     .table,
     .table td,
     .table th {
         border-collapse: collapse;
         text-align: center;
     }
-
     .table th {
         display: block;
         width: 100%;
         border: 0;
         padding: 1.5rem 0.5rem .1rem;
     }
-
     .table td {
         display: block;
         width: 100%;
         padding: 0 0.5rem 1.5rem;
-
     }
 }
 
+
 /* リスト調整 */
+
 ol,
 ul {
     padding-left: 1.2rem
@@ -179,12 +193,13 @@ ol li {
     padding-bottom: .2rem;
 }
 
+
 /* トースト調整 */
+
 .toast {
     /* max-width: 95%; */
     margin: 0 8px;
 }
-
 
 .text-white-shadow {
     text-shadow: 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242, 0 0 0.08rem #424242;
@@ -196,6 +211,7 @@ ol li {
 
 
 /* スライドショー調整 */
+
 .pswp__top-bar {
     top: unset;
     bottom: 0;
@@ -214,7 +230,9 @@ ol li {
     display: none !important;
 }
 
+
 /* 写真メニュー調整 */
+
 .hide {
     display: none;
 }
@@ -223,7 +241,9 @@ ol li {
     display: block;
 }
 
+
 /* 写真選択機能 */
+
 .hidden-checkbox {
     display: none;
     position: absolute;
@@ -260,8 +280,58 @@ ol li {
 .item label {
     margin-bottom: 0;
     display: inline-block;
+    cursor: pointer;
 }
 
 .item img {
     pointer-events: none;
+}
+
+
+/* セクションの余白 */
+
+.section {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+}
+
+
+/* サムネイルのサイズ */
+
+.album-thumbnail-link {
+    max-width: 160px;
+    width: 35vw;
+    height: auto;
+    min-width: 80px;
+    margin-right: 1.2rem;
+    margin-left: 0.4rem;
+}
+
+
+/* プロフィール画像の調整 */
+
+section#album .card .profile-thumbnail img {
+    border: 0;
+}
+
+section#album .card .profile-thumbnail {
+    width: 25vw;
+    min-width: 80px;
+    max-width: 160px;
+    height: auto;
+}
+
+
+/* パンくずリスト */
+
+.breadcrumb {
+    margin-bottom: .5rem;
+}
+
+
+/* 写真一覧 */
+
+#photo-list::after {
+    content: "";
+    flex: auto;
 }
