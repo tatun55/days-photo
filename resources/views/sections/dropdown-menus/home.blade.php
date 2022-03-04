@@ -1,0 +1,2 @@
+<button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="fas fa-redo me-2"></span>タイトルの変更</button>
+<button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="fas fa-times-circle me-2"></span>アーカイブ</button>

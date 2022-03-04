@@ -23,18 +23,18 @@ class AlbumController extends Controller
     public function delete(Album $album)
     {
         $album->delete();
-        return redirect('pages.user.home')->with('status', 'アルバムをアーカイブに移動しました');
+        return redirect('home')->with('status', 'アルバムをアーカイブに移動しました');
     }
 
     public function forceDelete(Album $album)
     {
         $album->forceDelete();
-        return redirect('pages.user.home')->with('status', 'アルバムを完全に削除しました');
+        return redirect('home')->with('status', 'アルバムを完全に削除しました');
     }
 
     public function restore(Album $album)
     {
         $album->restore();
-        return redirect('pages.user.home')->with('status', 'アルバムを元に戻しました');
+        return redirect('home')->with('status', 'アルバムを元に戻しました');
     }
 }

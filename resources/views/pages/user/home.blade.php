@@ -47,80 +47,8 @@
                         </div>
                     </nav>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <ul class="list-unstyled news-list">
-                                @foreach($albums as $album)
-                                    <li class="d-flex mx-0 mb-4 w-100">
-                                        <a href="{{ route('albums.show',$album->id) }}" class="album-thumbnail-link">
-                                            <div class="img-wrapper-1x1">
-                                                <div class="img-content">
-                                                    <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <div style="width:100%">
-                                            <div class="d-flex justify-content-between">
-                                                <a href="{{ route('albums.show',$album->id) }}" class="h5 m-0 me-2 p-0">{{ $album->title }}</a>
-                                                <div>
-                                                    <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
-                                                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="post-meta font-small">
-                                                <span class="me-3"><span class="far fa-clock me-2"></span>{{ $album->created_at->format('Y-m-d H:i') }}</span>
-                                                <a href="{{ route('albums.show',$album->id) }}" class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->images_count }}</a>
-                                            </div>
-                                        </div>
-                                    </li>
+                    @include('sections.albums-list',['type'=>'home'])
 
-                                    <div class="modal fade" id="modal-title-{{ $album->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <form method="POST" action="{{ route('albums.title',$album->id) }}" class="modal-content">
-                                                @csrf
-                                                @method('put')
-                                                <div class="modal-header">
-                                                    <h2 class="h6 modal-title">アルバムのタイトルを入力</h2>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <input type="text" class="form-control" name="title" value="{{ $album->title }}">
-                                                    <div class="form-text text-gray text-right text-sm">50字以内</div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-secondary text-white">変更</button>
-                                                    <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal fade" id="modal-delete-{{ $album->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <form method="POST" action="{{ route('albums.delete',$album->id) }}" class="modal-content">
-                                                @csrf
-                                                @method('delete')
-                                                <div class="modal-header">
-                                                    <h2 class="h6 modal-title">アーカイブへ移動しますか？</h2>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-warning text-white">アーカイブへ移動</button>
-                                                    <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
                 </div>
 
             </div>

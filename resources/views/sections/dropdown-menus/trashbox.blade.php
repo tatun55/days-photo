@@ -1,0 +1,2 @@
+<button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-restore-{{ $album->id }}"><span class="fas fa-redo me-2"></span>元に戻す</button>
+<button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-force-delete-{{ $album->id }}"><span class="fas fa-times-circle me-2"></span>削除 (データの消去)</button>
