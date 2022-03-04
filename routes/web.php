@@ -8,9 +8,10 @@ use App\Http\Controllers\TrashController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('intro');
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
+Route::get('pp', [HomeController::class, 'pp'])->name('pp');
+Route::get('terms', [HomeController::class, 'terms'])->name('terms');
+Route::get('ld', [HomeController::class, 'ld'])->name('ld');
 
 Route::get('login/line', [LoginController::class, 'redirectToProvider'])->name('login');
 Route::get('login/line/callback', [LoginController::class, 'handleProviderCallback']);
@@ -30,7 +31,3 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('trashbox', [TrashController::class, 'index'])->name('trashbox');
 });
-
-Route::get('pp', [HomeController::class, 'pp'])->name('pp');
-Route::get('terms', [HomeController::class, 'terms'])->name('terms');
-Route::get('ld', [HomeController::class, 'ld'])->name('ld');

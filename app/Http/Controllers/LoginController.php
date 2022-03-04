@@ -87,6 +87,6 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('intro')->with('status', 'ログアウトしました');
+        return redirect()->route('welcome')->with('status', 'ログアウトしました');
     }
 }

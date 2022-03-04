@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function welcome()
+    {
+        return view('pages.welcome');
+    }
     public function home()
     {
         $albums = Album::query()
@@ -16,20 +20,20 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(10)
             ->get();
-        return view('home', compact('albums'));
+        return view('pages.user.home', compact('albums'));
     }
 
     public function pp()
     {
-        return view('pp');
+        return view('pages.pp');
     }
 
     public function terms()
     {
-        return view('terms');
+        return view('pages.terms');
     }
     public function ld()
     {
-        return view('ld');
+        return view('pages.ld');
     }
 }
