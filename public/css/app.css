@@ -280,6 +280,7 @@ ol li {
 .item label {
     margin-bottom: 0;
     display: inline-block;
+    cursor: pointer;
 }
 
 .item img {
@@ -339,4 +340,5 @@ section#album .card .profile-thumbnail {
     width: 33.3%;
     padding: 0.5%;
     max-width: 160px;
+    cursor: pointer !important;
 }

@@ -29,6 +29,7 @@
                     {{-- End of Tab Menu --}}
 
                     @include('sections.album-photos-form')
+
                 </div>
             </div>
 

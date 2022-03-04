@@ -18,45 +18,18 @@
                 @include('sections.album-card-top')
 
                 <div class="col-12 col-lg-8 mt-4 mt-lg-3">
-                    {{-- タブメニュー --}}
+
+                    {{-- Tab Menu --}}
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a href="{{ route('albums.show',$album->id) }}" class="nav-item nav-link"><span class="fas fa-images me-1"></span>フォト</a>
                             <a class="nav-item nav-link active"><span class="fas fa-trash me-1"></span>アーカイブ</a>
                         </div>
                     </nav>
+                    {{-- End of Tab Menu --}}
 
-                    <form id="items-form" action="{{ route('albums.photos.action',$album->id) }}" method="post">
-                        @csrf
-                        @method('put')
-                        <div id="item-menus" class="d-flex p-3 position-sticky bg-white" style="z-index: 999;top:0">
-                            <div id="left-btns" class="d-flex justify-content-start w-100">
-                                <div id="select-desc" class="form-control-plaintext w-auto mx-2 hide"><span class="fas fa-info-circle me-1"></span>写真を選択してください</div>
-                                <input type="submit" id="move-btn" name="action_restore" class="btn btn-primary mx-2 text-white hide" value="元に戻す">
-                                <input type="submit" id="action-destroy-btn" name="action_destroy" class="d-none">
-                                <button id="archive-btn" type="button" class="btn btn-danger mx-2 text-white hide" data-bs-toggle="modal" data-bs-target="#modal-destroy">完全削除</button>
-                            </div>
-                            <div id="cancel-btn" class="btn btn-outline-primary w-auto flex-shrink-0 hide">キャンセル</div>
-                            <div id="select-btn" class="btn btn-primary flex-shrink-0 hide show">選択</div>
-                        </div>
+                    @include('sections.album-photos-form')
 
-                        <div class="row">
-                            <div class="col-12">
-                                <ul class="list-unstyled news-list d-flex flex-wrap">
-                                    @foreach($album->images()->onlyTrashed()->orderBy('deleted_at','desc')->get() as $image)
-                                        <li class="item" style="width:33.3%; padding:0.5%;">
-                                            <div class="img-wrapper-1x1">
-                                                <label class="img-content">
-                                                    <input name="items[]" type="checkbox" value="{{ $image->index }}" class="hidden-checkbox" disabled><span></span>
-                                                    <img data-index="{{ $image->index }}" src="{{ \Storage::disk('s3')->url("/s/{$image->id}.jpg") }}">
-                                                </label>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
 
