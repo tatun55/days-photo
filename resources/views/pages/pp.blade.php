@@ -2,19 +2,11 @@
 
 @section('content')
 <main>
-    <section class="section-header bg-white text-primary pb-4 pb-lg-6 mb-4 mb-lg-6">
+    <section class="section">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8 text-center">
-                    <h1 class="display-4 mb-4">プライバシーポリシー</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section section-lg pt-7">
-        <div class="container mt-n8 mt-lg-n12 z-2">
-            <div class="row justify-content-center">
                 <div class="col">
+                    <h1 class="display-4 mb-4 text-center">プライバシーポリシー</h1>
                     <div class="card shadow border-gray-300 p-4 p-lg-5">
                         <p><a href="https://colorbox.tech" style="font-size: 15px" class="p-0" target="_blank" rel="noopener noreferrer">COLORBOX株式会社</a>（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。</p>
 
