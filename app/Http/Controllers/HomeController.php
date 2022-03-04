@@ -11,6 +11,7 @@ class HomeController extends Controller
     public function home()
     {
         $albums = Album::query()
+            ->where('line_user_id', Auth::user()->id)
             ->withCount('images')
             ->orderBy('created_at', 'desc')
             ->get();
