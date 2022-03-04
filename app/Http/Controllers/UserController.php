@@ -6,7 +6,7 @@ use App\Models\Album;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
+class UserController extends Controller
 {
     public function home()
     {
@@ -22,5 +22,10 @@ class HomeController extends Controller
     {
         $albums = Album::where('line_user_id', Auth::user()->id)->orderBy('deleted_at', 'desc')->onlyTrashed()->withCount('images')->get();
         return view('pages.user.trash', compact('albums'));
+    }
+
+    public function profile()
+    {
+        return view('pages.user.profile.address');
     }
 }
