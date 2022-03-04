@@ -315,7 +315,7 @@ section#album .card .profile-thumbnail img {
 }
 
 section#album .card .profile-thumbnail {
-    width: 35vw;
+    width: 25vw;
     min-width: 80px;
     max-width: 160px;
     height: auto;
