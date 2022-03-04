@@ -112,10 +112,10 @@ main {
     position: absolute;
     content: '';
     bottom: -2px;
-    margin-left: -13px;
-    width: calc(100%);
-    border-bottom: 4px solid white;
-    z-index: 999;
+    left: 0;
+    width: 100%;
+    border-bottom: 2px solid white;
+    z-index: 11;
 }
 
 
