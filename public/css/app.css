@@ -286,7 +286,56 @@ ol li {
     pointer-events: none;
 }
 
+
+/* セクションの余白 */
+
 .section {
     padding-top: 6rem;
     padding-bottom: 3rem;
+}
+
+
+/* サムネイルのサイズ */
+
+.list-unstyled.news-list a.position-relative {
+    max-width: 160px;
+    width: 35%;
+    min-width: 80px;
+    flex-shrink: 1;
+    padding-right: 1.5rem;
+}
+
+
+/* プロフィール画像の調整 */
+
+section#album .card .profile-thumbnail img {
+    border: 0;
+}
+
+section#album .card .profile-thumbnail {
+    width: 35vw;
+    min-width: 80px;
+    max-width: 160px;
+    height: auto;
+}
+
+
+/* パンくずリスト */
+
+.breadcrumb {
+    margin-bottom: .5rem;
+}
+
+
+/* 写真一覧 */
+
+#photo-list::after {
+    content: "";
+    flex: auto;
+}
+
+#photo-list .item {
+    width: 33.3%;
+    padding: 0.5%;
+    max-width: 160px;
 }

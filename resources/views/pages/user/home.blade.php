@@ -5,7 +5,8 @@
     <div class="section section-lg pt-5 pt-md-6">
         <div class="container">
             <div class="row pt-4 pt-md-0">
-                <div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-3">
+
+                <div class="col-12 col-lg-4 my-3 mb-lg-0">
                     <div class="card border-gray-300 px-3 py-2">
                         <div class="card-header bg-white border-0 text-center d-flex flex-row flex-lg-column align-items-center justify-content-between justify-lg-content-center px-1 px-lg-4">
                             <div class="d-flex justyfy-content-between d-lg-inline flex-row align-items-center">
@@ -36,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-8 mt-4 mt-lg-0">
+                <div class="col-12 col-lg-8 mt-4 mt-lg-3">
 
                     {{-- タブメニュー --}}
                     <nav>
@@ -50,17 +51,17 @@
                         <div class="col-12">
                             <ul class="list-unstyled news-list">
                                 @foreach($albums as $album)
-                                    <li class="row mx-0 mb-4">
-                                        <a href="{{ route('albums.show',$album->id) }}" class="col-5">
+                                    <li class="d-flex mx-0 mb-4">
+                                        <a href="{{ route('albums.show',$album->id) }}" class="position-relative">
                                             <div class="img-wrapper-1x1">
                                                 <div class="img-content">
                                                     <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
                                                 </div>
                                             </div>
                                         </a>
-                                        <div class="col">
+                                        <div style="width:65%">
                                             <div class="d-flex justify-content-between">
-                                                <a href="{{ route('albums.show',$album->id) }}" class="h5 m-0 me-2 p-0 mt-lg-3">{{ $album->title }}</a>
+                                                <a href="{{ route('albums.show',$album->id) }}" class="h5 m-0 me-2 p-0">{{ $album->title }}</a>
                                                 <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0 d-lg-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
                                                     <span class="sr-only">Toggle Dropdown</span>

@@ -2,7 +2,7 @@
 
 @section('content')
 <main>
-    <div class="section section-lg pt-5 pt-md-6">
+    <section id="album" class="section section-lg pt-5 pt-md-6">
         <div class="container">
             <div class="row pt-4 pt-md-0">
 
@@ -15,45 +15,9 @@
                 </nav>
                 <!--End of Breadcrumb-->
 
-                <div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-3">
-                    <div class="list-unstyled news-list">
-                        <li class="row">
-                            <a href="{{ route('albums.show',$album->id) }}" class="col-4 col-lg-12">
-                                <div class="img-wrapper-1x1">
-                                    <div class="img-content">
-                                        <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="col col-lg-12">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="h5 m-0 me-2 p-0 mt-lg-3">{{ $album->title }}</h5>
-                                    <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0 d-lg-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <div class="dropdown-menu d-lg-none">
-                                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
-                                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
-                                    </div>
-                                </div>
-                                <div class="post-meta font-small">
-                                    <span class="me-3"><span class="far fa-clock me-2"></span>{{ $album->created_at->format('Y-m-d H:i') }}</span>
-                                    <span class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->images()->count() }}</span>
-                                </div>
-                            </div>
-                        </li>
-                    </div>
-                    {{-- LG幅以上のサイドメニュー --}}
-                    <div class="card-body p-2 d-none d-lg-block">
-                        <div class="list-group dashboard-menu list-group-sm">
-                            <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
-                            <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
-                        </div>
-                    </div>
-                </div>
+                @include('sections.album-card-top')
 
-                <div class="col-12 col-lg-8 mt-4 mt-lg-0">
+                <div class="col-12 col-lg-8 mt-4 mt-lg-3">
                     {{-- タブメニュー --}}
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -136,22 +100,22 @@
 
 
         </div>
-    </div>
+        </div>
 
-    <div class="modal fade" id="modal-destroy" tabindex="-1" role="dialog" aria-labelledby="modal-destroy" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="h6 modal-title">写真を完全に削除しますか？</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-action-destroy-btn" class="btn btn-danger text-white">完全に削除</button>
-                    <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
+        <div class="modal fade" id="modal-destroy" tabindex="-1" role="dialog" aria-labelledby="modal-destroy" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="h6 modal-title">写真を完全に削除しますか？</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="modal-action-destroy-btn" class="btn btn-danger text-white">完全に削除</button>
+                        <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 </main>
 @endsection

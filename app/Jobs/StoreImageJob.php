@@ -69,7 +69,7 @@ class StoreImageJob implements ShouldQueue
             $sizes = [
                 's' => 320,
                 'm' => 960,
-                'l' => 1600,
+                'l' => 1920,
             ];
             $image->backup();
             foreach ($sizes as $key => $value) {
