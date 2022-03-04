@@ -19,9 +19,9 @@
 
     <div class="row">
         <div class="col-12">
-            <ul id="photo-list" class="list-unstyled news-list d-flex flex-wrap justify-content-between">
+            <ul id="photo-list" class="list-unstyled news-list row g-1 justify-content-between">
                 @foreach($album->images()->when($type === 'trashbox', function($query) {return $query->onlyTrashed();})->orderBy('index','asc')->get() as $image)
-                    <li class="item">
+                    <li class="item col-4 col-sm-3">
                         <div class="img-wrapper-1x1">
                             <label class="img-content">
                                 <input name="items[]" type="checkbox" value="{{ $image->index }}" class="hidden-checkbox" disabled><span></span>

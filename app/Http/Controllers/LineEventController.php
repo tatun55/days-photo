@@ -126,11 +126,6 @@ class LineEventController extends Controller
                 break;
         }
 
-        $this->replyForSavedImage($replyToken, $message, $albumId);
-
-        // $bot = $this->initBot();
-        // $bot->replyText($replyToken, $message);
-
         // update Album 
         $album = Album::find($albumId);
         $album->status = 'uploading';
@@ -152,7 +147,8 @@ class LineEventController extends Controller
                 $album->save();
             })->catch(function (Batch $batch, Throwable $e) {
                 Log::error($e->getMessage());
-            })->finally(function (Batch $batch) {
+            })->finally(function (Batch $batch) use ($replyToken, $message, $albumId) {
+                $this->replyForSavedImage($replyToken, $message, $albumId);
             })->dispatch();
     }
 
@@ -314,7 +310,7 @@ class LineEventController extends Controller
         $bot->replyMessage($replyToken, $rawMessage);
     }
 
-    public function unfollowed(Type $var = null)
+    public function unfollowed()
     {
     }
 

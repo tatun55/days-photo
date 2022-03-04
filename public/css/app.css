@@ -335,10 +335,3 @@ section#album .card .profile-thumbnail {
     content: "";
     flex: auto;
 }
-
-#photo-list .item {
-    width: 33.3%;
-    padding: 0.5%;
-    max-width: 160px;
-    cursor: pointer !important;
-}
