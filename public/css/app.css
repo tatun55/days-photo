@@ -297,12 +297,13 @@ ol li {
 
 /* サムネイルのサイズ */
 
-.list-unstyled.news-list a.position-relative {
+.album-thumbnail-link {
     max-width: 160px;
-    width: 35%;
+    width: 35vw;
+    height: auto;
     min-width: 80px;
-    flex-shrink: 1;
-    padding-right: 1.5rem;
+    margin-right: 1.2rem;
+    margin-left: 0.4rem;
 }
 
 

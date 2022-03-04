@@ -51,24 +51,26 @@
                         <div class="col-12">
                             <ul class="list-unstyled news-list">
                                 @foreach($albums as $album)
-                                    <li class="d-flex mx-0 mb-4">
-                                        <a href="{{ route('albums.show',$album->id) }}" class="position-relative">
+                                    <li class="d-flex mx-0 mb-4 w-100">
+                                        <a href="{{ route('albums.show',$album->id) }}" class="album-thumbnail-link">
                                             <div class="img-wrapper-1x1">
                                                 <div class="img-content">
                                                     <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
                                                 </div>
                                             </div>
                                         </a>
-                                        <div style="width:65%">
+                                        <div style="width:100%">
                                             <div class="d-flex justify-content-between">
                                                 <a href="{{ route('albums.show',$album->id) }}" class="h5 m-0 me-2 p-0">{{ $album->title }}</a>
-                                                <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0 d-lg-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <div class="dropdown-menu d-lg-none">
-                                                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
-                                                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
+                                                <div>
+                                                    <button class="btn btn-link dropdown-toggle dropdown-toggle-split me-2 m-0 p-0" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="icon icon-sm"><span class="fas fa-ellipsis-h icon-secondary fa-lg"></span> </span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
+                                                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="post-meta font-small">
