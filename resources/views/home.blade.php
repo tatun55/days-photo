@@ -28,8 +28,8 @@
                         {{-- LG幅以上のサイドメニュー --}}
                         <div class="card-body p-2 d-none d-lg-block">
                             <div class="list-group dashboard-menu list-group-sm">
-                                <a href="" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-user"></span></span>プロフィール<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
-                                <a href="" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-cog"></span></span>設定<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span> </a>
+                                <a href="" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-user"></span></span>プロフィール<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
+                                <a href="" class="d-flex list-group-item border-0 list-group-item-action"><span class="me-2"><span class="fas fa-cog"></span></span>設定<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
                                 <a href="{{ route('logout') }}" class="mt-2 btn btn-gray-200 btn-sm"><span class="me-2"><span class="fas fa-sign-out-alt"></span></span>ログアウト</a>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                                 </button>
                                                 <div class="dropdown-menu d-lg-none">
                                                     <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
-                                                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>削除 (アーカイブへ移動)</button>
+                                                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
                                                 </div>
                                             </div>
                                             <div class="post-meta font-small">
