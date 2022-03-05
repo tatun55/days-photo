@@ -2,7 +2,7 @@
 
 @section('content')
 <main>
-    <section class="section">
+    <section id="section-ld" class="section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col" style="max-width: 960px">

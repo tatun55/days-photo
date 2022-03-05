@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\AmazonPayController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TopController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TopController::class, 'welcome'])->name('welcome');
@@ -30,4 +32,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('albums/{album}/photos', [PhotoController::class, 'action'])->name('albums.photos.action');
     Route::get('albums/{album}/trashbox', [PhotoController::class, 'trashbox'])->name('albums.photos.trashbox');
+
+    Route::get('amazon-pay/review', [AmazonPayController::class, 'review'])->name('amazon-pay.review');
+});
+
+Route::get('test', function () {
+    return view('test');
+})->name('test');
+Route::get('review', function (Request $request) {
+    return dd($request);
 });

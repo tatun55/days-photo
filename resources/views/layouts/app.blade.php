@@ -13,6 +13,7 @@
     @isset($photoSwipe)
         <link rel="stylesheet" href="{{ asset('photoswipe/v5/photoswipe.css') }}" />
     @endisset
+    @yield('style')
     <link type="text/css" href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 

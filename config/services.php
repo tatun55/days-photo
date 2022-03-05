@@ -39,4 +39,7 @@ return [
             'access_token' => env('LINE_MESSAGING_API_ACCESS_TOKEN'),
         ],
     ],
+    'amazon_pay' => [
+        'public_key_id' => env('AMAZON_PAY_PUBLIC_KEY_ID'),
+    ],
 ];

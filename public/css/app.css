@@ -162,19 +162,19 @@ main {
 /* テーブル調整 */
 
 @media (max-width: 768px) {
-    .table,
-    .table td,
-    .table th {
+    #section-ld .table,
+    #section-ld .table td,
+    #section-ld .table th {
         border-collapse: collapse;
         text-align: center;
     }
-    .table th {
+    #section-ld .table th {
         display: block;
         width: 100%;
         border: 0;
         padding: 1.5rem 0.5rem .1rem;
     }
-    .table td {
+    #section-ld .table td {
         display: block;
         width: 100%;
         padding: 0 0.5rem 1.5rem;
