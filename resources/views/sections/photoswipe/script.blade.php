@@ -36,7 +36,7 @@ lightbox.on('uiRegister', function() {
             name: 'next-button',
             order: 9,
             isButton: true,
-            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-right text-white text-white-shadow h1 m-0 me-6"></span></button>`,
+            html:`<a class="text-default inline-block"><span class="slideshow-menu-btn-icon fas fa-angle-right text-white m-0 me-6"></span></a>`,
             onClick: (event, el)=> {
                 lightbox.pswp.next();
             }
@@ -46,7 +46,7 @@ lightbox.on('uiRegister', function() {
             name: 'prev-button',
             order: 5,
             isButton: true,
-            html:`<button class="btn btn-link inline-block me-auto"><span class="fas fa-angle-left text-white text-white-shadow h1 m-0 ms-4"></span></button>`,
+            html:`<a class="text-default inline-block"><span class="slideshow-menu-btn-icon fas fa-angle-left text-white m-0 ms-4"></span></a>`,
             onClick: (event, el)=> {
                 lightbox.pswp.prev();
             }
