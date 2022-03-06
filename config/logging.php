@@ -50,7 +50,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily'],
+            'channels' => ['daily', 'epson'],
             'ignore_exceptions' => false,
         ],
 
@@ -66,6 +66,12 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
             'permission' => 0666,
+        ],
+
+        'epson' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/epson-connect-api.log'),
+            'level' => 'debug',
         ],
 
         'slack' => [
