@@ -46,7 +46,7 @@ class AmazonPayGetSignature extends Command
         );
 
         $client = new \Amazon\Pay\API\Client($amazonpay_config);
-        $payload = '{"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/amazon-pay/review"}}';
+        $payload = '{"scopes": ["name", "email", "phoneNumber", "billingAddress"],"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/amazon-pay/review"}}';
         $signature = $client->generateButtonSignature($payload);
         echo $signature . "\n";
     }

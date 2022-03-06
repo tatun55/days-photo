@@ -34,11 +34,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('albums/{album}/trashbox', [PhotoController::class, 'trashbox'])->name('albums.photos.trashbox');
 
     Route::get('amazon-pay/review', [AmazonPayController::class, 'review'])->name('amazon-pay.review');
+    Route::post('amazon-pay/checkout', [AmazonPayController::class, 'checkout'])->name('amazon-pay.checkout');
+    Route::get('amazon-pay/complete', [AmazonPayController::class, 'complete'])->name('amazon-pay.complete');
 });
 
 Route::get('test', function () {
     return view('test');
 })->name('test');
-Route::get('review', function (Request $request) {
-    return dd($request);
-});

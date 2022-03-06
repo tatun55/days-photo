@@ -181,6 +181,12 @@ main {
     }
 }
 
+#table-address.table th {
+    /* max-width: 25% !important; */
+    width: 6rem !important;
+    text-align: right;
+}
+
 
 /* リスト調整 */
 

@@ -24,7 +24,7 @@ lightbox.on('itemData', (e) => {
     let height = items[index]["height"];
     e.itemData = {
         src: `${url}/l/${id}.jpg`, // biggest size one
-        srcset: `${url}/l/${id}.jpg 1600w, ${url}/m/${id}.jpg 960w`,
+        srcset: `${url}/l/${id}.jpg 1920w, ${url}/m/${id}.jpg 960w`,
         w: width,
         h: height
     };
