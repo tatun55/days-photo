@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\ImageFromUser;
+use App\Models\Photo;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -43,8 +43,8 @@ class Upsert extends Command
 
 
 
-        $arr = ImageFromUser::where('album_id', '9e5e6590-8aa9-416f-a447-ed244d759565')->orderBy('index', 'asc')->get()->toArray();
-        // $arr = ImageFromUser::orderBy('index', 'asc')->get()->toArray();
+        $arr = Photo::where('album_id', '9e5e6590-8aa9-416f-a447-ed244d759565')->orderBy('index', 'asc')->get()->toArray();
+        // $arr = Photo::orderBy('index', 'asc')->get()->toArray();
         // dd($arr);
         $newArr = [];
         $now = \Carbon\Carbon::now();
@@ -54,8 +54,8 @@ class Upsert extends Command
         }
         dd($newArr);
         DB::table('image_from_users')->upsert($newArr, ['id'], ['index']);
-        // ImageFromUser::upsert($newArr, 'id', ['index']);
-        // $res = ImageFromUser::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->orderBy('index', 'asc')->get(['id', 'index'])->toArray();
+        // Photo::upsert($newArr, 'id', ['index']);
+        // $res = Photo::where('album_id', 'a7190e6d-d09f-49ca-b716-9c0ffb159ac8')->orderBy('index', 'asc')->get(['id', 'index'])->toArray();
         // dd($res);
     }
 }

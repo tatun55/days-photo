@@ -10,7 +10,7 @@ class AlbumController extends Controller
 {
     public function show(Album $album)
     {
-        $items = $album->images()->where('line_user_id', Auth::user()->id)->get(['id', 'index', 'width', 'height'])->keyBy('index');
+        $items = $album->images()->where('user_id', Auth::user()->id)->get(['id', 'index', 'width', 'height'])->keyBy('index');
         return view('pages.user.album.show', compact(['album', 'items']));
     }
 

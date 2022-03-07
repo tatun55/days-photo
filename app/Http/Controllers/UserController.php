@@ -11,7 +11,7 @@ class UserController extends Controller
     public function home()
     {
         $albums = Album::query()
-            ->where('line_user_id', Auth::user()->id)
+            ->where('user_id', Auth::user()->id)
             ->withCount('images')
             ->orderBy('created_at', 'desc')
             ->get();
@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function trashbox(Album $album)
     {
-        $albums = Album::where('line_user_id', Auth::user()->id)->orderBy('deleted_at', 'desc')->onlyTrashed()->withCount('images')->get();
+        $albums = Album::where('user_id', Auth::user()->id)->orderBy('deleted_at', 'desc')->onlyTrashed()->withCount('images')->get();
         return view('pages.user.trash', compact('albums'));
     }
 

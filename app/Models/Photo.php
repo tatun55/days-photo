@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ImageFromUser extends Model
+class Photo extends Model
 {
     use SoftDeletes;
 
@@ -16,7 +16,6 @@ class ImageFromUser extends Model
     protected $fillable = [
         'id',
         'album_id',
-        'line_user_id',
         'message_id',
         'index',
         'deleted_at',

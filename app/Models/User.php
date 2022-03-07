@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class LineUser extends Authenticatable
+class User extends Authenticatable
 {
     protected $primaryKey = 'id';
     protected $keyType = 'string';

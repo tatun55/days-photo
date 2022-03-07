@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Jobs\StoreImageJob;
 use App\Jobs\StoreLineImageMessageToS3Job;
-use App\Models\ImageFromUser;
+use App\Models\Photo;
 use App\Models\ImageSet;
-use App\Models\LineUser;
+use App\Models\User;
 use App\Models\Album;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -62,7 +62,7 @@ class LineEventController extends Controller
                             $this->verifySignature($request);
                             $isFromUser = $event->source->type === 'user';
                             if ($isFromUser && $this->isRegisted($event->source->userId)) {
-                                $this->postedImageFromUser($event);
+                                $this->postedPhoto($event);
                             }
                             break;
                     }
@@ -88,7 +88,7 @@ class LineEventController extends Controller
                 break;
             case 'cancel':
                 $album = Album::destroy($data->id);
-                ImageFromUser::where('album_id', $data->id)->delete();
+                Photo::where('album_id', $data->id)->delete();
                 $message = "✅ 保存前のアルバムが削除されました。";
                 $bot = $this->initBot();
                 $bot->replyText($event->replyToken, $message);
@@ -130,15 +130,14 @@ class LineEventController extends Controller
         $album = Album::find($albumId);
         $album->status = 'uploading';
         $album->title = $title;
-        $album->date_to_delete = $deleteDate;
-        $album->cover = ImageFromUser::where('album_id', $albumId)->first()->id;
+        $album->cover = Photo::where('album_id', $albumId)->first()->id;
         $album->save();
 
         // dispatch store image jobs
         $jobs = [];
-        $imageFromUsers = ImageFromUser::where('album_id', $albumId)->get();
-        foreach ($imageFromUsers as $imageFromUser) {
-            $jobs[] = new StoreImageJob($imageFromUser->id, $imageFromUser->message_id);
+        $photos = Photo::where('album_id', $albumId)->get();
+        foreach ($photos as $photo) {
+            $jobs[] = new StoreImageJob($photo->id, $photo->message_id);
         }
         $batch = Bus::batch($jobs)
             ->then(function (Batch $batch) use ($albumId) {
@@ -198,7 +197,7 @@ class LineEventController extends Controller
         if ($event->link->result === 'ok') {
             $bot = $this->initBot();
             $multiMessage = new MultiMessageBuilder();
-            $text = "アカウント登録が完了しました 🎉\n\n『days.』は、30秒でアルバムが作れる ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントにまとめて画像を送信すると、”ずっと残るアルバム”が作成されます✨\n\n✅ 機能②\n保存されているアルバムは、ワンクリックで部屋にかざれるミニフォトブックとして発送可✨\n\nほかにも様々な便利機能を準備中です（現在β版）";
+            $text = "アカウント登録が完了しました 🎉\n\n『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、”ずっと残るアルバム”が作成されます✨\n\n✅ 機能②\nかんたん操作で ”部屋にかざれるミニアルバム” をポチッと注文✨\n\nほかにも様々な便利機能を準備中です（現在α版）";
             $multiMessage->add(new TextMessageBuilder($text));
             $bot->replyMessage($event->replyToken, $multiMessage);
         }
@@ -206,24 +205,24 @@ class LineEventController extends Controller
 
     public function isRegisted($userId)
     {
-        return LineUser::where('id', $userId)->exists();
+        return User::where('id', $userId)->exists();
     }
 
-    public function postedImageFromUser($event)
+    public function postedPhoto($event)
     {
         // 作成途中のAlbumを取得、なければ作成
         $album = Album::firstOrCreate(
             [
-                'line_user_id' => $event->source->userId,
+                'user_id' => $event->source->userId,
                 'status' => 'default',
             ],
             [
                 'id' => (string) \Str::uuid(),
-                'message_id' => $event->message->id,
             ]
         );
 
         if (isset($event->message->imageSet)) {
+
             /**
              * ImageSetの序列管理
              * 
@@ -241,25 +240,26 @@ class LineEventController extends Controller
             if ($imageSet->count === $imageSetTotal) {
                 $imageSet->delete();
                 $album->increment('total', $imageSetTotal);
-                $this->replyForPostedImageFromUser($album->total, $album->id, $event->replyToken);
+                $this->replyForPostedPhoto($album->total, $album->id, $event->replyToken);
             }
         } else {
             $album->increment('total', 1);
             $index = $album->total;
-            $this->replyForPostedImageFromUser($album->total, $album->id, $event->replyToken);
+            $this->replyForPostedPhoto($album->total, $album->id, $event->replyToken);
         }
 
         // 投稿された画像情報を保存
-        $imageFromUser = ImageFromUser::create([
+        $photo = Photo::create([
             'id' => (string) \Str::uuid(),
             'album_id' => $album->id,
-            'line_user_id' => $event->source->userId,
+            'user_id' => $event->source->userId,
+            'group_id' => $event->source->groupId ?? null,
             'message_id' => $event->message->id,
             'index' => $index,
         ]);
     }
 
-    public function replyForPostedImageFromUser($total, $albumId, $replyToken)
+    public function replyForPostedPhoto($total, $albumId, $replyToken)
     {
         $bot = $this->initBot();
         $array = [
@@ -276,15 +276,15 @@ class LineEventController extends Controller
                             'text' => "保存",
                         ]
                     ],
-                    [
-                        'type' => 'action',
-                        'action' => [
-                            'type' => 'postback',
-                            'label' => '🌠 スグ消える保存',
-                            'data' => "action=temporary-save&id={$albumId}",
-                            'text' => "一時保存",
-                        ]
-                    ],
+                    // [
+                    //     'type' => 'action',
+                    //     'action' => [
+                    //         'type' => 'postback',
+                    //         'label' => '🌠 スグ消える保存',
+                    //         'data' => "action=temporary-save&id={$albumId}",
+                    //         'text' => "一時保存",
+                    //     ]
+                    // ],
                     [
                         'type' => 'action',
                         'action' => [

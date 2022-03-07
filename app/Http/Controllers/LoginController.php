@@ -7,7 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use App\Models\LineUser;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Jdenticon\Identicon;
 
@@ -59,10 +59,10 @@ class LoginController extends Controller
 
         $providedUser = Socialite::driver('line')->user();
 
-        $user = LineUser::find($providedUser->id);
+        $user = User::find($providedUser->id);
 
         if (!$user) {
-            $user = LineUser::create([
+            $user = User::create([
                 'id' => $providedUser->id,
                 'name' => $providedUser->name ?? 'ノーネーム',
                 'avatar' => $providedUser->avatar ?? asset('img/q.svg'),

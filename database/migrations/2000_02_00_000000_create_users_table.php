@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLineUsersTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLineUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('line_users', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->string('id', 33)->primary();
             $table->boolean('available')->default(true);
             $table->string('name', 20);

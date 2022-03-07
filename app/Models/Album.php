@@ -15,11 +15,11 @@ class Album extends Model
 
     protected $fillable = [
         'id',
-        'line_user_id',
+        'user_id',
     ];
 
     public function images()
     {
-        return $this->hasMany(ImageFromUser::class);
+        return $this->hasMany(Photo::class);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
-use App\Models\ImageFromUser;
+use App\Models\Photo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -47,7 +47,7 @@ class PhotoController extends Controller
             ]);
             $arrayToReIndexing[] = $merged;
         }
-        ImageFromUser::upsert($arrayToReIndexing, 'id', ['index']);
+        Photo::upsert($arrayToReIndexing, 'id', ['index']);
     }
 
     private function delete(Request $request, Album $album)
@@ -88,7 +88,7 @@ class PhotoController extends Controller
 
         $arrayMerged = array_merge($arrayToDelete, $arrayNotToDelete);
 
-        ImageFromUser::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
+        Photo::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
     }
 
     private function restore(Request $request, Album $album)
@@ -129,7 +129,7 @@ class PhotoController extends Controller
 
         $arrayMerged = array_merge($arrayToRestore, $arrayNotToRestore);
 
-        ImageFromUser::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
+        Photo::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
     }
 
     public function trashbox(Album $album)

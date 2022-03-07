@@ -8,7 +8,7 @@
                             <a href="{{ route('albums.show',$album->id) }}" class="album-thumbnail-link">
                                 <div class="img-wrapper-1x1">
                                     <div class="img-content">
-                                        <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
+                                        <img class="rounded" src="{{ \Storage::disk('s3')->url("/{$album->id}/{$album->cover}/s.jpg") }}">
                                     </div>
                                 </div>
                             </a>
@@ -17,7 +17,7 @@
                             <span class="album-thumbnail-link">
                                 <div class="img-wrapper-1x1">
                                     <div class="img-content">
-                                        <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
+                                        <img class="rounded" src="{{ \Storage::disk('s3')->url("/{$album->id}/{$album->cover}/s.jpg") }}">
                                     </div>
                                 </div>
                             </span>
