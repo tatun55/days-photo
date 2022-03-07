@@ -13,13 +13,20 @@ class Album extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = [
-        'id',
-        'user_id',
-    ];
+    // protected $fillable = [
+    //     'id',
+    //     'user_id',
+    //     'group_id',
+    // ];
+    protected $guarded = [];
 
     public function photos()
     {
         return $this->hasMany(Photo::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

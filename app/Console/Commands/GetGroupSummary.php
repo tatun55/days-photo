@@ -4,14 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class GetMessageContent extends Command
+class GetGroupSummary extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:getMsgContent';
+    protected $signature = 'command:getGroupSummary';
 
     /**
      * The console command description.
@@ -39,10 +39,7 @@ class GetMessageContent extends Command
     {
         $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(config('services.line.messaging_api.access_token'));
         $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
-        $response = $bot->getMessageContent('15614895789526');
-        dump($response->getHeaders());
-        $body = $response->getRawBody();
-        $image = \Image::make($body);
-        dump($image->exif());
+        $response = $bot->getGroupSummary('C5929593a295f2ccbb04a198be5836600');
+        dump($response);
     }
 }

@@ -16,6 +16,7 @@ class CreatePhotosTable extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->string('id', 36)->primary();
             $table->string('album_id', 36)->index();
+            $table->foreign('album_id')->references('id')->on('albums')->onDelete('cascade');
             $table->string('message_id', 36);
             $table->unsignedTinyInteger('index');
             $table->unsignedSmallInteger('width')->nullable();

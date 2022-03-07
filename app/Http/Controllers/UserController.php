@@ -10,8 +10,8 @@ class UserController extends Controller
 {
     public function home()
     {
-        $albums = Album::query()
-            ->where('user_id', Auth::user()->id)
+        $albums = Auth::user()
+            ->albums()
             ->withCount('photos')
             ->orderBy('created_at', 'desc')
             ->get();

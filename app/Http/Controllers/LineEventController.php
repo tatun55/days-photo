@@ -60,11 +60,14 @@ class LineEventController extends Controller
                     switch ($event->message->type) {
                         case 'image':
                             $this->verifySignature($request);
-                            $isFromUser = $event->source->type === 'user';
-                            if ($isFromUser && $this->isRegisted($event->source->userId)) {
-                                $this->postedPhoto($event);
+                            switch ($event->source->type) {
+                                case 'user':
+                                    $this->isRegisted($event->source->userId) && $this->postedPhotoFromUser($event);
+                                    break;
+                                case 'group':
+                                    $this->isRegisted($event->source->userId) && $this->postedPhotoFromGroup($event);
+                                    break;
                             }
-                            break;
                     }
                     break;
             }
@@ -130,8 +133,12 @@ class LineEventController extends Controller
         $album = Album::find($albumId);
         $album->status = 'uploading';
         $album->title = $title;
-        $album->cover = Photo::where('album_id', $albumId)->first()->id;
+        $photoId = Photo::where('album_id', $albumId)->withTrashed()->first()->id;
+        $album->cover = \Storage::disk('s3')->url("/{$albumId}/{$photoId}/s.jpg");
         $album->save();
+
+        // who can acess the album
+        $album->users()->syncWithoutDetaching($event->source->userId);
 
         // dispatch store image jobs
         $jobs = [];
@@ -208,7 +215,7 @@ class LineEventController extends Controller
         return User::where('id', $userId)->exists();
     }
 
-    public function postedPhoto($event)
+    public function postedPhotoFromUser($event)
     {
         // 作成途中のAlbumを取得、なければ作成
         $album = Album::firstOrCreate(
@@ -221,20 +228,15 @@ class LineEventController extends Controller
             ]
         );
 
+        /**
+         * ImageSetの序列管理
+         * 画像がImageSetとして複数同時投稿される場合、Event受信が順不同になりうる問題
+         */
         if (isset($event->message->imageSet)) {
-
-            /**
-             * ImageSetの序列管理
-             * 
-             * 画像がImageSetとして複数同時投稿される場合、Event受信が順不同になりうる問題
-             * Sessionとは、UserごとにCookieと併用する一時データ管理方法であり、LINE WebHookサーバーとのやり取りでは使えない
-             * そのためDatabaseを使用している
-             */
-
             $imageSetId = $event->message->imageSet->id;
             $imageSetTotal = $event->message->imageSet->total;
             $imageSetIndex = $event->message->imageSet->index;
-            $imageSet = ImageSet::firstOrCreate(['id' => $event->message->imageSet->id,]);
+            $imageSet = ImageSet::firstOrCreate(['id' => $event->message->imageSet->id]);
             $imageSet->increment('count', 1);
             $index = $album->total + $imageSetIndex;
             if ($imageSet->count === $imageSetTotal) {
@@ -253,10 +255,78 @@ class LineEventController extends Controller
             'id' => (string) \Str::uuid(),
             'album_id' => $album->id,
             'user_id' => $event->source->userId,
-            'group_id' => $event->source->groupId ?? null,
             'message_id' => $event->message->id,
             'index' => $index,
         ]);
+    }
+
+    public function postedPhotoFromGroup($event)
+    {
+        $album = Album::query()
+            ->where('group_id', $event->source->groupId)
+            ->where('status', 'default')
+            ->first();
+
+        if (!$album) {
+            $summary = $this->getGroupSummary($event->source->groupId);
+            $album = Album::Create([
+                'id' => (string) \Str::uuid(),
+                'user_id' => $event->source->userId,
+                'group_id' => $event->source->groupId,
+                'title' => $summary->groupName,
+                'cover' => $summary->pictureUrl,
+            ]);
+        }
+
+        /**
+         * ImageSetの序列管理
+         * 画像がImageSetとして複数同時投稿される場合、Event受信が順不同になりうる問題
+         */
+
+        if (isset($event->message->imageSet)) {
+            $imageSetId = $event->message->imageSet->id;
+            $imageSetTotal = $event->message->imageSet->total;
+            $imageSetIndex = $event->message->imageSet->index;
+            $imageSet = ImageSet::firstOrCreate(['id' => $event->message->imageSet->id,]);
+            $imageSet->increment('count', 1);
+            $index = $album->total + $imageSetIndex;
+            if ($imageSet->count === $imageSetTotal) {
+                $imageSet->delete();
+                $album->increment('total', $imageSetTotal);
+            }
+        } else {
+            $album->increment('total', 1);
+            $index = $album->total;
+        }
+
+        // 投稿された画像情報を保存
+        $photo = Photo::create([
+            'id' => (string) \Str::uuid(),
+            'album_id' => $album->id,
+            'user_id' => $event->source->userId,
+            'group_id' => $event->source->groupId,
+            'message_id' => $event->message->id,
+            'index' => $index,
+        ]);
+
+        // TODO: Registed GroupMembers attach AlbumUser,PhotoUser
+        // User::findMany($groupMembers);
+        $album->users()->syncWithoutDetaching($event->source->userId);
+        StoreImageJob::dispatch($photo->id, $photo->message_id);
+    }
+
+    public function getGroupMemberIds($groupId)
+    {
+        $bot = $this->initBot();
+        $res = $bot->getGroupMemberIds($groupId);
+        return json_decode($res->getRawBody(), false); //object
+    }
+
+    public function getGroupSummary($groupId)
+    {
+        $bot = $this->initBot();
+        $res = $bot->getGroupSummary($groupId);
+        return json_decode($res->getRawBody(), false); //object
     }
 
     public function replyForPostedPhoto($total, $albumId, $replyToken)
@@ -327,7 +397,8 @@ class LineEventController extends Controller
     {
         $bot = $this->initBot();
         $multiMessage = new MultiMessageBuilder();
-        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nグループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
+        // $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nグループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
+        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\n『days.』をグループに招待すると、トークでシェアされた写真を ”ずっと残る” & ”いつでも見れる” ように保存します。\n\nLINEのアルバムとして保存された写真や『days.』に登録していないメンバーの投稿した写真は保存されません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
         $multiMessage->add(new TextMessageBuilder('https://lin.ee/O6NF5rk'));
         $bot->replyMessage($event->replyToken, $multiMessage);
 

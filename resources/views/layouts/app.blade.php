@@ -33,7 +33,7 @@
                     </ul>
                 </div>
                 <div class="d-flex align-items-center">
-                    <a class="text-primary"><span class="fas fa-shopping-cart me-4"></span></a>
+                    <a class="text-primary "><span class="fas fa-shopping-cart me-4 fs-5"></span></a>
                 </div>
             </div>
         </nav>

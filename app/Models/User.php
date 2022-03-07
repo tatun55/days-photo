@@ -17,4 +17,9 @@ class User extends Authenticatable
         'name',
         'avatar',
     ];
+
+    public function albums()
+    {
+        return $this->belongsToMany(Album::class);
+    }
 }

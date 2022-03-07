@@ -263,16 +263,16 @@
             <!-- /gridwrap -->
             <div class="content mb-5">
                 <div class="content__item">
-                    <p class="lead">友だちに送った写真を自動で保存<br>写真はポチッと無料印刷 / 郵送 / アルバム化👌</p>
+                    <p class="lead">友だちに送った写真を自動で保存<br>写真はかんたん操作で、ポチッとアルバム化👌</p>
                 </div>
                 <div class="content__item">
-                    <p class="lead">家族アルバムの作成にも days.（デイズ）<br>ぜったい忘れずに、定期的に自動でできるので楽チン👌</p>
+                    <p class="lead">家族アルバムの作成にも days.（デイズ）<br>ぜったい忘れずに、定期的に自動でできるので簡単👌</p>
                 </div>
                 <div class="content__item">
-                    <p class="lead">恋人同士でシェアした画像がそのまま記念アルバムに<br>オンラインに <b>“ずっと残る保存”</b> も可👌</p>
+                    <p class="lead">恋人同士でシェアした画像がそのまま記念アルバムに<br>オンラインに “ずっと残る保存” もできる👌</p>
                 </div>
                 <div class="content__item">
-                    <p class="lead">パーソナルなフォトダイアリーにも最適<br>手作りスクラップブックも簡単👌</p>
+                    <p class="lead">パーソナルなフォトダイアリーにも最適<br>手作りスクラップブックもできる👌</p>
                 </div>
             </div>
         </div>
