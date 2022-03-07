@@ -210,6 +210,10 @@ ol li {
     text-shadow: 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242;
 }
 
+.text-white-shadow-bold {
+    text-shadow: 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242;
+}
+
 .text-black-shadow {
     text-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff;
 }
