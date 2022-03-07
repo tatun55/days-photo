@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Album;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -154,6 +155,7 @@ class EpsonConnectAPI extends Command
         //--------------------------------------------------------------------------------
         // 2. Create print job
 
+
         $subject_id = $auth_result['Response']['Body']['subject_id'];
         $access_token = $auth_result['Response']['Body']['access_token'];
 
@@ -205,42 +207,52 @@ class EpsonConnectAPI extends Command
         $job_id = $job_result['Response']['Body']['id'];
         $base_uri = $job_result['Response']['Body']['upload_uri'];
 
-        $local_file_path = 'https://days-photo.s3.ap-northeast-1.amazonaws.com/o/6af4f1be-1ce4-4673-963a-a6b216438250.jpg';
-        $content_type = 'application/octet-stream';
 
-        $file_name = '1.jpg';
-        $upload_uri = $base_uri . '&File=' . $file_name;
+        $ids = Album::orderBy('created_at', 'desc')->first()->images()->pluck('id');
+        $file_paths = [];
+        foreach ($ids as $key => $value) {
+            $file_paths[] = \Storage::disk('s3')->url("o/{$value}.jpg");
+        }
 
-        $data = file_get_contents($local_file_path);
+        foreach ($file_paths as $key => $file_path) {
 
-        $options = array(
-            'http' => array(
-                'method' => 'POST',
-                'header' => 'Host: ' . $host . "\r\n" .
-                    'Accept: ' . $accept . "\r\n" .
-                    'Content-Length: ' . strlen($data) . "\r\n" .
-                    'Content-Type: ' . $content_type . "\r\n",
-                'content' => $data,
-                'request_fulluri' => true,
-                'protocol_version' => $protocol,
-                'ignore_errors' => true
-            )
-        );
+            $content_type = 'application/octet-stream';
 
-        $http_response_header = null;
-        $response = @file_get_contents($upload_uri, false, stream_context_create($options));
+            $key++;
+            $file_name = "{$key}.jpg";
+            $upload_uri = $base_uri . '&File=' . $file_name;
 
-        $upload_result = array();
-        $upload_result['Response']['Header'] = $http_response_header;
-        $upload_result['Response']['Body'] = json_decode($response, true);
+            $data = file_get_contents($file_path);
 
-        Log::channel('epson')->info('3', [$upload_uri, $upload_result]);
+            $options = array(
+                'http' => array(
+                    'method' => 'POST',
+                    'header' => 'Host: ' . $host . "\r\n" .
+                        'Accept: ' . $accept . "\r\n" .
+                        'Content-Length: ' . strlen($data) . "\r\n" .
+                        'Content-Type: ' . $content_type . "\r\n",
+                    'content' => $data,
+                    'request_fulluri' => true,
+                    'protocol_version' => $protocol,
+                    'ignore_errors' => true
+                )
+            );
 
-        $matches = null;
-        preg_match('/HTTP\/1\.[0|1|x] ([0-9]{3})/', $upload_result['Response']['Header'][0], $matches);
+            $http_response_header = null;
+            $response = @file_get_contents($upload_uri, false, stream_context_create($options));
 
-        if ($matches[1] !== '200') {
-            exit(1);
+            $upload_result = array();
+            $upload_result['Response']['Header'] = $http_response_header;
+            $upload_result['Response']['Body'] = json_decode($response, true);
+
+            Log::channel('epson')->info('3', [$upload_uri, $upload_result]);
+
+            $matches = null;
+            preg_match('/HTTP\/1\.[0|1|x] ([0-9]{3})/', $upload_result['Response']['Header'][0], $matches);
+
+            if ($matches[1] !== '200') {
+                exit(1);
+            }
         }
 
         //--------------------------------------------------------------------------------

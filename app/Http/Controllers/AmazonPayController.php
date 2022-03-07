@@ -78,12 +78,12 @@ class AmazonPayController extends Controller
                 'paymentIntent' => 'Authorize',
                 'canHandlePendingAuthorization' => false,
                 'chargeAmount' => array(
-                    'amount' => '3000',
+                    'amount' => '1',
                     'currencyCode' => 'JPY'
                 ),
             ),
             'merchantMetadata' => array(
-                'merchantReferenceId' => '2020-00000001',
+                'merchantReferenceId' => \Str::uuid(),
                 'merchantStoreName' => 'daysフォト',
                 'noteToBuyer' => 'ご注文ありがとうございます。'
             )
@@ -119,7 +119,7 @@ class AmazonPayController extends Controller
 
         $payload = array(
             'chargeAmount' => array(
-                'amount' => '3000',
+                'amount' => '1',
                 'currencyCode' => 'JPY'
             ),
         );

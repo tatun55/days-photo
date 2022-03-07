@@ -9,16 +9,13 @@
                 @include('sections.profile-card')
 
                 <div class="col-12 col-lg-8 mt-4 mt-lg-3">
-
                     <nav>
                         <div class="nav nav-tabs mb-4" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active"><span class="fas fa-images me-1"></span>アルバム</a>
                             <a href="{{ route('trashbox') }}" class="nav-item nav-link"><span class="fas fa-trash me-1"></span>アーカイブ</a>
                         </div>
                     </nav>
-
                     @include('sections.albums-list',['type'=>'home'])
-
                 </div>
 
             </div>

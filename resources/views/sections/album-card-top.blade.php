@@ -13,7 +13,7 @@
                     {{ $album->title }}
                     <div class="post-meta font-small">
                         <span class="me-3"><span class="far fa-clock me-2"></span>{{ $album->created_at->format('Y-m-d H:i') }}</span>
-                        <span class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->images_count }}</span>
+                        <span class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->images()->count() }}</span>
                     </div>
                 </span>
             </div>

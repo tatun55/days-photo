@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta name="title" content="days. - かんたんフォト管理 - ">
     <meta name="author" content="COLORBOX Inc.">
-    <meta name="description" content="いつか消えてしまう、あの写真も、ずっと残る。 days.は新しいタイプの “かんたんフォト管理” サービス。30秒でアルバムが完成✅ 無料で印刷・郵送✅">
+    <meta name="description" content="いつか消えてしまう、あの写真も、ずっと残る。 days.は新しいタイプの “かんたんフォト管理” サービス。ずっと残る保存が無料✅ 部屋にかざれるアルバムがスグに✅">
     <link type="text/css" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
     @isset($photoSwipe)
@@ -19,7 +19,7 @@
 
 <body>
     <header class="header-global">
-        <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg nav-theme-white navbar-light">
+        <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg nav-theme-white navbar-light mt-2">
             <div class="container position-relative">
                 <a class="brand-name me-lg-5 px-2 px-lg-0" href="{{ route('home') }}">days.</a>
                 <div class="navbar-collapse collapse me-auto" id="navbar_global">
@@ -33,6 +33,7 @@
                     </ul>
                 </div>
                 <div class="d-flex align-items-center">
+                    <a class="text-primary"><span class="fas fa-shopping-cart me-4"></span></a>
                 </div>
             </div>
         </nav>

@@ -198,13 +198,13 @@
                         </form>
                     </div>
 
-                    <div class="card mb-4">
+                    {{-- <div class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title">配送方法</h5>
                             <p>指定なし</p>
                             <button class="btn btn-gray-200 float-end">変更</button>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>
