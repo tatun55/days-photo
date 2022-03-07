@@ -23,7 +23,7 @@
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active"><span class="fas fa-images me-1"></span>フォト</a>
-                            <a href="{{ route('albums.photos.trashbox',$album->id) }}" class="nav-item nav-link"><span class="fas fa-trash me-1"></span>アーカイブ</a>
+                            <a href="{{ route('albums.trashbox',$album->id) }}" class="nav-item nav-link"><span class="fas fa-trash me-1"></span>アーカイブ</a>
                         </div>
                     </nav>
                     {{-- End of Tab Menu --}}

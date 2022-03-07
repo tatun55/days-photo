@@ -28,8 +28,8 @@ class PhotoController extends Controller
 
     private function destroy(Request $request, Album $album)
     {
-        $album->images()->onlyTrashed()->whereIn('index', $request->items)->forceDelete();
-        $images = $album->images()->onlyTrashed()->orderBy('index', 'asc')->get();
+        $album->photos()->onlyTrashed()->whereIn('index', $request->items)->forceDelete();
+        $images = $album->photos()->onlyTrashed()->orderBy('index', 'asc')->get();
         if (!$images->isEmpty()) {
             $this->reIndexing($images->toArray());
         }
@@ -62,8 +62,8 @@ class PhotoController extends Controller
         $now = Carbon::now()->toDateTimeString();
 
         // Generate $arrayToDelete
-        $count = $album->images()->onlyTrashed()->count();
-        $imagesToDelete = $album->images()->orderBy('index', 'asc')->whereIn('index', $request->items)->get()->toArray();
+        $count = $album->photos()->onlyTrashed()->count();
+        $imagesToDelete = $album->photos()->orderBy('index', 'asc')->whereIn('index', $request->items)->get()->toArray();
         foreach ($imagesToDelete as $key => $value) {
             $merged = array_merge($value, [
                 'index' => $key + 1 + $count,
@@ -75,7 +75,7 @@ class PhotoController extends Controller
         }
 
         // Generate $arrayNotToDelete
-        $imagesNotToDelete = $album->images()->orderBy('index', 'asc')->whereNotIn('index', $request->items)->get()->toArray();
+        $imagesNotToDelete = $album->photos()->orderBy('index', 'asc')->whereNotIn('index', $request->items)->get()->toArray();
         foreach ($imagesNotToDelete as $key => $value) {
             $merged = array_merge($value, [
                 'index' => $key + 1,
@@ -103,8 +103,8 @@ class PhotoController extends Controller
         $now = Carbon::now()->toDateTimeString();
 
         // Generate $arrayToRestore
-        $count = $album->images()->count();
-        $imagesToRestore = $album->images()->onlyTrashed()->orderBy('deleted_at', 'desc')->whereIn('index', $request->items)->get()->toArray();
+        $count = $album->photos()->count();
+        $imagesToRestore = $album->photos()->onlyTrashed()->orderBy('deleted_at', 'desc')->whereIn('index', $request->items)->get()->toArray();
         foreach ($imagesToRestore as $key => $value) {
             $merged = array_merge($value, [
                 'index' => $key + 1 + $count,
@@ -116,7 +116,7 @@ class PhotoController extends Controller
         }
 
         // Generate $arrayNotToRestore
-        $imagesNotToRestore = $album->images()->onlyTrashed()->orderBy('deleted_at', 'desc')->whereNotIn('index', $request->items)->get()->toArray();
+        $imagesNotToRestore = $album->photos()->onlyTrashed()->orderBy('deleted_at', 'desc')->whereNotIn('index', $request->items)->get()->toArray();
         foreach ($imagesNotToRestore as $key => $value) {
             $merged = array_merge($value, [
                 'index' => $key + 1,
@@ -130,11 +130,5 @@ class PhotoController extends Controller
         $arrayMerged = array_merge($arrayToRestore, $arrayNotToRestore);
 
         Photo::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
-    }
-
-    public function trashbox(Album $album)
-    {
-        $items = $album->images()->onlyTrashed()->get(['id', 'index', 'width', 'height'])->keyBy('index');
-        return view('pages.user.album.trash', compact('album', 'items'));
     }
 }

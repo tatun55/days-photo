@@ -29,9 +29,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('albums/{album}', [AlbumController::class, 'delete'])->name('albums.delete');
     Route::delete('albums/{album}/force', [AlbumController::class, 'forceDelete'])->withTrashed()->name('albums.delete.force');
     Route::put('albums/{album}/title', [AlbumController::class, 'title'])->name('albums.title');
+    Route::get('albums/{album}/trashbox', [AlbumController::class, 'trashbox'])->name('albums.trashbox');
 
     Route::put('albums/{album}/photos', [PhotoController::class, 'action'])->name('albums.photos.action');
-    Route::get('albums/{album}/trashbox', [PhotoController::class, 'trashbox'])->name('albums.photos.trashbox');
 
     Route::get('amazon-pay/review', [AmazonPayController::class, 'review'])->name('amazon-pay.review');
     Route::post('amazon-pay/checkout', [AmazonPayController::class, 'checkout'])->name('amazon-pay.checkout');

@@ -208,7 +208,7 @@ class EpsonConnectAPI extends Command
         $base_uri = $job_result['Response']['Body']['upload_uri'];
 
 
-        $ids = Album::orderBy('created_at', 'desc')->first()->images()->pluck('id');
+        $ids = Album::orderBy('created_at', 'desc')->first()->photos()->pluck('id');
         $file_paths = [];
         foreach ($ids as $key => $value) {
             $file_paths[] = \Storage::disk('s3')->url("o/{$value}.jpg");

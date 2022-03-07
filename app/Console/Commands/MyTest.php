@@ -38,7 +38,7 @@ class MyTest extends Command
      */
     public function handle()
     {
-        $ids = Album::orderBy('created_at', 'desc')->first()->images()->pluck('id');
+        $ids = Album::orderBy('created_at', 'desc')->first()->photos()->pluck('id');
         $urls = [];
         foreach ($ids as $key => $value) {
             $urls[] = \Storage::disk('s3')->url("o/{$value}.jpg");

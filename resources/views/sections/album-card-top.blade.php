@@ -5,7 +5,7 @@
                 <div class="profile-thumbnail mx-lg-auto me-3">
                     <div class="img-wrapper-1x1">
                         <div class="img-content">
-                            <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
+                            <img class="rounded" src="{{ \Storage::disk('s3')->url("/{$album->id}/{$album->cover}/s.jpg") }}">
                         </div>
                     </div>
                 </div>
@@ -13,7 +13,7 @@
                     {{ $album->title }}
                     <div class="post-meta font-small">
                         <span class="me-3"><span class="far fa-clock me-2"></span>{{ $album->created_at->format('Y-m-d H:i') }}</span>
-                        <span class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->images()->count() }}</span>
+                        <span class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->photos()->count() }}</span>
                     </div>
                 </span>
             </div>

@@ -58,7 +58,7 @@
                             <span class="me-3"><span class="far fa-clock me-2"></span>{{ $album->created_at->format('Y-m-d H:i') }}</span>
                             @switch($type)
                                 @case('home')
-                                    <a href="{{ route('albums.show',$album->id) }}" class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->images_count }}</a>
+                                    <a href="{{ route('albums.show',$album->id) }}" class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->photos_count }}</a>
                                     @break
                             @endswitch
                         </div>
