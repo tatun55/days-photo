@@ -25,6 +25,8 @@ class AmazonPayController extends Controller
                 $response = json_decode($result['response'], false); // object
                 // dd($response->chargeId);
 
+                
+
                 return view('pages.user.payment-review', compact('response'));
 
                 // NOTE: Once Checkout Session moves to a "Completed" state, buyer and shipping

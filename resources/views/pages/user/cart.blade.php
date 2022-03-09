@@ -20,95 +20,12 @@
                     </div>
                 @else
                     <div class="col-lg-8">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title">ショッピングカート</h5>
-                                <div id="cart-table-wrapper">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th> </th>
-                                                <th>タイトル</th>
-                                                <th style="width: 16%">タイプ</th>
-                                                <th style="width: 8%">数量</th>
-                                                <th style="width: 8%">価格</th>
-                                                <th style="width: 8%">小計</th>
-                                                <th style="width: 8%"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($orders as $order)
-                                                <tr class="text-center">
-                                                    <th aria-label="お写真">
-                                                        <div class="mx-auto m-3 my-md-0" style="width: 80px; height: 80px;">
-                                                            <img class="rounded" src="{{ $order->album->cover }}" alt="...">
-                                                        </div>
-                                                    </th>
-                                                    <td aria-label="タイトル">{{ $order->album->title }}</td>
-                                                    <td aria-label="タイプ">
-                                                        シンプル
-                                                    </td>
-                                                    <td aria-label="価格">
-                                                        1
-                                                    </td>
-                                                    <td aria-label="数量">
-                                                        1
-                                                    </td>
-                                                    <td aria-label="小計">
-                                                        1
-                                                    </td>
-                                                    <td aria-label="">
-                                                        <div class="d-flex justify-content-center">
-                                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-cart-delete-{{ $order->id }}"><i class="fas fa-trash"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        @include('sections.cart.item-info',['isReview'=>false])
                     </div>
 
                     <!-- Sidebar Widgets Column -->
                     <div class="col-lg-4">
-                        <div class="card mb-4">
-                            <form method="post" action="{{ route('amazon-pay.checkout') }}">
-                                @csrf
-                                <input type="hidden" name="checkout_session_id" value="{{}}">
-                                <div class="card-body" id="highlight2">
-                                    <h5>お支払い金額</h5>
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <td>商品合計</td>
-                                                <td class="text-right">￥2,500</td>
-                                            </tr>
-                                            <tr>
-                                                <td>送料</td>
-                                                <td class="text-right">￥0</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>総合計</strong></td>
-                                                <td class="text-right"><strong>￥3,000</strong></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                    <div>
-                                        <button id="placeorder" class="btn btn-primary" type="submit">購入する</button>
-                                    </div>
-
-                                    <div class="mt-3">
-                                        <p>※デモサイトです</p>
-                                        <p class="mb-0">※課金はされません</p>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-
+                        @include('sections.cart.total-price',['isReview'=>false])
                     </div>
                 @endif
             </div>
@@ -120,4 +37,25 @@
 @endsection
 
 @section('script')
+<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+<script type="text/javascript" charset="utf-8">
+    amazon.Pay.renderButton('#AmazonPayButton', {
+        // set checkout environment
+        merchantId: 'A1V2ZW022WI0BY',
+        ledgerCurrency: 'JPY',
+        sandbox: true,
+        // customize the buyer experience
+        checkoutLanguage: 'ja_JP',
+        productType: 'PayAndShip',
+        placement: 'Cart',
+        buttonColor: 'Gold', // Gold,DarkGray,LightGray
+        // configure Create Checkout Session request
+        createCheckoutSessionConfig: {
+            payloadJSON: '{"scopes": ["name", "email", "phoneNumber", "billingAddress"],"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/order/review"}}', // string generated in step 2
+            signature: '0j3F1awQQ/KwZ4jZTvqgsND9Cs0oAkF44dNPB9DTTssQrZqG9SCgWxr5TjZgyCQqNR1ie/UZGEGah/NWCY/in+0O8vn+cbrV66FZrdgp+fH9ILPlsKsmsOZlPJRtpoZgqPWH2NSE1VRhhCKzbzr4Q1+sjd0PhOsrfrf49WMxjFt4SppKBeqZJmfrUpWCaSv++w0yf9PdfJ+I6VS7mOu8/tLSOWiabQQY2Qyo0edGR+ESr+I1hs6GlXYaoXNHgkDaGHUcZx+tJFIzurpyULkti9vwJDmeoZNhLopmBIWR7Jw/UV64YfsR3KWuC+UzvMl6vAAHAqo8oMcMwCHctN6HiQ==', // signature generated in step 3
+            publicKeyId: 'SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU'
+        }
+    });
+
+</script>
 @endsection

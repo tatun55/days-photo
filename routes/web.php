@@ -35,9 +35,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('albums/{album}/photos', [PhotoController::class, 'action'])->name('albums.photos.action');
 
-    Route::get('amazon-pay/review', [AmazonPayController::class, 'review'])->name('amazon-pay.review');
-    Route::post('amazon-pay/checkout', [AmazonPayController::class, 'checkout'])->name('amazon-pay.checkout');
-    Route::get('amazon-pay/complete', [AmazonPayController::class, 'complete'])->name('amazon-pay.complete');
+    Route::get('order/review', [OrderController::class, 'review'])->name('order.review');
+    Route::post('order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+    Route::get('order/complete', [OrderController::class, 'complete'])->name('order.complete');
 
     Route::post('order', [OrderController::class, 'store'])->name('order.store');
     Route::get('cart', [OrderController::class, 'cart'])->name('cart');
