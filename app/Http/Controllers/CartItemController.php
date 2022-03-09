@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CartItemController extends Controller
 {
@@ -62,41 +64,9 @@ class CartItemController extends Controller
 
                 // price info
                 $cartItems = CartItem::where('user_id', Auth::user()->id)->where('order_id', null)->orderBy('created_at', 'desc')->get();
-                $price = 0;
-                foreach ($cartItems as $cartItem) {
-                    $price += 1;
-                }
-                $total = [
-                    'price' => $price,
-                    'postage' => 0,
-                    'total_price' => $price,
-                ];
-                $total = json_decode(json_encode($total), false);
+                $total = $this->getCurrentCartTotal($cartItems);
 
                 return view('pages.user.payment-review', compact('response', 'cartItems', 'total'));
-
-                // NOTE: Once Checkout Session moves to a "Completed" state, buyer and shipping
-                // details must be obtained from the getCharges() function call instead
-
-                $checkoutSessionState = $response['statusDetails']['state'];
-                $chargeId = $response['chargeId'];
-                $chargePermissionId = $response['chargePermissionId'];
-
-                $buyerName = $response['buyer']['name'];
-                $buyerEmail = $response['buyer']['email'];
-
-                $shipName = $response['shippingAddress']['name'];
-                $shipAddrLine1 = $response['shippingAddress']['addressLine1'];
-                $shipCity = $response['shippingAddress']['city'];
-                $shipState = $response['shippingAddress']['stateOrRegion'];
-                $shipZip = $response['shippingAddress']['postalCode'];
-                $shipCounty = $response['shippingAddress']['countryCode'];
-
-                echo "checkoutSessionState=$checkoutSessionState\n";
-                echo "chargeId=$chargeId; chargePermissionId=$chargePermissionId\n";
-                echo "buyer=$buyerName ($buyerEmail)\n";
-                echo "shipName=$shipName\n";
-                echo "address=$shipAddrLine1; $shipCity $shipState $shipZip ($shipCounty)\n";
             } else {
                 // check the error
                 echo 'status=' . $result['status'] . '; response=' . $result['response'] . "\n";
@@ -108,9 +78,25 @@ class CartItemController extends Controller
         return;
     }
 
+    private function getCurrentCartTotal($cartItems)
+    {
+        $price = 0;
+        foreach ($cartItems as $cartItem) {
+            $price += 1;
+        }
+        $total = [
+            'price' => $price,
+            'postage' => 0,
+            'total_price' => $price,
+        ];
+        return json_decode(json_encode($total), false);
+    }
+
     public function checkout(Request $request)
     {
-        // dd($request);
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->where('order_id', null)->orderBy('created_at', 'desc')->get();
+        $total = $this->getCurrentCartTotal($cartItems);
+
         $amazonpay_config = array(
             'public_key_id' => config('services.amazon_pay.public_key_id'),
             'private_key'   => storage_path('AmazonPay_SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU.pem'),
@@ -126,7 +112,7 @@ class CartItemController extends Controller
                 'paymentIntent' => 'Authorize',
                 'canHandlePendingAuthorization' => false,
                 'chargeAmount' => array(
-                    'amount' => '1',
+                    'amount' => $total->total_price,
                     'currencyCode' => 'JPY'
                 ),
             ),
@@ -157,7 +143,9 @@ class CartItemController extends Controller
 
     public function complete(Request $request)
     {
-        // dd($request);
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->where('order_id', null)->orderBy('created_at', 'desc')->get();
+        $total = $this->getCurrentCartTotal($cartItems);
+
         $amazonpay_config = array(
             'public_key_id' => config('services.amazon_pay.public_key_id'),
             'private_key'   => storage_path('AmazonPay_SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU.pem'),
@@ -167,7 +155,7 @@ class CartItemController extends Controller
 
         $payload = array(
             'chargeAmount' => array(
-                'amount' => '1',
+                'amount' => $total->total_price,
                 'currencyCode' => 'JPY'
             ),
         );
@@ -181,12 +169,34 @@ class CartItemController extends Controller
             if ($result['status'] === 200) {
                 $response = json_decode($result['response'], true);
 
-                dd($response);
+                if ($response['statusDetails']['state'] === 'Completed') {
+                    $order = new Order();
+                    $order->uuid = \Str::uuid();
+                    $order->user_id = Auth::user()->id;
+                    $order->raw_resp = $result['response'];
+                    $order->save();
 
-                echo "state=$state; reasonCode=$reasonCode; reasonDescription=$reasonDescription\n";
+                    $arr = $cartItems->toArray();
+                    $newArr = [];
+                    $now = \Carbon\Carbon::now();
+                    foreach ($arr as $key => $value) {
+                        $merged = array_merge($value, ['order_id' => $order->id, 'created_at' => \Carbon\Carbon::create($value["created_at"])->toDateTimeString(), 'updated_at' => $now->toDateTimeString()]);
+                        $newArr[] = $merged;
+                    }
+                    // dd($newArr);
+                    DB::table('cart_items')->upsert($newArr, 'id', ['order_id']);
+
+                    return view('pages.user.order-completed', compact('cartItems'));
+                } else {
+                    \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                    return redirect('cart')->with('status', '決済中にエラーが発生しました');
+                }
             } else {
-                // check the error
-                echo 'status=' . $result['status'] . '; response=' . $result['response'] . "\n";
+                \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                return redirect('cart')->with('status', '決済中にエラーが発生しました');
+
+                // // check the error
+                // echo 'status=' . $result['status'] . '; response=' . $result['response'] . "\n";
             }
         } catch (\Exception $e) {
             // handle the exception

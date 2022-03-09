@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id', 33);
             $table->string('uuid', 36);
             $table->enum('status', ['confirmed', 'shipping', 'shipped', 'canceled'])->default('confirmed');
             $table->json('raw_resp');
