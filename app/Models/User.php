@@ -22,4 +22,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Album::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

@@ -10,7 +10,9 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['status'];
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     /**
      * Get the user associated with the Order

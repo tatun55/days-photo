@@ -274,6 +274,25 @@ main {
 }
 
 
+/* バッチ */
+
+.badge-num {
+    position: absolute;
+    display: inline-block;
+    top: -4px;
+    right: -4px;
+    background: #F00;
+    color: white;
+    z-index: 29999;
+    font-size: 7px;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    line-height: 10px;
+}
+
+
 /* リスト調整 */
 
 ol,

@@ -9,17 +9,17 @@
                 @if($orders->isEmpty())
                     <div class="col-lg-8">
                         <div class="card p-1 p-md-4 mb-4 mb-lg-0 bg-gray-100">
-                            <div class="card-body">
+                            <div class="card-body text-center">
                                 <div class="icon icon-shape icon-shape-primary rounded-circle mb-4">
                                     <span class="far fa-lightbulb"></span>
                                 </div>
-                                <h3 class="h5 mb-3">現在、お届け先がありません</h3>
-                                <p>お届け先を登録しておくと、部屋にかざれるミニアルバムをワンクリックで、スムーズに発送できます。</p>
+                                <h3 class="h5 mb-3">現在、カート内に商品がありません</h3>
+                                <p><code class="px-2 py-1 mx-2 d-inline-block bg-gray-300">アルバムのドロップダウンメニュー</code><span><i class="fa fa-arrow-right"></i></span><code class="px-2 py-1 mx-2 d-inline-block bg-gray-300">ミニアルバムを作る</code> で商品を追加できます。</p>
                             </div>
                         </div>
                     </div>
                 @else
-                    <div class="col-md-8">
+                    <div class="col-lg-8">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <h5 class="card-title">ショッピングカート</h5>
@@ -59,7 +59,7 @@
                                                     </td>
                                                     <td aria-label="">
                                                         <div class="d-flex justify-content-center">
-                                                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-cart-delete-{{ $order->id }}"><i class="fas fa-trash"></i></button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -72,7 +72,7 @@
                     </div>
 
                     <!-- Sidebar Widgets Column -->
-                    <div class="col-md-4">
+                    <div class="col-lg-4">
                         <div class="card mb-4">
                             <form method="post" action="{{ route('amazon-pay.checkout') }}">
                                 @csrf
@@ -114,8 +114,8 @@
             </div>
 
         </div>
-
     </div>
+    @include('sections.modals.cart')
 </main>
 @endsection
 

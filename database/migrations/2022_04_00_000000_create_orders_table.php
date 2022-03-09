@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->string('id', 36);
             $table->enum('status', ['default', 'confirmed', 'shipping', 'shipped'])->default('default');
             $table->string('user_id', 33);
             $table->string('album_id', 36);
