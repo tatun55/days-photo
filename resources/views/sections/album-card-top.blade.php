@@ -23,9 +23,9 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu d-lg-none">
-                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-album-{{ $album->id }}"><span class="me-2"><span class="fas fa-book-open"></span></span>ミニアルバムを注文</button>
-                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
-                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
+                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-album"><span class="me-2"><span class="fas fa-book-open"></span></span>ミニアルバムを作る</button>
+                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
+                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
                 </div>
             </div>
         </div>
@@ -33,9 +33,9 @@
         {{-- LG幅以上のサイドメニュー --}}
         <div class="card-body p-2 d-none d-lg-block">
             <div class="list-group dashboard-menu list-group-sm">
-                <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-album-{{ $album->id }}"><span class="me-2"><span class="fas fa-book-open"></span></span>ミニアルバムを注文<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
-                <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-title-{{ $album->id }}"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
-                <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $album->id }}"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-album"><span class="me-2"><span class="fas fa-book-open"></span></span>ミニアルバムを作る<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-title"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
+                <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-delete"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
             </div>
         </div>
     </div>

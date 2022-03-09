@@ -153,7 +153,7 @@ main {
 
 .brand-name {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-left: .4rem;
 }
 
@@ -202,9 +202,11 @@ ol li {
 /* トースト調整 */
 
 .toast {
-    /* max-width: 95%; */
     margin: 0 8px;
 }
+
+
+/* 文字の縁取り */
 
 .text-white-shadow {
     text-shadow: 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242;
@@ -216,6 +218,14 @@ ol li {
 
 .text-black-shadow {
     text-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff;
+}
+
+
+/* カルーセル */
+
+.carousel-indicators .active {
+    background: #fff;
+    background-clip: padding-box;
 }
 
 

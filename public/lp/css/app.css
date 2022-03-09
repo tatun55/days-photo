@@ -36,7 +36,9 @@ a.link:hover {
     color: #6dc234 !important;
 }
 
+
 /* フッターのデザイン */
+
 .footer {
     color: #1F2937 !important;
     font-size: 0.9rem;
@@ -69,7 +71,31 @@ a.link:hover {
     font-weight: 300 !important;
 }
 
+.nav__footer .brand {
+    color: #1F2937 !important;
+    font-size: 1.2rem;
+    font-weight: 300 !important;
+}
+
+.nav__footer .produce {
+    color: #1F2937 !important;
+    font-size: 0.8rem;
+    font-weight: 300 !important;
+    margin-bottom: 1rem;
+}
+
+.nav__footer a {
+    color: #1F2937 !important;
+}
+
+.nav__footer a:hover {
+    text-decoration: underline;
+    color: #1F2937 !important;
+}
+
+
 /* ヒーローデザイン */
+
 .text-colored {
     color: #64B330;
     font-weight: 600;
@@ -95,11 +121,9 @@ a.link:hover {
     h5 {
         font-size: 4vw;
     }
-
     .lead {
         font-size: 3.2vw;
     }
-
     .grid {
         height: calc(var(--grigheight) * 0.8);
         grid-template-rows: repeat(10, calc(var(--gridheight) / 14 - var(--gridgap)));
@@ -107,7 +131,9 @@ a.link:hover {
     }
 }
 
+
 /* フォントサイズ調整 */
+
 @media (max-width: 768px) {
     html {
         font-size: 14px;

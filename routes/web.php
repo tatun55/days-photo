@@ -13,6 +13,7 @@ Route::get('/', [TopController::class, 'welcome'])->name('welcome');
 Route::get('pp', [TopController::class, 'pp'])->name('pp');
 Route::get('terms', [TopController::class, 'terms'])->name('terms');
 Route::get('ld', [TopController::class, 'ld'])->name('ld');
+Route::get('about', [TopController::class, 'about'])->name('about');
 
 Route::get('login/line', [LoginController::class, 'redirectToProvider'])->name('login');
 Route::get('login/line/callback', [LoginController::class, 'handleProviderCallback']);

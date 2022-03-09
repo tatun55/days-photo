@@ -8,7 +8,7 @@
 
                 <!--Breadcrumb-->
                 <nav class="ms-2 mb-0 mt-3" aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                    <ol class="breadcrumb breadcrumb-transparent">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}"><span class="fas fa-home"></span></span> ホーム</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ $album->title }}</li>
                     </ol>
