@@ -44,28 +44,31 @@
                     <button type="button" class="btn-close ms-auto p-3" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="card-header border-0 bg-white text-center pb-3">
                         <h2 class="h4">部屋に飾れるミニアルバムを作る</h2>
-                        <span>このページで管理中のフォト {{ $album->photos()->count() }} 枚から作成します</span>
+                        <span>このアルバムで管理中のフォト {{ $album->photos()->count() }} 枚から作成します</span>
                     </div>
-                    <form class="card-body">
+                    <form method="POST" action="{{ route('order.store') }}" class="card-body">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ \Auth::user()->id }}">
+                        <input type="hidden" name="album_id" value="{{ $album->id }}">
                         <label class="h6">ページ数 <small class="fw-light"><span class="text-danger">*</span>25ページまで</small></label>
                         <p>{{ $album->photos()->count() }}ページ</p>
                         <label class="h6">タイプを選択</label>
                         <div class="form-group d-block d-sm-flex justify-content-between">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                <label class="form-check-label" for="exampleRadios1">
+                                <input class="form-check-input" type="radio" name="type" id="type1" value="1" checked>
+                                <label class="form-check-label" for="type1">
                                     シンプル
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" disabled>
-                                <label class="form-check-label" for="exampleRadios2">
+                                <input class="form-check-input" type="radio" name="type" id="type2" value="2" disabled>
+                                <label class="form-check-label" for="type2">
                                     カジュアル <span class="text-danger">*</span>準備中
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                                <label class="form-check-label" for="exampleRadios3">
+                                <input class="form-check-input" type="radio" name="type" id="type3" value="3" disabled>
+                                <label class="form-check-label" for="type3">
                                     ミニマル <span class="text-danger">*</span>準備中
                                 </label>
                             </div>
@@ -103,14 +106,14 @@
                         <div class="container">
                             <div class="form-group row">
                                 <div class="form-check col-6">
-                                    <input class="form-check-input" type="radio" name="print_type" id="print_type_1" value="1" disabled>
-                                    <label class="form-check-label" for="print_type_1">
+                                    <input class="form-check-input" type="radio" name="self_print" id="self_print_1" value="0" checked>
+                                    <label class="form-check-label" for="self_print_1">
                                         弊社で印刷
                                     </label>
                                 </div>
                                 <div class="form-check col-6">
-                                    <input class="form-check-input" type="radio" name="print_type" id="print_type_2" value="2" disabled>
-                                    <label class="form-check-label" for="print_type_2">
+                                    <input class="form-check-input" type="radio" name="self_print" id="self_print_2" value="1">
+                                    <label class="form-check-label" for="self_print_2">
                                         自分で印刷
                                     </label>
                                 </div>

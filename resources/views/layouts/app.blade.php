@@ -33,7 +33,7 @@
                     </ul>
                 </div>
                 <div class="d-flex align-items-center">
-                    <a class="text-primary "><span class="fas fa-shopping-cart me-2 fs-5"></span></a>
+                    <a href="{{ route('cart') }}" class="text-primary"><span class="fas fa-shopping-cart me-2 fs-5"></span></a>
                 </div>
             </div>
         </nav>

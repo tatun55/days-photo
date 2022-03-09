@@ -161,19 +161,19 @@ main {
 /* テーブル調整 */
 
 @media (max-width: 768px) {
-    #section-ld .table,
-    #section-ld .table td,
-    #section-ld .table th {
+    .responsive-table,
+    .responsive-table td,
+    .responsive-table th {
         border-collapse: collapse;
         text-align: center;
     }
-    #section-ld .table th {
+    .responsive-table th {
         display: block;
         width: 100%;
         border: 0;
         padding: 1.5rem 0.5rem .1rem;
     }
-    #section-ld .table td {
+    .responsive-table td {
         display: block;
         width: 100%;
         padding: 0 0.5rem 1.5rem;
@@ -184,6 +184,93 @@ main {
     /* max-width: 25% !important; */
     width: 6rem !important;
     text-align: right;
+}
+
+
+/* カート用のテーブル */
+
+#cart-table-wrapper {
+    max-width: 750px;
+    padding: 0 10px;
+    margin: 20px auto;
+    font-size: 14px
+}
+
+#cart-table-wrapper table {
+    width: 100%
+}
+
+#cart-table-wrapper table th {
+    text-align: center
+}
+
+@media screen and (min-width: 768px) {
+    #cart-table-wrapper table {
+        table-layout: fixed
+    }
+    #cart-table-wrapper table td,
+    #cart-table-wrapper table th {
+        padding: 10px;
+        border: 1px solid #eee,
+    }
+    #cart-table-wrapper table td a,
+    #cart-table-wrapper table th a {
+        margin: 0 3px
+    }
+    #cart-table-wrapper table thead>tr>th {
+        background-color: #fafafa
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #cart-table-wrapper table {
+        display: block
+    }
+    #cart-table-wrapper table thead {
+        display: none
+    }
+    #cart-table-wrapper table tbody,
+    #cart-table-wrapper table td,
+    #cart-table-wrapper table th,
+    #cart-table-wrapper table tr {
+        display: block;
+        width: 100%
+    }
+    #cart-table-wrapper table tbody a,
+    #cart-table-wrapper table td a,
+    #cart-table-wrapper table th a,
+    #cart-table-wrapper table tr a {
+        margin: 0 3px
+    }
+    #cart-table-wrapper table tr {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 5px
+    }
+    #cart-table-wrapper table th {
+        padding: 10px 10px 5px;
+        font-weight: 700;
+        font-size: 16px
+    }
+    #cart-table-wrapper table td {
+        position: relative;
+        padding: 10px 10px 10px calc(25% + 10px);
+        border-top: 1px solid #eee;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+        background-color: #fff
+    }
+    #cart-table-wrapper table td:before {
+        content: attr(aria-label);
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        width: 25%;
+        height: 100%;
+        padding: 10px;
+        border-right: 1px solid #eee;
+        background-color: #fafafa
+    }
 }
 
 

@@ -62,6 +62,11 @@
                                     @break
                             @endswitch
                         </div>
+                        <div>
+                            @if($album->group_id !== null)
+                                <span class="badge bg-primary px-2">グループ</span>
+                            @endif
+                        </div>
                     </div>
                 </li>
 

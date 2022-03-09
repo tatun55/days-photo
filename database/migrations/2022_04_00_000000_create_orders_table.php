@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('album_user', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('album_id', 36);
-            $table->foreign('album_id')->references('id')->on('albums')->onDelete('cascade');
+            $table->enum('status', ['default', 'confirmed', 'shipping', 'shipped'])->default('default');
             $table->string('user_id', 33);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('album_id', 36);
+            $table->enum('type', ['simple', 'casual', 'minimal']);
+            $table->boolean('self_print');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('album_user');
+        Schema::dropIfExists('orders');
     }
 };

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AmazonPayController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TopController;
@@ -37,6 +38,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('amazon-pay/review', [AmazonPayController::class, 'review'])->name('amazon-pay.review');
     Route::post('amazon-pay/checkout', [AmazonPayController::class, 'checkout'])->name('amazon-pay.checkout');
     Route::get('amazon-pay/complete', [AmazonPayController::class, 'complete'])->name('amazon-pay.complete');
+
+    Route::post('order', [OrderController::class, 'store'])->name('order.store');
+    Route::get('cart', [OrderController::class, 'cart'])->name('cart');
 });
 
 Route::get('test', function () {

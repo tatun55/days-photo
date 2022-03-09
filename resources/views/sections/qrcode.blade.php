@@ -5,8 +5,8 @@
                 @guest
                     <div class="d-md-flex d-block justify-content-center align-items-center">
                         <div class="text-center">
-                            <img class="qrcode" src="https://qr-official.line.me/sid/L/645yuzex.png">
-                            {{-- <img class="qrcode m-2" src="https://dummyimage.com/640x640/cccccc/ffffff&text=現在準備中"> --}}
+                            {{-- <img class="qrcode" src="https://qr-official.line.me/sid/L/645yuzex.png"> --}}
+                            <img class="qrcode m-2" src="https://dummyimage.com/640x640/cccccc/ffffff&text=現在準備中">
                         </div>
                         <div class="text-center text-md-left">
                             <h5><span class="d-none d-md-inline">👈 </span>コチラからLINE公式アカウントを登録</h5>
