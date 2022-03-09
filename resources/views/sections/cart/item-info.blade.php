@@ -18,19 +18,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($orders as $order)
+                    @foreach($cartItems as $cartItem)
                         <tr class="text-center">
                             <th aria-label="お写真">
                                 <div class="mx-auto m-3 my-md-0" style="width: 80px; height: 80px;">
-                                    <img class="rounded" src="{{ $order->album->cover }}" alt="...">
+                                    <img class="rounded" src="{{ $cartItem->album->cover }}" alt="...">
                                 </div>
                             </th>
-                            <td aria-label="タイトル">{{ $order->album->title }}</td>
+                            <td aria-label="タイトル">{{ $cartItem->album->title }}</td>
                             <td aria-label="タイプ">
                                 シンプル
                             </td>
                             <td aria-label="印刷">
-                                @if($order->self_print)
+                                @if($cartItem->self_print)
                                     セルフ
                                 @else
                                     弊社
@@ -48,7 +48,7 @@
                             @if(! $isReview)
                                 <td aria-label="">
                                     <div class="d-flex justify-content-center">
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-cart-delete-{{ $order->id }}"><i class="fas fa-trash"></i></button>
+                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-cart-delete-{{ $cartItem->id }}"><i class="fas fa-trash"></i></button>
                                     </div>
                                 </td>
                             @endif

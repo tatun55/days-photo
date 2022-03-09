@@ -3,7 +3,7 @@
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AmazonPayController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TopController;
@@ -35,13 +35,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('albums/{album}/photos', [PhotoController::class, 'action'])->name('albums.photos.action');
 
-    Route::get('order/review', [OrderController::class, 'review'])->name('order.review');
-    Route::post('order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
-    Route::get('order/complete', [OrderController::class, 'complete'])->name('order.complete');
+    Route::get('order/review', [CartItemController::class, 'review'])->name('order.review');
+    Route::post('order/checkout', [CartItemController::class, 'checkout'])->name('order.checkout');
+    Route::get('order/complete', [CartItemController::class, 'complete'])->name('order.complete');
 
-    Route::post('order', [OrderController::class, 'store'])->name('order.store');
-    Route::get('cart', [OrderController::class, 'cart'])->name('cart');
-    Route::delete('cart/{order}', [OrderController::class, 'destroy'])->name('cart.delete');
+    Route::post('order', [CartItemController::class, 'store'])->name('order.store');
+    Route::get('cart', [CartItemController::class, 'cart'])->name('cart');
+    Route::delete('cart/{cartItem}', [CartItemController::class, 'destroy'])->name('cart.delete');
 });
 
 Route::get('test', function () {

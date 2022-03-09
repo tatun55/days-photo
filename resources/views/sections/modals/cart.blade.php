@@ -1,7 +1,7 @@
-@foreach($orders as $order)
-    <div class="modal fade" id="modal-cart-delete-{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-cart-delete-{{ $order->id }}" aria-hidden="true">
+@foreach($cartItems as $cartItem)
+    <div class="modal fade" id="modal-cart-delete-{{ $cartItem->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-cart-delete-{{ $cartItem->id }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <form method="POST" action="{{ route('cart.delete',$order->id) }}" class="modal-content">
+            <form method="POST" action="{{ route('cart.delete',$cartItem->id) }}" class="modal-content">
                 @csrf
                 @method('delete')
                 <div class="modal-header">

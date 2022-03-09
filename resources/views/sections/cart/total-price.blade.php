@@ -3,7 +3,6 @@
         @csrf
         @if($isReview)
             <input type="hidden" name="checkout_session_id" value="{{ $response->checkoutSessionId }}">
-            <input type="hidden" name="order_id" value="{{ $order->id }}">
         @endif
         <div class="card-body" id="highlight2">
             <h5>お支払い金額</h5>

@@ -14,12 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->string('id', 36);
-            $table->enum('status', ['default', 'confirmed', 'shipping', 'shipped'])->default('default');
-            $table->string('user_id', 33);
-            $table->string('album_id', 36);
-            $table->enum('type', ['simple', 'casual', 'minimal']);
-            $table->boolean('self_print');
+            $table->id();
+            $table->string('uuid', 36);
+            $table->enum('status', ['confirmed', 'shipping', 'shipped', 'canceled'])->default('confirmed');
+            $table->json('raw_resp');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('cart_items');
     }
 };

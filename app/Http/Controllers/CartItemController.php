@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class OrderController extends Controller
+class CartItemController extends Controller
 {
     public function store(Request $request)
     {
-        $order = new Order();
-        $order->id = \Str::uuid();
-        $order->user_id = $request->user_id;
-        $order->album_id = $request->album_id;
-        $order->type = $request->type;
-        $order->self_print = $request->self_print;
-        $order->save();
+        $cartItem = new CartItem();
+        $cartItem->id = \Str::uuid();
+        $cartItem->user_id = $request->user_id;
+        $cartItem->album_id = $request->album_id;
+        $cartItem->type = $request->type;
+        $cartItem->self_print = $request->self_print;
+        $cartItem->save();
         return redirect('cart')->with('status', 'カートに追加されました');
     }
 
     public function cart()
     {
-        $orders = Order::where('user_id', Auth::user()->id)->where('status', 'default')->orderBy('created_at', 'desc')->get();
+        $cartItems = CartItem::where('user_id', Auth::user()->id)->where('order_id', null)->orderBy('created_at', 'desc')->get();
         $price = 0;
-        foreach ($orders as $order) {
+        foreach ($cartItems as $cartItem) {
             $price += 1;
         }
         $total = [
@@ -33,12 +33,12 @@ class OrderController extends Controller
             'total_price' => $price,
         ];
         $total = json_decode(json_encode($total), false);
-        return view('pages.user.cart', compact('orders', 'total'));
+        return view('pages.user.cart', compact('cartItems', 'total'));
     }
 
-    public function destroy(Order $order)
+    public function destroy(CartItem $cartItem)
     {
-        $order->delete();
+        $cartItem->delete();
         return redirect('cart')->with('status', 'カート内の商品が削除されました');
     }
 
@@ -61,9 +61,9 @@ class OrderController extends Controller
                 // dd($response->chargeId);
 
                 // price info
-                $orders = Order::where('user_id', Auth::user()->id)->where('status', 'default')->orderBy('created_at', 'desc')->get();
+                $cartItems = CartItem::where('user_id', Auth::user()->id)->where('order_id', null)->orderBy('created_at', 'desc')->get();
                 $price = 0;
-                foreach ($orders as $order) {
+                foreach ($cartItems as $cartItem) {
                     $price += 1;
                 }
                 $total = [
@@ -73,7 +73,7 @@ class OrderController extends Controller
                 ];
                 $total = json_decode(json_encode($total), false);
 
-                return view('pages.user.payment-review', compact('response', 'orders', 'total'));
+                return view('pages.user.payment-review', compact('response', 'cartItems', 'total'));
 
                 // NOTE: Once Checkout Session moves to a "Completed" state, buyer and shipping
                 // details must be obtained from the getCharges() function call instead

@@ -23,8 +23,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Album::class);
     }
 
-    public function orders()
+    public function cartItems()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(CartItem::class);
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app',["isReview"=>true])
 
 @section('content')
 <main>
