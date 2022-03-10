@@ -6,7 +6,6 @@ use App\Models\CartItem;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CartItemController extends Controller
 {
@@ -185,9 +184,10 @@ class CartItemController extends Controller
                         $newArr[] = $merged;
                     }
                     // dd($newArr);
-                    DB::table('cart_items')->upsert($newArr, 'id', ['order_id']);
+                    CartItem::upsert($newArr, 'id', ['order_id']);
 
-                    return view('pages.user.order-completed', compact('cartItems'));
+                    // return view('pages.user.order-completed', compact('cartItems'));
+                    return redirect('account')->with('modal', 'ご注文が完了しました');
                 } else {
                     \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
                     return redirect('cart')->with('status', '決済中にエラーが発生しました');

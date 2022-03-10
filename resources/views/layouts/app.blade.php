@@ -38,7 +38,7 @@
                         </ul>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="{{ route('cart') }}" class="text-primary"><span class="fas fa-shopping-cart me-2 fs-5 position-relative">@if(\Auth::user()->cartItems()->where('order_id',null)->get()->isNotEmpty())<span class="badge-num"></span>@endif</span></a>
+                        <a href="{{ route('cart') }}" class="text-primary"><span class="fa fa-shopping-cart me-2 fs-5 position-relative">@if(\Auth::user()->cartItems()->where('order_id',null)->get()->isNotEmpty())<span class="badge-num"></span>@endif</span></a>
                     </div>
                 </div>
             @endisset
@@ -96,6 +96,7 @@
     <!-- Pixel JS -->
     <script src="{{ asset('assets/js/pixel.js') }}"></script>
     <script src="{{ asset('js/toast.js') }}" type="module"></script>
+    @include('sections.modal')
     @isset($photoSwipe)
         @include('sections.photoswipe.script')
     @endisset
