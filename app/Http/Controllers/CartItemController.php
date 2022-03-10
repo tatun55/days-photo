@@ -64,11 +64,11 @@ class CartItemController extends Controller
 
                 return view('pages.user.payment-review', compact('response', 'cartItems', 'total'));
             } else {
-                \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                \Log::emergency('status=' . $result['status'] . '; response=' . $result['response'] . "\n");
                 return redirect('cart')->with('status', '決済中にエラーが発生しました');
             }
         } catch (\Exception $e) {
-            \Log::emergency('order error', $e . "\n");
+            \Log::emergency('order error : ' . $e . "\n");
             return redirect('cart')->with('status', '決済中にエラーが発生しました');
         }
         return;
@@ -127,11 +127,11 @@ class CartItemController extends Controller
                 $amazonPayRedirectUrl = $response['webCheckoutDetails']['amazonPayRedirectUrl'];
                 return redirect()->away($amazonPayRedirectUrl);
             } else {
-                \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                \Log::emergency('status=' . $result['status'] . '; response=' . $result['response'] . "\n");
                 return redirect('cart')->with('status', '決済中にエラーが発生しました');
             }
         } catch (\Exception $e) {
-            \Log::emergency('order error', $e . "\n");
+            \Log::emergency('order error : ' . $e . "\n");
             return redirect('cart')->with('status', '決済中にエラーが発生しました');
         }
     }
@@ -183,16 +183,15 @@ class CartItemController extends Controller
 
                     return redirect('account')->with('modal', 'ご注文が完了しました');
                 } else {
-                    \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                    \Log::emergency('status=' . $result['status'] . '; response=' . $result['response'] . "\n");
                     return redirect('cart')->with('status', '決済中にエラーが発生しました');
                 }
             } else {
-                \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                \Log::emergency('status=' . $result['status'] . '; response=' . $result['response'] . "\n");
                 return redirect('cart')->with('status', '決済中にエラーが発生しました');
             }
         } catch (\Exception $e) {
-            // handle the exception
-            \Log::emergency('order error', $e . "\n");
+            \Log::emergency('order error : ' . $e . "\n");
             return redirect('cart')->with('status', '決済中にエラーが発生しました');
         }
     }

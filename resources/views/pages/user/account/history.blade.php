@@ -40,9 +40,9 @@
                         @foreach($orders as $order)
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h5 class="card-title">ご注文内容</h5>
+                                    <h5 class="card-title">ご注文 ({{ $order->created_at->toDateTimeString() }}) </h5>
                                     <small class="d-block">オーダーID : {{ $order->id }}</small>
-                                    <small class="d-block">注文日時 : {{ $order->created_at->toDateTimeString() }}</small>
+                                    {{-- <small class="d-block">注文日時 : {{ $order->created_at->toDateTimeString() }}</small> --}}
                                     <small class="d-block">お支払い金額 : ￥{{ number_format( $order->total_price ) }}</small>
                                     <small class="d-block">ステータス :
                                         @switch($order->status)
