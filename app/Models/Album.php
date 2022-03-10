@@ -13,11 +13,6 @@ class Album extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    // protected $fillable = [
-    //     'id',
-    //     'user_id',
-    //     'group_id',
-    // ];
     protected $guarded = [];
 
     public function photos()

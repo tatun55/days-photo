@@ -13,15 +13,12 @@ class Photo extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = [
-        'id',
-        'album_id',
-        'message_id',
-        'index',
-        'deleted_at',
-        'created_at',
-        'updated_at',
-    ];
+    protected $guarded = [];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 
     // protected $guarded = [];
 }

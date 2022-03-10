@@ -340,7 +340,7 @@ class LineEventController extends Controller
         ]);
 
         // who can access this album and photo
-        $groupUserIds = Group::find($event->source->groupId)->users()->pluck('id'); // users in this group
+        $groupUserIds = Group::find($event->source->groupId)->users()->pluck('users.id'); // users in this group
         $album->users()->syncWithoutDetaching($groupUserIds); // users in this group can access this album
         $photo->users()->syncWithoutDetaching($groupUserIds); // users in this group can access this photo
 
