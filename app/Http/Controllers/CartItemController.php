@@ -56,9 +56,7 @@ class CartItemController extends Controller
             $checkoutSessionId = $request->amazonCheckoutSessionId;
             $result = $client->getCheckoutSession($checkoutSessionId);
             if ($result['status'] === 200) {
-                // $response = json_decode($result['response'], true);
                 $response = json_decode($result['response'], false); // object
-                // dd($response->chargeId);
 
                 // price info
                 $cartItems = CartItem::where('user_id', Auth::user()->id)->where('order_id', null)->orderBy('created_at', 'desc')->get();
@@ -66,12 +64,12 @@ class CartItemController extends Controller
 
                 return view('pages.user.payment-review', compact('response', 'cartItems', 'total'));
             } else {
-                // check the error
-                echo 'status=' . $result['status'] . '; response=' . $result['response'] . "\n";
+                \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                return redirect('cart')->with('status', '決済中にエラーが発生しました');
             }
         } catch (\Exception $e) {
-            // handle the exception
-            echo $e . "\n";
+            \Log::emergency('order error', $e . "\n");
+            return redirect('cart')->with('status', '決済中にエラーが発生しました');
         }
         return;
     }
@@ -129,12 +127,12 @@ class CartItemController extends Controller
                 $amazonPayRedirectUrl = $response['webCheckoutDetails']['amazonPayRedirectUrl'];
                 return redirect()->away($amazonPayRedirectUrl);
             } else {
-                // check the error
-                echo 'status=' . $result['status'] . '; response=' . $result['response'] . "\n";
+                \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
+                return redirect('cart')->with('status', '決済中にエラーが発生しました');
             }
         } catch (\Exception $e) {
-            // handle the exception
-            echo $e . "\n";
+            \Log::emergency('order error', $e . "\n");
+            return redirect('cart')->with('status', '決済中にエラーが発生しました');
         }
     }
 
@@ -191,13 +189,11 @@ class CartItemController extends Controller
             } else {
                 \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");
                 return redirect('cart')->with('status', '決済中にエラーが発生しました');
-
-                // // check the error
-                // echo 'status=' . $result['status'] . '; response=' . $result['response'] . "\n";
             }
         } catch (\Exception $e) {
             // handle the exception
-            echo $e . "\n";
+            \Log::emergency('order error', $e . "\n");
+            return redirect('cart')->with('status', '決済中にエラーが発生しました');
         }
     }
 }
