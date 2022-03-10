@@ -38,6 +38,9 @@ class LineEventController extends Controller
                 \Log::info(json_encode($event, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
             }
 
+            $this->joined($event);
+            return response()->json('ok', 200);
+
             switch ($event->type) {
                 case 'postback':
                     $this->verifySignature($request) || abort(400);
@@ -397,22 +400,50 @@ class LineEventController extends Controller
     {
         $bot = $this->initBot();
         $multiMessage = new MultiMessageBuilder();
-        // $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\n『days.』を友だち登録すると、フォト管理に役立つ機能を提供します。\n\nグループメンバーが『days.』を登録していない場合、そのメンバーのアクションには一切関与しません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
-        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\n『days.』をグループに招待すると、トークでシェアされた写真を ”ずっと残る” & ”いつでも見れる” ように保存します。\n\nLINEのアルバムとして保存された写真や『days.』に登録していないメンバーの投稿した写真は保存されません。\n\nサービスを利用したいときは、下のリンクから友だち登録をお願いします。"));
-        $multiMessage->add(new TextMessageBuilder('https://lin.ee/O6NF5rk'));
+
+        $array = [
+            'type' => 'text',
+            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\nこのグループトーク内で、画像の 「ずっと残る保存」 を開始するには\n\nメンバーそれぞれ\n① 友だち登録\n② 「ずっと残る保存」 開始\nを下のボタンからお願いします\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $multiMessage->add($rawMessage);
+
+        $array = [
+            "type" => "template",
+            "altText" => "This is a buttons template",
+            "template" => [
+                "type" => "buttons",
+                "text" => "友だち登録済なら開始のみ",
+                "actions" => [
+                    [
+                        "type" => "uri",
+                        "label" => "友だち登録",
+                        "uri" => "https://lin.ee/O6NF5rk"
+                    ],
+                    [
+                        "type" => "postback",
+                        "label" => "「ずっと残る保存」開始",
+                        "data" => "action=start-saving"
+                    ],
+                ]
+            ]
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $multiMessage->add($rawMessage);
+
         $bot->replyMessage($event->replyToken, $multiMessage);
 
-        $groupSummaryJson = $bot->getGroupSummary($event->source->groupId);
-        $groupSummary = json_decode($groupSummaryJson, false);
-        LineGroup::updateOrCreate([
-            [
-                'line_group_id' => $groupSummary->groupId
-            ],
-            [
-                'name' => $groupSummary->groupId,
-                'picture_url' => $groupSummary->pictureUrl,
-            ]
-        ]);
+        // $groupSummaryJson = $bot->getGroupSummary($event->source->groupId);
+        // $groupSummary = json_decode($groupSummaryJson, false);
+        // LineGroup::updateOrCreate([
+        //     [
+        //         'line_group_id' => $groupSummary->groupId
+        //     ],
+        //     [
+        //         'name' => $groupSummary->groupId,
+        //         'picture_url' => $groupSummary->pictureUrl,
+        //     ]
+        // ]);
     }
 
     public function addTermsMessage($multiMessage)
