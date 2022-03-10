@@ -21,7 +21,6 @@ class CreatePhotosTable extends Migration
             $table->unsignedTinyInteger('index');
             $table->unsignedSmallInteger('width')->nullable();
             $table->unsignedSmallInteger('height')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -21,7 +21,6 @@ class CreateAlbumsTable extends Migration
             $table->string('title', 50)->nullable();
             $table->unsignedSmallInteger('total')->default(0);
             $table->string('cover')->default(null)->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
