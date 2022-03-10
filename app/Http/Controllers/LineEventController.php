@@ -8,6 +8,7 @@ use App\Models\Photo;
 use App\Models\ImageSet;
 use App\Models\User;
 use App\Models\Album;
+use App\Models\Group;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,12 +35,10 @@ class LineEventController extends Controller
             $event = json_decode(json_encode($event), false);
 
             // TODO: delete (This is just for developing)
-            if (config('app.env') !== 'production') {
-                \Log::info(json_encode($event, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
-            }
+            \Log::info(json_encode($event, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
-            $this->joined($event);
-            return response()->json('ok', 200);
+            // TODO: test at here
+            // return response()->json('ok', 200);
 
             switch ($event->type) {
                 case 'postback':
@@ -103,6 +102,34 @@ class LineEventController extends Controller
                 $message = "追加したい画像を送信してください✨";
                 $bot = $this->initBot();
                 $bot->replyText($event->replyToken, $message);
+                break;
+            case 'start-saving':
+                if ($this->isRegisted($event->source->userId)) {
+
+                    $group = Group::find($event->source->groupId);
+                    if (!$group) {
+                        $summary = $this->getGroupSummary($event->source->groupId);
+                        $group = Group::create([
+                            'id' => $event->source->groupId,
+                            'name' => $summary->groupName,
+                            'picture' => $summary->pictureUrl,
+                        ]);
+                    }
+                    User::find($event->source->userId)->groups()->syncWithoutDetaching($event->source->groupId, ['auto_saving' => true]);
+
+                    $bot = $this->initBot();
+                    $res = json_decode($bot->getProfile($event->source->userId)->getRawBody());
+                    $name = (isset($res->displayName) && $res->displayName)
+                        ? $res->displayName
+                        : 'ノーネーム';
+                    $message = "{$name}さんの「ずっと残る保存」が開始されました✨";
+                    $bot = $this->initBot();
+                    $bot->replyText($event->replyToken, $message);
+                } else {
+                    $message = "①のボタンから、友だち＆ユーザー登録をお願いします";
+                    $bot = $this->initBot();
+                    $bot->replyText($event->replyToken, $message);
+                }
                 break;
         }
     }
@@ -312,9 +339,11 @@ class LineEventController extends Controller
             'index' => $index,
         ]);
 
-        // TODO: Registed GroupMembers attach AlbumUser,PhotoUser
-        // User::findMany($groupMembers);
-        $album->users()->syncWithoutDetaching($event->source->userId);
+        // who can access this album and photo
+        $groupUserIds = Group::find($event->source->groupId)->users()->pluck('id'); // users in this group
+        $album->users()->syncWithoutDetaching($groupUserIds); // users in this group can access this album
+        $photo->users()->syncWithoutDetaching($groupUserIds); // users in this group can access this photo
+
         StoreImageJob::dispatch($photo->id, $photo->message_id);
     }
 
@@ -391,7 +420,7 @@ class LineEventController extends Controller
     {
         $bot = $this->initBot();
         $multiMessage = new MultiMessageBuilder();
-        $multiMessage->add(new TextMessageBuilder("こんにちは。\n\n新しいタイプの “かんたんフォト管理サービス” 『days.』です。\n\nこのアカウントは、フォト管理に役立つ機能を提供します。"));
+        $multiMessage->add(new TextMessageBuilder("こんにちは、 “かんたんフォト管理サービス” 『days.』です。\n\nこのアカウントは、フォト管理に役立つ機能を提供します。"));
         $multiMessage = $this->addTermsMessage($multiMessage);
         $bot->replyMessage($event->replyToken, $multiMessage);
     }
@@ -403,7 +432,7 @@ class LineEventController extends Controller
 
         $array = [
             'type' => 'text',
-            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\nこのグループトーク内で、画像の 「ずっと残る保存」 を開始するには\n\nメンバーそれぞれ\n① 友だち登録\n② 「ずっと残る保存」 開始\nを下のボタンからお願いします\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
+            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②を押していただくと、トーク内画像の「ずっと残る保存」が利用できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
         ];
         $rawMessage = new RawMessageBuilder($array);
         $multiMessage->add($rawMessage);
@@ -413,16 +442,16 @@ class LineEventController extends Controller
             "altText" => "This is a buttons template",
             "template" => [
                 "type" => "buttons",
-                "text" => "友だち登録済なら開始のみ",
+                "text" => "登録済なら②のみ",
                 "actions" => [
                     [
                         "type" => "uri",
-                        "label" => "友だち登録",
+                        "label" => "① 友だち & ユーザー登録",
                         "uri" => "https://lin.ee/O6NF5rk"
                     ],
                     [
                         "type" => "postback",
-                        "label" => "「ずっと残る保存」開始",
+                        "label" => "② ｢ずっと残る保存｣ 開始",
                         "data" => "action=start-saving"
                     ],
                 ]
@@ -432,18 +461,6 @@ class LineEventController extends Controller
         $multiMessage->add($rawMessage);
 
         $bot->replyMessage($event->replyToken, $multiMessage);
-
-        // $groupSummaryJson = $bot->getGroupSummary($event->source->groupId);
-        // $groupSummary = json_decode($groupSummaryJson, false);
-        // LineGroup::updateOrCreate([
-        //     [
-        //         'line_group_id' => $groupSummary->groupId
-        //     ],
-        //     [
-        //         'name' => $groupSummary->groupId,
-        //         'picture_url' => $groupSummary->pictureUrl,
-        //     ]
-        // ]);
     }
 
     public function addTermsMessage($multiMessage)
@@ -456,7 +473,7 @@ class LineEventController extends Controller
             $pp_button,
             $regist_button
         ];
-        $buttonTemplage = new ButtonTemplateBuilder("以下を必ずご確認いただき、同意できる場合のみユーザー登録にお進みください。", $actions);
+        $buttonTemplage = new ButtonTemplateBuilder("下記ご確認いただき、同意できる場合に「ユーザー登録」にお進みください。", $actions);
         $templateMessage = new TemplateMessageBuilder('テンプレートタイトル', $buttonTemplage);
         $multiMessage->add($templateMessage);
         return $multiMessage;

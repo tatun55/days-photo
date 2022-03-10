@@ -18,9 +18,19 @@ class User extends Authenticatable
         'avatar',
     ];
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
     public function albums()
     {
         return $this->belongsToMany(Album::class);
+    }
+
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class);
     }
 
     public function cartItems()
