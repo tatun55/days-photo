@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+            $table->string('id', 36)->primary();
             $table->string('user_id', 33);
-            $table->string('uuid', 36);
             $table->enum('status', ['confirmed', 'shipping', 'shipped', 'canceled'])->default('confirmed');
+            $table->unsignedInteger('total_price');
             $table->json('raw_resp');
             $table->timestamps();
         });

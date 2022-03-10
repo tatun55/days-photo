@@ -171,8 +171,9 @@ class CartItemController extends Controller
 
                 if ($response['statusDetails']['state'] === 'Completed') {
                     $order = new Order();
-                    $order->uuid = \Str::uuid();
+                    $order->id = \Str::uuid();
                     $order->user_id = Auth::user()->id;
+                    $order->total_price = $total->total_price;
                     $order->raw_resp = $result['response'];
                     $order->save();
 

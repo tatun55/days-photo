@@ -23,7 +23,7 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     Route::get('home', [UserController::class, 'home'])->name('home');
     Route::get('trashbox', [UserController::class, 'trashbox'])->name('trashbox');
-    Route::get('profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('account', [UserController::class, 'account'])->name('account');
     Route::get('setting', [UserController::class, 'setting'])->name('setting');
 
     Route::post('albums/{album}/restore', [AlbumController::class, 'restore'])->withTrashed()->name('albums.restore');

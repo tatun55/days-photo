@@ -9,7 +9,6 @@
                 @include('sections.profile-card')
 
                 <div class="col-12 col-lg-8 mt-4 mt-lg-3">
-
                     ご注文が完了しました。
                 </div>
 
