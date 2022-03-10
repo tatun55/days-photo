@@ -5,7 +5,16 @@
     <div class="section">
         <div class="container">
             <div class="row justify-content-lg-center pt-4 pt-md-0">
-                <h5 class="my-4 text-center">カート内の商品</h5>
+
+                <!--Breadcrumb-->
+                <nav class="ms-2 mb-0 mt-3" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-transparent">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}"><span class="fas fa-home"></span></span> ホーム</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">カート</li>
+                    </ol>
+                </nav>
+                <!--End of Breadcrumb-->
+
                 @if($cartItems->isEmpty())
                     <div class="col-lg-8">
                         <div class="card p-1 p-md-4 mb-4 mb-lg-0 bg-gray-100">
@@ -19,6 +28,7 @@
                         </div>
                     </div>
                 @else
+                    <h5 class="my-4 text-center">カート内の商品</h5>
                     <div class="col-lg-8">
                         @include('sections.cart.item-info',['isReview'=>false])
                     </div>
