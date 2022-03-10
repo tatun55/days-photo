@@ -284,7 +284,6 @@ class LineEventController extends Controller
         $photo = Photo::create([
             'id' => (string) \Str::uuid(),
             'album_id' => $album->id,
-            'user_id' => $event->source->userId,
             'message_id' => $event->message->id,
             'index' => $index,
         ]);
@@ -333,8 +332,6 @@ class LineEventController extends Controller
         $photo = Photo::create([
             'id' => (string) \Str::uuid(),
             'album_id' => $album->id,
-            'user_id' => $event->source->userId,
-            'group_id' => $event->source->groupId,
             'message_id' => $event->message->id,
             'index' => $index,
         ]);

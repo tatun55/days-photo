@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\AlbumUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,21 +47,21 @@ class AlbumController extends Controller
         return back()->with('status', 'タイトルを変更しました');
     }
 
-    public function delete(Album $album)
+    public function archive(Album $album)
     {
-        $album->delete();
+        $album->users()->syncWithoutDetaching([Auth::user()->id => ['is_archived' => true]]);
         return redirect('home')->with('status', 'アルバムをアーカイブに移動しました');
     }
 
-    public function forceDelete(Album $album)
+    public function detach(Album $album)
     {
-        $album->forceDelete();
+        $album->users()->detach(Auth::user()->id);
         return redirect('home')->with('status', 'アルバムを完全に削除しました');
     }
 
     public function restore(Album $album)
     {
-        $album->restore();
+        $album->users()->syncWithoutDetaching([Auth::user()->id => ['is_archived' => false]]);
         return redirect('home')->with('status', 'アルバムを元に戻しました');
     }
 }

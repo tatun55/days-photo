@@ -28,8 +28,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('albums/{album}/restore', [AlbumController::class, 'restore'])->withTrashed()->name('albums.restore');
     Route::get('albums/{album}', [AlbumController::class, 'show'])->name('albums.show');
-    Route::delete('albums/{album}', [AlbumController::class, 'delete'])->name('albums.delete');
-    Route::delete('albums/{album}/force', [AlbumController::class, 'forceDelete'])->withTrashed()->name('albums.delete.force');
+    Route::delete('albums/{album}', [AlbumController::class, 'archive'])->name('albums.archive');
+    Route::delete('albums/{album}/detach', [AlbumController::class, 'detach'])->withTrashed()->name('albums.detach');
     Route::put('albums/{album}/title', [AlbumController::class, 'title'])->name('albums.title');
     Route::get('albums/{album}/trashbox', [AlbumController::class, 'trashbox'])->name('albums.trashbox');
 
