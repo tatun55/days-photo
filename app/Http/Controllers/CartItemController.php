@@ -47,9 +47,8 @@ class CartItemController extends Controller
     {
         $amazonpay_config = array(
             'public_key_id' => config('services.amazon_pay.public_key_id'),
-            'private_key'   => storage_path('AmazonPay_SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU.pem'),
+            'private_key'   => storage_path('AmazonPay_LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5.pem'),
             'region'        => 'JP',
-            'sandbox'       => true
         );
 
         try {
@@ -98,9 +97,8 @@ class CartItemController extends Controller
 
         $amazonpay_config = array(
             'public_key_id' => config('services.amazon_pay.public_key_id'),
-            'private_key'   => storage_path('AmazonPay_SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU.pem'),
+            'private_key'   => storage_path('AmazonPay_LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5.pem'),
             'region'        => 'JP',
-            'sandbox'       => true
         );
 
         $payload = array(
@@ -147,9 +145,8 @@ class CartItemController extends Controller
 
         $amazonpay_config = array(
             'public_key_id' => config('services.amazon_pay.public_key_id'),
-            'private_key'   => storage_path('AmazonPay_SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU.pem'),
+            'private_key'   => storage_path('AmazonPay_LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5.pem'),
             'region'        => 'JP',
-            'sandbox'       => true
         );
 
         $payload = array(
@@ -176,6 +173,7 @@ class CartItemController extends Controller
                     $order->raw_resp = $result['response'];
                     $order->save();
 
+                    // add order_id to cart items witch ordered
                     $arr = $cartItems->toArray();
                     $newArr = [];
                     $now = \Carbon\Carbon::now();
@@ -183,10 +181,8 @@ class CartItemController extends Controller
                         $merged = array_merge($value, ['order_id' => $order->id, 'created_at' => \Carbon\Carbon::create($value["created_at"])->toDateTimeString(), 'updated_at' => $now->toDateTimeString()]);
                         $newArr[] = $merged;
                     }
-                    // dd($newArr);
                     CartItem::upsert($newArr, 'id', ['order_id']);
 
-                    // return view('pages.user.order-completed', compact('cartItems'));
                     return redirect('account')->with('modal', 'ご注文が完了しました');
                 } else {
                     \Log::emergency('order error', 'status=' . $result['status'] . '; response=' . $result['response'] . "\n");

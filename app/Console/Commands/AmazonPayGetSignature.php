@@ -37,12 +37,11 @@ class AmazonPayGetSignature extends Command
      */
     public function handle()
     {
-        // dd(config('services.amazon_pay.public_key_id'));
         $amazonpay_config = array(
             'public_key_id' => config('services.amazon_pay.public_key_id'),
-            'private_key'   => storage_path('AmazonPay_SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU.pem'),
+            'private_key'   => storage_path('AmazonPay_LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5.pem'),
             'region'        => 'JP',
-            'sandbox'       => true
+            // 'sandbox'       => true
         );
 
         $client = new \Amazon\Pay\API\Client($amazonpay_config);

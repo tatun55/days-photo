@@ -53,17 +53,17 @@
         // set checkout environment
         merchantId: 'A1V2ZW022WI0BY',
         ledgerCurrency: 'JPY',
-        sandbox: true,
+        // sandbox: true,
         // customize the buyer experience
         checkoutLanguage: 'ja_JP',
         productType: 'PayAndShip',
         placement: 'Cart',
-        buttonColor: 'Gold', // Gold,DarkGray,LightGray
+        buttonColor: 'DarkGray', // Gold,DarkGray,LightGray
         // configure Create Checkout Session request
         createCheckoutSessionConfig: {
             payloadJSON: '{"scopes": ["name", "email", "phoneNumber", "billingAddress"],"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/order/review"}}', // string generated in step 2
-            signature: '0j3F1awQQ/KwZ4jZTvqgsND9Cs0oAkF44dNPB9DTTssQrZqG9SCgWxr5TjZgyCQqNR1ie/UZGEGah/NWCY/in+0O8vn+cbrV66FZrdgp+fH9ILPlsKsmsOZlPJRtpoZgqPWH2NSE1VRhhCKzbzr4Q1+sjd0PhOsrfrf49WMxjFt4SppKBeqZJmfrUpWCaSv++w0yf9PdfJ+I6VS7mOu8/tLSOWiabQQY2Qyo0edGR+ESr+I1hs6GlXYaoXNHgkDaGHUcZx+tJFIzurpyULkti9vwJDmeoZNhLopmBIWR7Jw/UV64YfsR3KWuC+UzvMl6vAAHAqo8oMcMwCHctN6HiQ==', // signature generated in step 3
-            publicKeyId: 'SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU'
+            signature: 'QdBE/SNvg0+Tb/kKq5eDQyN/do6om1XSNhcLo0n60hUqBxsr25e2BvqiCbOrWZvUdjRBC09XwOSj+f3tV3mHKVsaMJeHqLrbLf7p6Ymahz01CtrXPd4blz0uyo7B3dfb2Ymt4AvqflPD+FGXmSdFf2xcp06fprryXYUXo8C0JhcjhM4k22MiyhFRvLWxzRDExyBsixGL4zJNcwy1Py2ZkAd+SmLSbrQJwbyL1B4j7nc6QRIWfVK8stlBBrHCm1oL0LFVYH2hx1L1ZM/gcFDAWVXgGYY93seNABkRE4cxa3edWeWR+wWItL/Og6jHh7KRfp2IC9FtBkIn73R4QiyKYw==', // signature generated in step 3
+            publicKeyId: 'LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5'
         }
     });
 
