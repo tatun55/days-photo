@@ -20,11 +20,11 @@
     <div class="row">
         <div class="col-12">
             <ul id="photo-list" class="list-unstyled news-list row g-1 justify-content-between">
-                @foreach($album->photos()->when($type === 'trashbox', function($query) {return $query->onlyTrashed();})->orderBy('index','asc')->get() as $photo)
+                @foreach($photos as $photo)
                     <li class="item col-4 col-sm-3">
                         <div class="img-wrapper-1x1">
                             <label class="img-content">
-                                <input name="items[]" type="checkbox" value="{{ $photo->index }}" class="hidden-checkbox" disabled><span></span>
+                                <input name="photo_ids[]" type="checkbox" value="{{ $photo->id }}" class="hidden-checkbox" disabled><span></span>
                                 <img data-index="{{ $photo->index }}" src="{{ \Storage::disk('s3')->url("/{$photo->album_id}/{$photo->id}/s.jpg") }}">
                             </label>
                         </div>

@@ -11,25 +11,33 @@ class AlbumController extends Controller
 {
     public function show(Album $album)
     {
-        $dataSource = $this->getDataSource($album);
-        return view('pages.user.album.show', compact(['album', 'dataSource']));
+        $photos = $album->photos()
+            ->whereHas('users', function ($q) {
+                return $q->where('user_id', Auth::user()->id)->where('is_archived', false);
+            })
+            ->orderBy('created_at')
+            ->get();
+        $dataSource = $this->getDataSource($album->id, $photos);
+        return view('pages.user.album.show', compact(['album', 'photos', 'dataSource']));
     }
 
     public function trashbox(Album $album)
     {
-        $isTrashed = true;
-        $dataSource = $this->getDataSource($album, $isTrashed);
-        return view('pages.user.album.trash', compact('album', 'dataSource'));
+        $photos = $album->photos()
+            ->whereHas('users', function ($q) {
+                return $q->where('user_id', Auth::user()->id)->where('is_archived', true);
+            })
+            ->orderBy('created_at')
+            ->get();
+        $dataSource = $this->getDataSource($album->id, $photos);
+        return view('pages.user.album.trash', compact('album', 'photos', 'dataSource'));
     }
 
-    private function getDataSource(Album $album, $isTrashed = false)
+    private function getDataSource($albumId, $photos)
     {
-        $photos = $album->photos();
-        $isTrashed && $photos->onlyTrashed();
-        $array = $photos->get(['id', 'index', 'width', 'height'])->keyBy('index');
-        $path = \Storage::disk('s3')->url($album->id);
+        $path = \Storage::disk('s3')->url($albumId);
         $dataSource = [];
-        foreach ($array as $key => $value) {
+        foreach ($photos as $key => $value) {
             $dataSource[] = [
                 'srcset' => "{$path}/{$value->id}/l.jpg 1920w, {$path}/{$value->id}/m.jpg 960w",
                 'src' => "{$path}/{$value->id}/l.jpg",

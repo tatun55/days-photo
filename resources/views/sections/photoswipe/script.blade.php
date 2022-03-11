@@ -101,7 +101,7 @@ function selectMode() {
     selectDesc.classList.add('show');
     cancelBtn.classList.add('show');
     removeSlideShowEvents();
-    document.querySelectorAll('form#items-form input[name="items[]"]').forEach(elem=> {
+    document.querySelectorAll('form#items-form input[name="photo_ids[]"]').forEach(elem=> {
         // var itemIndex=elem.querySelector('img').getAttribute('data-index');
         // var checkbox=document.createElement('input');
         // checkbox.name='items';
@@ -116,7 +116,7 @@ function selectMode() {
 
 function isAnyCheckboxChecked() {
     var flag = false;
-    var itemInputs=document.querySelectorAll('form#items-form input[name="items[]"]');
+    var itemInputs=document.querySelectorAll('form#items-form input[name="photo_ids[]"]');
     for(let itemInput of itemInputs) {
         if(itemInput.checked) {
             console.log('there is checked one.');
@@ -151,7 +151,7 @@ function normalMode() {
     cancelBtn.classList.remove('show');
     moveBtn.classList.remove('show');
     archiveBtn.classList.remove('show');
-    document.querySelectorAll('form#items-form input[name="items[]"]').forEach(elem=> {
+    document.querySelectorAll('form#items-form input[name="photo_ids[]"]').forEach(elem=> {
         elem.checked = false;
         elem.setAttribute('disabled','');
         elem.removeEventListener("change", isAnyCheckboxChecked, false)

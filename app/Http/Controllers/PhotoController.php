@@ -6,6 +6,7 @@ use App\Models\Album;
 use App\Models\Photo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PhotoController extends Controller
 {
@@ -13,16 +14,17 @@ class PhotoController extends Controller
     {
         switch (true) {
             case $request->has('action_delete'):
-                $this->delete($request, $album);
+                Auth::user()->photos()->updateExistingPivot($request->photo_ids, ['is_archived' => true]);
                 return back()->with('status', '写真をアーカイブに移動しました');
-            case $request->has('action_destroy'):
-                $this->destroy($request, $album);
-                return back()->with('status', '写真を削除しました');
-            case $request->has('action_move'):
-                return 'move';
             case $request->has('action_restore'):
-                $this->restore($request, $album);
+                Auth::user()->photos()->updateExistingPivot($request->photo_ids, ['is_archived' => false]);
                 return back()->with('status', '写真を元に戻しました');
+            case $request->has('action_destroy'):
+                Auth::user()->photos()->detach($request->photo_ids);
+                return back()->with('status', '写真を削除にしました');
+            case $request->has('action_move'):
+                // TODO: implement
+                return 'move';
         }
     }
 

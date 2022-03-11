@@ -3,16 +3,17 @@
 namespace App\Console\Commands;
 
 use App\Models\Album;
+use App\Models\User;
 use Illuminate\Console\Command;
 
-class MyTest extends Command
+class WhereHas extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:myTest';
+    protected $signature = 'command:WhereHas';
 
     /**
      * The console command description.
@@ -38,11 +39,11 @@ class MyTest extends Command
      */
     public function handle()
     {
-        $ids = Album::orderBy('created_at', 'desc')->first()->photos()->pluck('id');
-        $urls = [];
-        foreach ($ids as $key => $value) {
-            $urls[] = \Storage::disk('s3')->url("o/{$value}.jpg");
-        }
-        dump($urls);
+        $user = User::first();
+        $photos = Album::orderBy('created_at', 'desc')->first()->photos();
+        $dump = $photos->whereHas('users', function ($q) use ($user) {
+            return $q->where('user_id', $user->id)->where('is_archived', false);
+        });
+        dump($dump->get()->toArray());
     }
 }
