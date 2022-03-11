@@ -11,10 +11,15 @@ class UserController extends Controller
 {
     public function home()
     {
+        $userId = Auth::user()->id;
         $albums = Auth::user()
             ->albums()
             ->where('is_archived', false)
-            ->withCount('photos')
+            ->withCount(['photos' => function ($query) use ($userId) {
+                $query->whereHas('users', function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->where('is_archived', false);
+                });
+            }])
             ->orderBy('created_at', 'desc')
             ->get();
         return view('pages.user.home', compact('albums'));
@@ -22,10 +27,15 @@ class UserController extends Controller
 
     public function trashbox(Album $album)
     {
+        $userId = Auth::user()->id;
         $albums = Auth::user()
             ->albums()
             ->where('is_archived', true)
-            ->withCount('photos')
+            ->withCount(['photos' => function ($query) use ($userId) {
+                $query->whereHas('users', function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->where('is_archived', false);
+                });
+            }])
             ->orderBy('created_at', 'desc')
             ->get();
         return view('pages.user.trash', compact('albums'));

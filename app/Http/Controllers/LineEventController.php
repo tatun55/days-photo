@@ -58,6 +58,9 @@ class LineEventController extends Controller
                 case 'join': // getting event when invited to group
                     $this->joined($event);
                     break;
+                case 'memberJoined': // getting event when invited to group
+                    $this->memberJoined($event);
+                    break;
                 case 'message':
                     switch ($event->message->type) {
                         case 'image':
@@ -93,7 +96,6 @@ class LineEventController extends Controller
                 break;
             case 'cancel':
                 $album = Album::destroy($data->id);
-                Photo::where('album_id', $data->id)->delete();
                 $message = "✅ 保存前のアルバムが削除されました。";
                 $bot = $this->initBot();
                 $bot->replyText($event->replyToken, $message);
@@ -163,17 +165,17 @@ class LineEventController extends Controller
         $album = Album::find($albumId);
         $album->status = 'uploading';
         $album->title = $title;
-        $photoId = Photo::where('album_id', $albumId)->withTrashed()->first()->id;
-        $album->cover = \Storage::disk('s3')->url("/{$albumId}/{$photoId}/s.jpg");
+        $photos = $album->photos()->get();
+        $album->cover = \Storage::disk('s3')->url("/{$albumId}/{$photos[0]->id}/s.jpg");
         $album->save();
 
-        // who can acess the album
+        // ownership
         $album->users()->syncWithoutDetaching($event->source->userId);
+        User::find($event->source->userId)->photos()->syncWithoutDetaching($photos->pluck('id'));
 
         // dispatch store image jobs
         $jobs = [];
-        $photos = Photo::where('album_id', $albumId)->get();
-        foreach ($photos as $photo) {
+        foreach ($album->photos()->get() as $photo) {
             $jobs[] = new StoreImageJob($photo->id, $photo->message_id);
         }
         $batch = Bus::batch($jobs)
@@ -251,6 +253,7 @@ class LineEventController extends Controller
         $album = Album::firstOrCreate(
             [
                 'user_id' => $event->source->userId,
+                'group_id' => null,
                 'status' => 'default',
             ],
             [
@@ -429,7 +432,45 @@ class LineEventController extends Controller
 
         $array = [
             'type' => 'text',
-            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②を押していただくと、トーク内画像の「ずっと残る保存」が利用できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
+            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、トーク内画像の「ずっと残る保存」が開始できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $multiMessage->add($rawMessage);
+
+        $array = [
+            "type" => "template",
+            "altText" => "This is a buttons template",
+            "template" => [
+                "type" => "buttons",
+                "text" => "登録済なら②のみ",
+                "actions" => [
+                    [
+                        "type" => "uri",
+                        "label" => "① 友だち & ユーザー登録",
+                        "uri" => "https://lin.ee/O6NF5rk"
+                    ],
+                    [
+                        "type" => "postback",
+                        "label" => "② ｢ずっと残る保存｣ 開始",
+                        "data" => "action=start-saving"
+                    ],
+                ]
+            ]
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $multiMessage->add($rawMessage);
+
+        $bot->replyMessage($event->replyToken, $multiMessage);
+    }
+
+    public function memberJoined($event)
+    {
+        $bot = $this->initBot();
+        $multiMessage = new MultiMessageBuilder();
+
+        $array = [
+            'type' => 'text',
+            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、トーク内画像の「ずっと残る保存」が開始できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
         ];
         $rawMessage = new RawMessageBuilder($array);
         $multiMessage->add($rawMessage);
