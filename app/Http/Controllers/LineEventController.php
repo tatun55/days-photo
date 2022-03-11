@@ -124,11 +124,11 @@ class LineEventController extends Controller
                     $name = (isset($res->displayName) && $res->displayName)
                         ? $res->displayName
                         : 'ノーネーム';
-                    $message = "{$name}さんの「ずっと残る保存」が開始されました✨";
+                    $message = "{$name}さんの「💎ずっと残る保存」が開始されました✨";
                     $bot = $this->initBot();
                     $bot->replyText($event->replyToken, $message);
                 } else {
-                    $message = "①のボタンから、友だち＆ユーザー登録をお願いします";
+                    $message = "①のボタンから、👤友だち＆ユーザー登録をお願いします✨";
                     $bot = $this->initBot();
                     $bot->replyText($event->replyToken, $message);
                 }
@@ -202,7 +202,7 @@ class LineEventController extends Controller
                         'type' => 'action',
                         'action' => [
                             'type' => 'postback',
-                            'label' => '📓 部屋に飾れるミニアルバム化',
+                            'label' => '📔 部屋にかざれるミニアルバムにする',
                             'data' => "action=album&id={$albumId}",
                             'text' => "ミニアルバム",
                         ]
@@ -236,7 +236,7 @@ class LineEventController extends Controller
         if ($event->link->result === 'ok') {
             $bot = $this->initBot();
             $multiMessage = new MultiMessageBuilder();
-            $text = "アカウント登録が完了しました 🎉\n\n『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、「ずっと残る保存」が選択できる✨\n\n✅ 機能②\nグループに招待すると、グループでも「ずっと残る保存」が可能✨\n\n✅ 機能③\nかんたん操作で「部屋にかざれるミニアルバム」をポチッと注文✨\n\nほかにも様々な便利機能を準備中です";
+            $text = "アカウント登録が完了しました 🎉\n\n『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、「💎ずっと残る保存」が選択できる✨\n\n✅ 機能②\nグループに招待すると、グループでも「💎ずっと残る保存」が可能✨\n\n✅ 機能③\nかんたん操作で「📔部屋にかざれるミニアルバム」をポチッと注文✨\n\nほかにも様々な便利機能を準備中です";
             $multiMessage->add(new TextMessageBuilder($text));
             $bot->replyMessage($event->replyToken, $multiMessage);
         }
@@ -391,18 +391,18 @@ class LineEventController extends Controller
                         'type' => 'action',
                         'action' => [
                             'type' => 'postback',
-                            'label' => '❌ キャンセル',
-                            'data' => "action=cancel&id={$albumId}",
-                            'text' => "キャンセル",
+                            'label' => '🖼️ 画像を追加',
+                            'data' => "action=add&id={$albumId}",
+                            'text' => "画像を追加",
                         ]
                     ],
                     [
                         'type' => 'action',
                         'action' => [
                             'type' => 'postback',
-                            'label' => '🖼️ 画像を追加',
-                            'data' => "action=add&id={$albumId}",
-                            'text' => "画像を追加",
+                            'label' => '❌ キャンセル',
+                            'data' => "action=cancel&id={$albumId}",
+                            'text' => "キャンセル",
                         ]
                     ],
                 ]
@@ -420,7 +420,8 @@ class LineEventController extends Controller
     {
         $bot = $this->initBot();
         $multiMessage = new MultiMessageBuilder();
-        $multiMessage->add(new TextMessageBuilder("こんにちは、 “かんたんフォト管理サービス” 『days.』です。\n\nこのアカウントは、フォト管理に役立つ機能を提供します。"));
+        // $multiMessage->add(new TextMessageBuilder("こんにちは、かんたんフォト管理サービスの『days.』です。\n\nこのアカウントは、｢💎ずっと残る保存｣や｢📔手間なしミニアルバム作成｣など、フォト管理に役立つ機能を提供します。"));
+        $multiMessage->add(new TextMessageBuilder("こんにちは、かんたんフォト管理サービスの『days.』です。\n\nこのアカウントは、フォト管理に役立つ機能を提供します。"));
         $multiMessage = $this->addTermsMessage($multiMessage);
         $bot->replyMessage($event->replyToken, $multiMessage);
     }
@@ -432,7 +433,7 @@ class LineEventController extends Controller
 
         $array = [
             'type' => 'text',
-            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、トーク内画像の「ずっと残る保存」が開始できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
+            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、画像の「💎ずっと残る保存」が開始できます。\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
         ];
         $rawMessage = new RawMessageBuilder($array);
         $multiMessage->add($rawMessage);
@@ -446,12 +447,12 @@ class LineEventController extends Controller
                 "actions" => [
                     [
                         "type" => "uri",
-                        "label" => "① 友だち & ユーザー登録",
+                        "label" => "①友だち&ユーザー登録👤",
                         "uri" => "https://lin.ee/O6NF5rk"
                     ],
                     [
                         "type" => "postback",
-                        "label" => "② ｢ずっと残る保存｣ 開始",
+                        "label" => "②ずっと残る保存開始💎",
                         "data" => "action=start-saving"
                     ],
                 ]
@@ -465,40 +466,62 @@ class LineEventController extends Controller
 
     public function memberJoined($event)
     {
-        $bot = $this->initBot();
-        $multiMessage = new MultiMessageBuilder();
 
-        $array = [
-            'type' => 'text',
-            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、トーク内画像の「ずっと残る保存」が開始できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
-        ];
-        $rawMessage = new RawMessageBuilder($array);
-        $multiMessage->add($rawMessage);
+        foreach ($event->joined->members as $joinedMember) {
+            $bot = $this->initBot();
+            $multiMessage = new MultiMessageBuilder();
+            if ($this->isRegisted($joinedMember->userId)) {
+                $array = [
+                    "type" => "template",
+                    "altText" => "This is a buttons template",
+                    "template" => [
+                        "type" => "buttons",
+                        "text" => "こんにちは。下のボタンから ｢💎ずっと残る保存｣ を開始できます",
+                        "actions" => [
+                            [
+                                "type" => "postback",
+                                "label" => "ずっと残る保存開始💎",
+                                "data" => "action=start-saving"
+                            ],
+                        ]
+                    ]
+                ];
+                $rawMessage = new RawMessageBuilder($array);
+                $multiMessage->add($rawMessage);
+            } else {
 
-        $array = [
-            "type" => "template",
-            "altText" => "This is a buttons template",
-            "template" => [
-                "type" => "buttons",
-                "text" => "登録済なら②のみ",
-                "actions" => [
-                    [
-                        "type" => "uri",
-                        "label" => "① 友だち & ユーザー登録",
-                        "uri" => "https://lin.ee/O6NF5rk"
-                    ],
-                    [
-                        "type" => "postback",
-                        "label" => "② ｢ずっと残る保存｣ 開始",
-                        "data" => "action=start-saving"
-                    ],
-                ]
-            ]
-        ];
-        $rawMessage = new RawMessageBuilder($array);
-        $multiMessage->add($rawMessage);
+                $array = [
+                    'type' => 'text',
+                    'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、トーク内画像の「💎ずっと残る保存」が開始できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
+                ];
+                $rawMessage = new RawMessageBuilder($array);
+                $multiMessage->add($rawMessage);
 
-        $bot->replyMessage($event->replyToken, $multiMessage);
+                $array = [
+                    "type" => "template",
+                    "altText" => "This is a buttons template",
+                    "template" => [
+                        "type" => "buttons",
+                        "text" => "登録済なら②のみ",
+                        "actions" => [
+                            [
+                                "type" => "uri",
+                                "label" => "①友だち&ユーザー登録👤",
+                                "uri" => "https://lin.ee/O6NF5rk"
+                            ],
+                            [
+                                "type" => "postback",
+                                "label" => "②ずっと残る保存開始💎",
+                                "data" => "action=start-saving"
+                            ],
+                        ]
+                    ]
+                ];
+                $rawMessage = new RawMessageBuilder($array);
+                $multiMessage->add($rawMessage);
+            }
+            $bot->replyMessage($event->replyToken, $multiMessage);
+        }
     }
 
     public function addTermsMessage($multiMessage)

@@ -13,7 +13,7 @@ class AlbumController extends Controller
     {
         $photos = $album->photos()
             ->whereHas('users', function ($q) {
-                return $q->where('user_id', Auth::user()->id)->where('is_archived', false);
+                $q->where('user_id', Auth::user()->id)->where('is_archived', false);
             })
             ->orderBy('created_at')
             ->get();
