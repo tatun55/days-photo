@@ -6,14 +6,14 @@
                     <button type="button" class="btn-close ms-auto p-3" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="card-header border-0 bg-white text-center pb-3">
                         <h2 class="h4">部屋に飾れるミニアルバムを作る</h2>
-                        <span>このアルバムで管理中のフォト {{ $album->photos_count }} 枚から作成します</span>
+                        <span>このアルバムで管理中のフォト {{ isset($photos) ? $photos->count() : $album->photos_count }} 枚から作成します</span>
                     </div>
                     <form method="POST" action="{{ route('order.store') }}" class="card-body">
                         @csrf
                         <input type="hidden" name="user_id" value="{{ \Auth::user()->id }}">
                         <input type="hidden" name="album_id" value="{{ $album->id }}">
                         <label class="h6">ページ数 <small class="fw-light"><span class="text-danger">*</span>25ページまで</small></label>
-                        <p>{{ $album->photos_count }}ページ</p>
+                        <p>{{ isset($photos) ? $photos->count() : $album->photos_count }}ページ</p>
                         <label class="h6">タイプを選択</label>
                         <div class="form-group d-block d-sm-flex justify-content-between">
                             <div class="form-check">

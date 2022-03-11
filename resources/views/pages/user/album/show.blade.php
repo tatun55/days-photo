@@ -37,3 +37,13 @@
     @include('sections.modals.albums.show')
 </main>
 @endsection
+
+@section('script')
+@if($flagModal)
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById("modal-album-{{ $album->id }}"));
+        myModal.show();
+
+    </script>
+@endif
+@endsection

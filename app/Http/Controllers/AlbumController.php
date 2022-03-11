@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AlbumController extends Controller
 {
-    public function show(Album $album)
+    public function show(Album $album, Request $request)
     {
+        $flagModal = $request->has('modal');
         $photos = $album->photos()
             ->whereHas('users', function ($q) {
                 $q->where('user_id', Auth::user()->id)->where('is_archived', false);
@@ -18,7 +19,7 @@ class AlbumController extends Controller
             ->orderBy('created_at')
             ->get();
         $dataSource = $this->getDataSource($album->id, $photos);
-        return view('pages.user.album.show', compact(['album', 'photos', 'dataSource']));
+        return view('pages.user.album.show', compact(['album', 'photos', 'dataSource', 'flagModal']));
     }
 
     public function trashbox(Album $album)
