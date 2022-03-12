@@ -26,7 +26,7 @@
                     </nav>
 
                     <div class="ms-1 mb-4 me-2">
-                        <button class="btn btn-primary" type="button"><i class="fa fa-plus me-2"></i>プリンターを登録</button>
+                        <button class="btn btn-primary" type="button"><i class="fa fa-plus me-2" data-bs-toggle="modal" data-bs-target="#modal-printer"></i>プリンターを登録</button>
                         <div><small><span class="text-danger">*1</span> Epson Connect 対応プリンターを登録してください</small></div>
                         <div><small><span class="text-danger">*2</span> エプソンプリンターをお持ちで Epson Connect への登録がまだの方は<a href="https://www.epsonconnect.com/guide/ja/html/p01.htm" class="text-tertiary text-decoration-underline" target="_blank" rel="noopener noreferrer">コチラ</a></small></div>
                     </div>
@@ -41,6 +41,22 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="modal fade" id="modal-printer" tabindex="-1" role="dialog" aria-labelledby="modal-printer" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <form method="POST" action="{{ route('printer.store') }}" class="modal-content">
+                            @csrf
+                            <div class="modal-header">
+                                <h2 class="h6 modal-title">アーカイブへ移動しますか？</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-warning text-white">アーカイブへ移動</button>
+                                <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
             </div>

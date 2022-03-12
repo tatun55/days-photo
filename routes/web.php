@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('trashbox', [UserController::class, 'trashbox'])->name('trashbox');
     Route::get('account', [UserController::class, 'account'])->name('account');
     Route::get('setting', [UserController::class, 'setting'])->name('setting');
+    Route::post('printer', [PriterController::class, 'store'])->name('printer.store');
 
     Route::post('albums/{album}/restore', [AlbumController::class, 'restore'])->withTrashed()->name('albums.restore');
     Route::get('albums/{album}', [AlbumController::class, 'show'])->name('albums.show');
