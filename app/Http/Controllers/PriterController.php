@@ -11,6 +11,7 @@ class PriterController extends Controller
     public function store(Request $request)
     {
         $printer = new Printer();
+        $printer->id = \Str::uuid();
         $printer->user_id = Auth::user()->id;
         $printer->name = $request->name;
         $printer->email = $request->email;
