@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\PriterController;
 use App\Http\Controllers\TopController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('trashbox', [UserController::class, 'trashbox'])->name('trashbox');
     Route::get('account', [UserController::class, 'account'])->name('account');
     Route::get('setting', [UserController::class, 'setting'])->name('setting');
+
     Route::post('printer', [PriterController::class, 'store'])->name('printer.store');
 
     Route::post('albums/{album}/restore', [AlbumController::class, 'restore'])->withTrashed()->name('albums.restore');

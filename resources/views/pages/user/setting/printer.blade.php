@@ -26,7 +26,7 @@
                     </nav>
 
                     <div class="ms-1 mb-4 me-2">
-                        <button class="btn btn-primary" type="button"><i class="fa fa-plus me-2" data-bs-toggle="modal" data-bs-target="#modal-printer"></i>プリンターを登録</button>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modal-printer"><i class="fa fa-plus me-2"></i>プリンターを登録</button>
                         <div><small><span class="text-danger">*1</span> Epson Connect 対応プリンターを登録してください</small></div>
                         <div><small><span class="text-danger">*2</span> エプソンプリンターをお持ちで Epson Connect への登録がまだの方は<a href="https://www.epsonconnect.com/guide/ja/html/p01.htm" class="text-tertiary text-decoration-underline" target="_blank" rel="noopener noreferrer">コチラ</a></small></div>
                     </div>
@@ -37,7 +37,7 @@
                                 <span class="far fa-lightbulb"></span>
                             </div>
                             <h3 class="h5 mb-3">現在、印刷可能なプリンターが登録されていません</h3>
-                            <p><code class="px-2 py-1 me-1 d-inline-block bg-gray-300">Epson Connect 対応プリンター</code>を登録していただくと、アルバム収納用写真のセルフプリントが可能です</p>
+                            <p><code class="px-2 py-1 me-1 d-inline-block bg-gray-300">Epson Connect 対応プリンター</code>を登録していただくと、アルバム収納用フォトのセルフプリントが可能です</p>
                         </div>
                     </div>
 
@@ -48,11 +48,24 @@
                         <form method="POST" action="{{ route('printer.store') }}" class="modal-content">
                             @csrf
                             <div class="modal-header">
-                                <h2 class="h6 modal-title">アーカイブへ移動しますか？</h2>
+                                <h2 class="h6 modal-title">プリンターの登録</h2>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                            <div class="modal-body">
+                                <div class="form-group mb-3">
+                                    <label for="input-name">プリンタ名 (管理用)</label>
+                                    <input id="input-name" type="text" class="form-control" name="name" placeholder="自宅プリンター">
+                                    <div class="form-text text-gray text-left text-sm"><span class="text-danger">*</span> 50字以内</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-name">プリンターのメールアドレス</label>
+                                    <input id="input-name" type="text" class="form-control" name="email" placeholder="xxxxxxxxxxxxxxx@print.epsonconnect.com">
+                                    <div class="form-text text-gray text-left text-sm"><span class="text-danger">*</span> Epson Connect 設定で取得したもの</div>
+                                </div>
+                            </div>
+
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-warning text-white">アーカイブへ移動</button>
+                                <button type="submit" class="btn btn-warning text-white">登録</button>
                                 <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
                             </div>
                         </form>
