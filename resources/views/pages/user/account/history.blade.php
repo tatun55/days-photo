@@ -62,7 +62,7 @@
 
                                         @endswitch
                                     </small>
-                                    <div id="cart-table-wrapper">
+                                    <div id="table-responsive-wrapper">
                                         <table>
                                             <thead>
                                                 <tr>
@@ -78,7 +78,7 @@
                                             <tbody>
                                                 @foreach($order->cartItems()->get() as $cartItem)
                                                     <tr class="text-center">
-                                                        <th aria-label="お写真">
+                                                        <th>
                                                             <div class="table-img-wrapper mx-auto m-3 my-md-0 rounded">
                                                                 <img src="{{ $cartItem->album->cover }}" alt="...">
                                                             </div>

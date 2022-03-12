@@ -33,7 +33,7 @@
                         </div>
                     </div>
 
-                    @if(\Auth::user()->printers()->isEmpty())
+                    @if(\Auth::user()->printers()->get()->isEmpty())
                         <div class="card p-1 p-md-4 mb-4 mb-lg-0 bg-gray-100">
                             <div class="card-body">
                                 <div class="icon icon-shape icon-shape-primary rounded-circle mb-4">
@@ -45,134 +45,75 @@
                         </div>
                     @else
                         <div>
-                            <table class="table responsive-table">
-                                <tbody>
-                                    <tr>
-                                        <th style="text-align:left;">販売業者
-                                        </th>
-                                        <td style="text-align:left;">COLORBOX株式会社</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">代表責任者
-                                        </th>
-                                        <td style="text-align:left;">高井昭彦</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">所在地
-                                        </th>
-                                        <td style="text-align:left;">
-                                            〒１５０-０００１<br>
-                                            東京都渋谷区神宮前六丁目２３番４号
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">電話番号
-                                        </th>
-                                        <td style="text-align:left;">090-6124-7916</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">電話受付時間
-                                        </th>
-                                        <td style="text-align:left;">8:00 - 17:00</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">メールアドレス
-                                        </th>
-                                        <td style="text-align:left;">info@colorbox.tech</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">サイトURL
-                                        </th>
-                                        <td style="text-align:left;">https://colorbox.tech</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">販売価格
-                                        </th>
-                                        <td style="text-align:left;">各商品の紹介ページに記載している価格とします。</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">商品代金以外に必要な料金
-                                        </th>
-                                        <td style="text-align:left;">
-                                            消費税、送料（全国一律３８０円）<br>
-                                            ※２，０００円以上購入すれば送料無料、ラッピング代１００円（希望者のみ）
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">引き渡し時期
-                                        </th>
-                                        <td style="text-align:left;">ご注文から３日以内に発送します。</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">お支払い方法とお支払いの時期
-                                        </th>
-                                        <td style="text-align:left;">
-                                            クレジットカード決済：ご注文時にお支払いが確定します。<br>
-                                            代金引換：代金は商品お届け時、配送員に現金でお支払いください。<br>
-                                            コンビニ決済：ご注文から３日以内に、コンビニでお支払いください。
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">返品・交換・キャンセルについて
-                                        </th>
-                                        <td style="text-align:left;">
-                                            商品発送後の返品・交換・キャンセルには、基本的に対応しておりません。<br>
-                                            商品に欠陥がある場合のみ交換が可能ですのでご連絡ください。
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">返品期限
-                                        </th>
-                                        <td style="text-align:left;">商品出荷から１０日以内にご連絡ください。</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:left;">返品送料
-                                        </th>
-                                        <td style="text-align:left;">
-                                            商品に欠陥がある場合は、弊社で負担いたします。<br>
-                                            それ以外は、お客さまのご負担になります。
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+                            <div id="table-responsive-wrapper">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 6%"> </th>
+                                            <th style="width: 22%">このプリンタを使う</th>
+                                            <th style="width: 28%">プリンタ名</th>
+                                            <th style="width: 30%">Email</th>
+                                            <th style="width: 14%">編集・削除</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($printers as $i => $printer)
+                                            <tr class="text-center my-5">
+                                                <th class="d-inline p-0 d-sm-table-cell">
+                                                    <input type="radio" id="printer-{{ $i + 1 }}" class="form-check-input" name="availables" value="{{ $printer->id }}">
+                                                </th>
+                                                <th class="d-inline p-0 d-sm-table-cell">
+                                                    <label for="printer-{{ $i + 1 }}" class="fa fa-print fa-2x position-relative mx-3"><span class="badge-num-printer">{{ $i + 1 }}</span></label>
+                                                </th>
+                                                <td aria-label="プリンタ名">{{ $printer->name }}</td>
+                                                <td aria-label="Email">{{ $printer->email }}</td>
+                                                <td aria-label="編集・削除">
+                                                    <div class="d-flex justify-content-center">
+                                                        <button class="btn btn-sm btn-gray-600 text-white mx-1" data-bs-toggle="modal" data-bs-target="#modal-printer-edit"><i class="fas fa-edit"></i></button>
+                                                        <button class="btn btn-sm btn-danger mx-1" data-bs-toggle="modal" data-bs-target="#modal-printer-delete"><i class="fas fa-trash"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     @endif
-
                 </div>
-
-                <div class="modal fade" id="modal-printer" tabindex="-1" role="dialog" aria-labelledby="modal-printer" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <form method="POST" action="{{ route('printer.store') }}" class="modal-content">
-                            @csrf
-                            <div class="modal-header">
-                                <h2 class="h6 modal-title">プリンターの登録</h2>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group mb-3">
-                                    <label for="input-name">プリンタ名 (管理用)</label>
-                                    <input id="input-name" type="text" class="form-control" name="name" placeholder="自宅プリンター">
-                                    <div class="form-text text-gray text-left text-sm"><span class="text-danger">*</span> 50字以内</div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="input-name">プリンターのメールアドレス</label>
-                                    <input id="input-name" type="text" class="form-control" name="email" placeholder="xxxxxxxxxxxxxxx@print.epsonconnect.com">
-                                    <div class="form-text text-gray text-left text-sm"><span class="text-danger">*</span> Epson Connect 設定で取得したもの</div>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-warning text-white">登録</button>
-                                <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="modal-printer" tabindex="-1" role="dialog" aria-labelledby="modal-printer" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form method="POST" action="{{ route('printer.store') }}" class="modal-content">
+                @csrf
+                <div class="modal-header">
+                    <h2 class="h6 modal-title">プリンターの登録</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="input-name">プリンタ名 (管理用)</label>
+                        <input id="input-name" type="text" class="form-control" name="name" placeholder="自宅プリンター">
+                        <div class="form-text text-gray text-left text-sm"><span class="text-danger">*</span> 50字以内</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-name">プリンターのメールアドレス</label>
+                        <input id="input-name" type="text" class="form-control" name="email" placeholder="xxxxxxxxxxxxxxx@print.epsonconnect.com">
+                        <div class="form-text text-gray text-left text-sm"><span class="text-danger">*</span> Epson Connect 設定で取得したもの</div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning text-white">登録</button>
+                    <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </main>
 @endsection

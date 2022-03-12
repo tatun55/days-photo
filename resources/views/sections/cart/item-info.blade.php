@@ -1,7 +1,7 @@
 <div class="card mb-4">
     <div class="card-body">
         <h5 class="card-title">ショッピングカート</h5>
-        <div id="cart-table-wrapper">
+        <div id="table-responsive-wrapper">
             <table>
                 <thead>
                     <tr>
@@ -13,14 +13,14 @@
                         <th style="width: 8%">数量</th>
                         <th style="width: 8%">小計</th>
                         @if(! $isReview)
-                            <th style="width: 8%"></th>
+                            <th style="width: 8%">削除</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($cartItems as $cartItem)
                         <tr class="text-center">
-                            <th aria-label="お写真">
+                            <th>
                                 <div class="table-img-wrapper mx-auto m-3 my-md-0 rounded">
                                     <img src="{{ $cartItem->album->cover }}" alt="...">
                                 </div>
@@ -46,7 +46,7 @@
                                 ￥1
                             </td>
                             @if(! $isReview)
-                                <td aria-label="">
+                                <td aria-label="削除">
                                     <div class="d-flex justify-content-center">
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#modal-cart-delete-{{ $cartItem->id }}"><i class="fas fa-trash"></i></button>
                                     </div>

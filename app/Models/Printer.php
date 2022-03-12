@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Printer extends Model
 {
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     protected $guarded = [];
 }

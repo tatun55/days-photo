@@ -49,6 +49,7 @@ class UserController extends Controller
 
     public function setting()
     {
-        return view('pages.user.setting.printer');
+        $printers = Auth::user()->printers()->get();
+        return view('pages.user.setting.printer', compact('printers'));
     }
 }

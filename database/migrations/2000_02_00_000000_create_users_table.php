@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->boolean('available')->default(true);
             $table->string('name', 20);
             $table->string('avatar');
+            $table->string('printer_id', 36)->nullable();
             $table->timestamps();
         });
     }
