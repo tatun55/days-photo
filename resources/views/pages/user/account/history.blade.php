@@ -33,7 +33,7 @@
                                     <span class="far fa-lightbulb"></span>
                                 </div>
                                 <h3 class="h5 mb-3">現在、商品を購入された履歴がありません。</h3>
-                                <p><code class="px-2 py-1 mx-2 d-inline-block bg-gray-300">アルバムのドロップダウンメニュー</code><span><i class="fa fa-arrow-right"></i></span><code class="px-2 py-1 mx-2 d-inline-block bg-gray-300">ミニアルバムを作る</code> で、部屋にかざれるミニアルバムを作れます。</p>
+                                <p><code class="px-2 py-1 me-1 d-inline-block bg-gray-300">アルバムのドロップダウンメニュー</code><span><i class="fa fa-arrow-right"></i></span><code class="px-2 py-1 mx-1 d-inline-block bg-gray-300">ミニアルバムを作る</code> で、部屋にかざれるミニアルバムを作れます。</p>
                             </div>
                         </div>
                     @else

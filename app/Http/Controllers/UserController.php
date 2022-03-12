@@ -46,4 +46,9 @@ class UserController extends Controller
         $orders = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
         return view('pages.user.account.history', compact('orders'));
     }
+
+    public function setting()
+    {
+        return view('pages.user.setting.printer');
+    }
 }
