@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(CartItem::class)->where('order_id', null);
     }
+
+    public function printers()
+    {
+        return $this->hasMany(Printer::class);
+    }
 }
