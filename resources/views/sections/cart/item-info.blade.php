@@ -19,10 +19,12 @@
                 </thead>
                 <tbody>
                     @foreach($cartItems as $cartItem)
-                        <tr class="text-center">
-                            <th>
-                                <div class="table-img-wrapper mx-auto m-3 my-md-0 rounded">
-                                    <img src="{{ $cartItem->album->cover }}" alt="...">
+                        <tr class="text-center my-5">
+                            <th class="w-100">
+                                <div class="img-wrapper-1x1 mx-auto" style="max-width: 120px;">
+                                    <div class="img-content">
+                                        <img class="rounded" src="{{ $cartItem->album->cover }}" alt="...">
+                                    </div>
                                 </div>
                             </th>
                             <td aria-label="タイトル">{{ $cartItem->album->title }}</td>
