@@ -11,7 +11,7 @@
                 <nav class="ms-2 mb-0 mt-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-transparent">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}"><span class="fas fa-home me-1"></span></span>ホーム</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">アカウントサービス</li>
+                        <li class="breadcrumb-item active" aria-current="page">設定</li>
                     </ol>
                 </nav>
                 <!--End of Breadcrumb-->
@@ -42,7 +42,7 @@
                                 </div>
                                 <h3 class="h5 mb-3">現在、印刷可能なプリンターが登録されていません</h3>
                                 <p><code class="px-2 py-1 me-1 d-inline-block bg-gray-300">Epson Connect 対応プリンター</code>を登録していただくと、アルバム収納用フォトのセルフプリントが可能です</p>
-                                <p>対応プリンタがない場合などは、アルバム購入時に<b>弊社で印刷</b>をお選びください。</p>
+                                <p>対応プリンタがない場合は、アルバム購入時に<b>弊社で印刷</b>をお選びください。</p>
                             </div>
                         </div>
                     @else
@@ -52,7 +52,7 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th style="width: 20%">使用中のプリンタ</th>
+                                            <th style="width: 20%">使用するプリンタ</th>
                                             <th style="width: 36%">プリンタ名</th>
                                             <th style="width: 36%">Email</th>
                                             <th style="width: 8%">削除</th>

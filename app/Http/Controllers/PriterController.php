@@ -41,6 +41,9 @@ class PriterController extends Controller
 
     public function delete(Printer $printer)
     {
+        if (Auth::user()->printer_id === $printer->id) {
+            User::where('id', Auth::user()->id)->update(['printer_id' => null]);
+        }
         $printer->delete();
         return back()->with('status', 'プリンターが削除されました');
     }

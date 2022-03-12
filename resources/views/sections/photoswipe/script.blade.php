@@ -61,7 +61,7 @@ lightbox.init();
 
 
 var slideShowEvent=function (e) {
-    let i = e.target.querySelector('img').getAttribute('data-index') - 1;
+    var i = e.currentTarget.querySelector('img').getAttribute('data-index') - 0;
     lightbox.loadAndOpen(i);
 };
 

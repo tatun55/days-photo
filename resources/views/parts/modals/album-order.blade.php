@@ -64,7 +64,7 @@
                             <li>メッセージカード</li>
                         </ol>
 
-                        <label class="h6">フォト印刷</label>
+                        <label class="h6" style="cursor: pointer;" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="「設定」メニューからプリンターを登録すると、アルバムに収納されるフォトのセルフプリントが可能です">フォト印刷 <span class="fa fa-question-circle"></span></label>
                         <div class="container">
                             <div class="form-group row">
                                 <div class="form-check col-6">
@@ -74,7 +74,7 @@
                                     </label>
                                 </div>
                                 <div class="form-check col-6">
-                                    <input class="form-check-input" type="radio" name="self_print" id="self_print_2" value="1">
+                                    <input class="form-check-input" type="radio" name="self_print" id="self_print_2" value="1" @if(\Auth::user()->printer === null) disabled @endif>
                                     <label class="form-check-label" for="self_print_2">
                                         自分で印刷
                                     </label>

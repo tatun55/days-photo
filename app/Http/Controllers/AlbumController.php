@@ -11,12 +11,12 @@ class AlbumController extends Controller
 {
     public function show(Album $album, Request $request)
     {
-        $flagModal = $request->has('modal');
+        $flagModal = $request->has('modal'); // from line quick reply button
         $photos = $album->photos()
             ->whereHas('users', function ($q) {
                 $q->where('user_id', Auth::user()->id)->where('is_archived', false);
             })
-            ->orderBy('created_at')
+            ->orderBy('created_at', 'desc')
             ->get();
         $dataSource = $this->getDataSource($album->id, $photos);
         return view('pages.user.album.show', compact(['album', 'photos', 'dataSource', 'flagModal']));
@@ -28,7 +28,7 @@ class AlbumController extends Controller
             ->whereHas('users', function ($q) {
                 return $q->where('user_id', Auth::user()->id)->where('is_archived', true);
             })
-            ->orderBy('created_at')
+            ->orderBy('created_at', 'desc')
             ->get();
         $dataSource = $this->getDataSource($album->id, $photos);
         return view('pages.user.album.trash', compact('album', 'photos', 'dataSource'));
