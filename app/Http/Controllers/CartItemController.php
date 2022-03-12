@@ -193,9 +193,6 @@ class CartItemController extends Controller
                         }
                         CartItem::upsert($newArr, 'id', ['order_id']);
 
-                        // copy image files (by current all cartItems which contain album_id)
-
-
                         DB::commit();
                         return redirect('account')->with('modal', 'ご注文が完了しました');
                     } catch (Throwable $e) {
