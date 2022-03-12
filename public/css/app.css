@@ -273,6 +273,16 @@ main {
     }
 }
 
+div.table-img-wrapper {
+    width: 100px !important;
+    height: 100px !important;
+    overflow: hidden;
+}
+
+div.table-img-wrapper img {
+    object-fit: cover !important;
+}
+
 
 /* バッチ */
 

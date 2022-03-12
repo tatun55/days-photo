@@ -9,8 +9,8 @@
                         <th>タイトル</th>
                         <th style="width: 16%">タイプ</th>
                         <th style="width: 16%">印刷</th>
-                        <th style="width: 8%">数量</th>
                         <th style="width: 8%">価格</th>
+                        <th style="width: 8%">数量</th>
                         <th style="width: 8%">小計</th>
                         @if(! $isReview)
                             <th style="width: 8%"></th>
@@ -21,8 +21,8 @@
                     @foreach($cartItems as $cartItem)
                         <tr class="text-center">
                             <th aria-label="お写真">
-                                <div class="mx-auto m-3 my-md-0" style="width: 80px; height: 80px;">
-                                    <img class="rounded" src="{{ $cartItem->album->cover }}" alt="...">
+                                <div class="table-img-wrapper mx-auto m-3 my-md-0 rounded">
+                                    <img src="{{ $cartItem->album->cover }}" alt="...">
                                 </div>
                             </th>
                             <td aria-label="タイトル">{{ $cartItem->album->title }}</td>

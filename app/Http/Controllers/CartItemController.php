@@ -18,6 +18,15 @@ class CartItemController extends Controller
         $cartItem->type = $request->type;
         $cartItem->self_print = $request->self_print;
         $cartItem->save();
+
+        // cart_item_photoをsync
+        $cartItemPhotoIds = $cartItem->album->photos()->whereHas('users', function ($q) {
+            $q->where('user_id', Auth::user()->id)->where('is_archived', false);
+        })
+            ->orderBy('created_at')
+            ->pluck('id');
+        $cartItem->photos()->sync($cartItemPhotoIds);
+
         return redirect('cart')->with('status', 'カートに追加されました');
     }
 
@@ -164,24 +173,36 @@ class CartItemController extends Controller
                 $response = json_decode($result['response'], true);
 
                 if ($response['statusDetails']['state'] === 'Completed') {
-                    $order = new Order();
-                    $order->id = \Str::uuid();
-                    $order->user_id = Auth::user()->id;
-                    $order->total_price = $total->total_price;
-                    $order->raw_resp = $result['response'];
-                    $order->save();
+                    try {
+                        DB::beginTransaction();
 
-                    // add order_id to cart items witch ordered
-                    $arr = $cartItems->toArray();
-                    $newArr = [];
-                    $now = \Carbon\Carbon::now();
-                    foreach ($arr as $key => $value) {
-                        $merged = array_merge($value, ['order_id' => $order->id, 'created_at' => \Carbon\Carbon::create($value["created_at"])->toDateTimeString(), 'updated_at' => $now->toDateTimeString()]);
-                        $newArr[] = $merged;
+                        $order = new Order();
+                        $order->id = \Str::uuid();
+                        $order->user_id = Auth::user()->id;
+                        $order->total_price = $total->total_price;
+                        $order->raw_resp = $result['response'];
+                        $order->save();
+
+                        // add order_id to cart items witch ordered
+                        $arr = $cartItems->toArray();
+                        $newArr = [];
+                        $now = \Carbon\Carbon::now();
+                        foreach ($arr as $key => $value) {
+                            $merged = array_merge($value, ['order_id' => $order->id, 'created_at' => \Carbon\Carbon::create($value["created_at"])->toDateTimeString(), 'updated_at' => $now->toDateTimeString()]);
+                            $newArr[] = $merged;
+                        }
+                        CartItem::upsert($newArr, 'id', ['order_id']);
+
+                        // copy image files (by current all cartItems which contain album_id)
+
+
+                        DB::commit();
+                        return redirect('account')->with('modal', 'ご注文が完了しました');
+                    } catch (Throwable $e) {
+                        DB::rollBack();
+                        \Log::emergency(json_encode($e, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+                        return redirect('cart')->with('status', '決済中にエラーが発生しました');
                     }
-                    CartItem::upsert($newArr, 'id', ['order_id']);
-
-                    return redirect('account')->with('modal', 'ご注文が完了しました');
                 } else {
                     \Log::emergency('status=' . $result['status'] . '; response=' . $result['response'] . "\n");
                     return redirect('cart')->with('status', '決済中にエラーが発生しました');

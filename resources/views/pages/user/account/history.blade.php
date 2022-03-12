@@ -79,8 +79,8 @@
                                                 @foreach($order->cartItems()->get() as $cartItem)
                                                     <tr class="text-center">
                                                         <th aria-label="お写真">
-                                                            <div class="mx-auto m-3 my-md-0" style="width: 80px; height: 80px;">
-                                                                <img class="rounded" src="{{ $cartItem->album->cover }}" alt="...">
+                                                            <div class="table-img-wrapper mx-auto m-3 my-md-0 rounded">
+                                                                <img src="{{ $cartItem->album->cover }}" alt="...">
                                                             </div>
                                                         </th>
                                                         <td aria-label="タイトル">{{ $cartItem->album->title }}</td>

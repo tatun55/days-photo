@@ -18,5 +18,8 @@ class Photo extends Model
         return $this->belongsToMany(User::class);
     }
 
-    // protected $guarded = [];
+    public function cartItems()
+    {
+        return $this->belongsToMany(CartItem::class);
+    }
 }

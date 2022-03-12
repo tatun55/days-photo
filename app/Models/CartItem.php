@@ -23,4 +23,9 @@ class CartItem extends Model
     {
         return $this->hasOne(Album::class, 'id', 'album_id');
     }
+
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class);
+    }
 }
