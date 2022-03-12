@@ -47,25 +47,29 @@
 @endsection
 
 @section('script')
-<script src="https://static-fe.payments-amazon.com/checkout.js"></script>
-<script type="text/javascript" charset="utf-8">
-    amazon.Pay.renderButton('#AmazonPayButton', {
-        // set checkout environment
-        merchantId: 'A1V2ZW022WI0BY',
-        ledgerCurrency: 'JPY',
-        // sandbox: true,
-        // customize the buyer experience
-        checkoutLanguage: 'ja_JP',
-        productType: 'PayAndShip',
-        placement: 'Cart',
-        buttonColor: 'DarkGray', // Gold,DarkGray,LightGray
-        // configure Create Checkout Session request
-        createCheckoutSessionConfig: {
-            payloadJSON: '{"scopes": ["name", "email", "phoneNumber", "billingAddress"],"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/order/review"}}', // string generated in step 2
-            signature: 'QdBE/SNvg0+Tb/kKq5eDQyN/do6om1XSNhcLo0n60hUqBxsr25e2BvqiCbOrWZvUdjRBC09XwOSj+f3tV3mHKVsaMJeHqLrbLf7p6Ymahz01CtrXPd4blz0uyo7B3dfb2Ymt4AvqflPD+FGXmSdFf2xcp06fprryXYUXo8C0JhcjhM4k22MiyhFRvLWxzRDExyBsixGL4zJNcwy1Py2ZkAd+SmLSbrQJwbyL1B4j7nc6QRIWfVK8stlBBrHCm1oL0LFVYH2hx1L1ZM/gcFDAWVXgGYY93seNABkRE4cxa3edWeWR+wWItL/Og6jHh7KRfp2IC9FtBkIn73R4QiyKYw==', // signature generated in step 3
-            publicKeyId: 'LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5'
-        }
-    });
 
-</script>
+@if(!$cartItems->isEmpty())
+    <script src="https://static-fe.payments-amazon.com/checkout.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        amazon.Pay.renderButton('#AmazonPayButton', {
+            // set checkout environment
+            merchantId: 'A1V2ZW022WI0BY',
+            ledgerCurrency: 'JPY',
+            // sandbox: true,
+            // customize the buyer experience
+            checkoutLanguage: 'ja_JP',
+            productType: 'PayAndShip',
+            placement: 'Cart',
+            buttonColor: 'DarkGray', // Gold,DarkGray,LightGray
+            // configure Create Checkout Session request
+            createCheckoutSessionConfig: {
+                payloadJSON: '{"scopes": ["name", "email", "phoneNumber", "billingAddress"],"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/order/review"}}', // string generated in step 2
+                signature: 'QdBE/SNvg0+Tb/kKq5eDQyN/do6om1XSNhcLo0n60hUqBxsr25e2BvqiCbOrWZvUdjRBC09XwOSj+f3tV3mHKVsaMJeHqLrbLf7p6Ymahz01CtrXPd4blz0uyo7B3dfb2Ymt4AvqflPD+FGXmSdFf2xcp06fprryXYUXo8C0JhcjhM4k22MiyhFRvLWxzRDExyBsixGL4zJNcwy1Py2ZkAd+SmLSbrQJwbyL1B4j7nc6QRIWfVK8stlBBrHCm1oL0LFVYH2hx1L1ZM/gcFDAWVXgGYY93seNABkRE4cxa3edWeWR+wWItL/Og6jHh7KRfp2IC9FtBkIn73R4QiyKYw==', // signature generated in step 3
+                publicKeyId: 'LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5'
+            }
+        });
+
+    </script>
+@endif
+
 @endsection

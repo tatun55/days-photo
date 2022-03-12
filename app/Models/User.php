@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function printers()
     {
-        return $this->hasMany(Printer::class);
+        return $this->hasMany(Printer::class)->orderBy('created_at', 'asc');
     }
 }

@@ -152,6 +152,8 @@ class EpsonConnectAPI extends Command
             ]
         ];
 
+        dd($printSetting);
+
         //--------------------------------------------------------------------------------
         // 2. Create print job
 

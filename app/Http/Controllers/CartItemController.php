@@ -195,7 +195,7 @@ class CartItemController extends Controller
                         CartItem::upsert($newArr, 'id', ['order_id']);
 
                         DB::commit();
-                        return redirect('account')->with('modal', 'ご注文が完了しました');
+                        return redirect('account')->with('order_completed', 'ご注文が完了しました');
                     } catch (Throwable $e) {
                         DB::rollBack();
                         \Log::emergency(json_encode($e, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));

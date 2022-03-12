@@ -301,6 +301,9 @@ div.table-img-wrapper img {
     line-height: 10px;
 }
 
+
+/* プリンター画面 */
+
 .badge-num-printer {
     position: absolute;
     display: inline-block;
@@ -315,6 +318,14 @@ div.table-img-wrapper img {
     height: 18px;
     text-align: center;
     line-height: 16px;
+}
+
+.printer::before {
+    opacity: .5;
+}
+
+.printer.available::before {
+    opacity: 1;
 }
 
 
