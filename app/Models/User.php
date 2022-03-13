@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Printer::class)->orderBy('created_at', 'asc');
     }
+
+    public function printer()
+    {
+        return $this->hasOne(Printer::class);
+    }
 }

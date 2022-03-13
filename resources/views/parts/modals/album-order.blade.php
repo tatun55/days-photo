@@ -64,19 +64,19 @@
                             <li>メッセージカード</li>
                         </ol>
 
-                        <label class="h6" style="cursor: pointer;" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="「設定」メニューからプリンターを登録すると、アルバムに収納されるフォトのセルフプリントが可能です">フォト印刷 <span class="fa fa-question-circle"></span></label>
+                        <label class="h6" style="cursor: pointer;" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="「設定」メニューからプリンターを登録すると、アルバムに収納されるフォトのセルフプリントが可能です。ご注文後に印刷可能となります。">フォト <span class="fa fa-question-circle"></span></label>
                         <div class="container">
                             <div class="form-group row">
                                 <div class="form-check col-6">
                                     <input class="form-check-input" type="radio" name="self_print" id="self_print_1" value="0" checked>
                                     <label class="form-check-label" for="self_print_1">
-                                        弊社で印刷
+                                        アルバムに同梱
                                     </label>
                                 </div>
                                 <div class="form-check col-6">
-                                    <input class="form-check-input" type="radio" name="self_print" id="self_print_2" value="1" @if(\Auth::user()->printer === null) disabled @endif>
+                                    <input class="form-check-input" type="radio" name="self_print" id="self_print_2" value="1" @if(\Auth::user()->printer_id === null) disabled @endif>
                                     <label class="form-check-label" for="self_print_2">
-                                        自分で印刷
+                                        セルフプリント
                                     </label>
                                 </div>
                             </div>

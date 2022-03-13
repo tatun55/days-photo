@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use App\Models\Order;
+use App\Services\EpsonConnectApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -213,5 +214,11 @@ class CartItemController extends Controller
             \Log::emergency('order error : ' . $e . "\n");
             return redirect('cart')->with('status', '決済中にエラーが発生しました');
         }
+    }
+
+    public function print(CartItem $cartItem)
+    {
+        (new EpsonConnectApiService())->printCartItem($cartItem);
+        return back()->with('status', '印刷ジョブを送信しました');
     }
 }

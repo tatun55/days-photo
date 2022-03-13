@@ -66,32 +66,34 @@
                                         <table>
                                             <thead>
                                                 <tr>
-                                                    <th> </th>
+                                                    <th></th>
                                                     <th>タイトル</th>
-                                                    <th style="width: 16%">タイプ</th>
-                                                    <th style="width: 16%">印刷</th>
+                                                    <th style="width: 12%">タイプ</th>
+                                                    <th style="width: 18%">フォト</th>
                                                     <th style="width: 8%">数量</th>
                                                     <th style="width: 8%">価格</th>
                                                     <th style="width: 8%">小計</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($order->cartItems()->get() as $cartItem)
+                                                @foreach($order->cartItems()->withCount('photos')->get() as $cartItem)
                                                     <tr class="text-center">
-                                                        <th>
-                                                            <div class="table-img-wrapper mx-auto m-3 my-md-0 rounded">
-                                                                <img src="{{ $cartItem->album->cover }}" alt="...">
+                                                        <th class="w-100">
+                                                            <div class="img-wrapper-1x1 mx-auto" style="max-width: 100px;">
+                                                                <div class="img-content">
+                                                                    <img class="rounded" src="{{ $cartItem->album->cover }}" alt="...">
+                                                                </div>
                                                             </div>
                                                         </th>
                                                         <td aria-label="タイトル">{{ $cartItem->album->title }}</td>
                                                         <td aria-label="タイプ">
                                                             シンプル
                                                         </td>
-                                                        <td aria-label="印刷">
+                                                        <td aria-label="フォト">
                                                             @if($cartItem->self_print)
-                                                                セルフ
+                                                                セルフプリント <button class="btn btn-sm btn-primary btn-print" data-bs-toggle="modal" data-bs-target="#modal-print" data-cart-item-id="{{ $cartItem->id }}" data-photos-count="{{ $cartItem->photos_count }}">印刷する</button>
                                                             @else
-                                                                弊社
+                                                                アルバムに同梱
                                                             @endif
                                                         </td>
                                                         <td aria-label="価格">
@@ -119,6 +121,62 @@
         </div>
     </div>
 
-
+    <div class="modal fade" id="modal-print" tabindex="-1" role="dialog" aria-labelledby="modal-print" aria-hidden="true">
+        <div class="modal-lg modal-dialog modal-dialog-centered" role="document">
+            <form id="print-form" method="POST" class="modal-content">
+                @csrf
+                <div class="modal-header">
+                    印刷の準備はよろしいですか？
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-0 text-center">
+                        <div class="px-4 mb-1">
+                            <span class="modal-icon display-1"><i class="fa fa-print"></i></span>
+                            <h6 class="h6 modal-title mb-1">設定されたプリンタでフォト印刷を行います</h6>
+                            <p class="text-left text-sm-center"><small>写真用紙 L 版サイズを <span id="photos-count"></span> 枚以上セットした状態で行ってください。</small></p>
+                        </div>
+                        <div id="table-responsive-wrapper" class="p-0">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 36%">プリンタ名</th>
+                                        <th style="width: 36%">Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center">
+                                        <td aria-label="プリンタ名"><span style="font-size: 0.8rem">{{ \Auth::user()->printer->name }}</span></td>
+                                        <td aria-label="Email"><span style="font-size: 0.8rem">{{ \Auth::user()->printer->email }}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning text-white" onclick="this.disabled=true;this.value='送信中...'; this.form.submit();">印刷する</button>
+                        <button type="button" class="btn btn-link text-gray ms-auto" data-bs-dismiss="modal">キャンセル</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
+@endsection
+
+@section('script')
+<script>
+    document.querySelectorAll('.btn-print').forEach(item => {
+        item.addEventListener('click', event => {
+            var cartItemId = event.currentTarget.getAttribute('data-cart-item-id');
+            var actionUrl = `https://days.photo/cart-items/${cartItemId}/print`;
+            var printForm = document.getElementById("print-form");
+            printForm.action = actionUrl;
+
+            var photosCount = event.currentTarget.getAttribute('data-photos-count');
+            document.querySelector('#photos-count').textContent = photosCount;
+        });
+    });
+
+</script>
 @endsection

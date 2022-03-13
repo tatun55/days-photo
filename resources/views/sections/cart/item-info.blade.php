@@ -8,7 +8,7 @@
                         <th> </th>
                         <th>タイトル</th>
                         <th style="width: 16%">タイプ</th>
-                        <th style="width: 16%">印刷</th>
+                        <th style="width: 16%">フォト</th>
                         <th style="width: 8%">価格</th>
                         <th style="width: 8%">数量</th>
                         <th style="width: 8%">小計</th>
@@ -31,11 +31,11 @@
                             <td aria-label="タイプ">
                                 シンプル
                             </td>
-                            <td aria-label="印刷">
+                            <td aria-label="フォト">
                                 @if($cartItem->self_print)
-                                    セルフ
+                                    セルフプリント
                                 @else
-                                    弊社
+                                    アルバムに同梱
                                 @endif
                             </td>
                             <td aria-label="価格">
