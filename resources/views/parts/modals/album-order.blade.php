@@ -40,16 +40,20 @@
                                 <button type="button" data-bs-target="#Carousel3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                                 <button type="button" data-bs-target="#Carousel3" data-bs-slide-to="1" aria-label="Slide 2"></button>
                                 <button type="button" data-bs-target="#Carousel3" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                <button type="button" data-bs-target="#Carousel3" data-bs-slide-to="3" aria-label="Slide 4"></button>
                             </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="../../assets/img/carousel/image-1.jpg" alt="First slide">
+                                    <img class="d-block w-100" src="{{ asset('img/pet-01-size-m.jpg') }}" alt="First slide">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block w-100" src="../../assets/img/carousel/image-2.jpg" alt="Second slide">
+                                    <img class="d-block w-100" src="{{ asset('img/pet-02-size-m.jpg') }}" alt="Second slide">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block w-100" src="../../assets/img/carousel/image-3.jpg" alt="Third slide">
+                                    <img class="d-block w-100" src="{{ asset('img/pet-03-size-m.jpg') }}" alt="Third slide">
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="{{ asset('img/pet-04-size-m.jpg') }}" alt="Fourth slide">
                                 </div>
                             </div>
                         </div>
