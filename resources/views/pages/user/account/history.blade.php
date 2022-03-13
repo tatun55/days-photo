@@ -146,8 +146,8 @@
                                 </thead>
                                 <tbody>
                                     <tr class="text-center">
-                                        <td aria-label="プリンタ名"><span style="font-size: 0.8rem">{{ \Auth::user()->printer->name }}</span></td>
-                                        <td aria-label="Email"><span style="font-size: 0.8rem">{{ \Auth::user()->printer->email }}</span></td>
+                                        <td aria-label="プリンタ名"><span style="font-size: 0.8rem">{{ \Auth::user()->printer->name ?? '' }}</span></td>
+                                        <td aria-label="Email"><span style="font-size: 0.8rem">{{ \Auth::user()->printer->email ?? '' }}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
