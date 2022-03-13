@@ -74,8 +74,8 @@
                     <li class="nav__list-item"><a href="/home">home</a></li>
                 @endauth
                 <li class="nav__list-item active-nav"><a href="/">intro</a></li>
-                <li class="nav__list-item"><a href="{{ route('about') }}">about</a></li>
-                <li class="nav__list-item"><a href="/">contact</a></li>
+                {{-- <li class="nav__list-item"><a href="{{ route('about') }}">about</a></li>
+                <li class="nav__list-item"><a href="/">contact</a></li> --}}
             </ul>
         </div>
         <div class="nav__footer">
@@ -100,16 +100,16 @@
     <main>
         <nav class="menu">
             <div class="menu__item">
-                <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">Friend</span></span>
+                <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">pet</span></span>
                 </span>
                 <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>Click here</a>
             </div>
             <div class="menu__item">
-                <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">Family</span></span>
+                <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">trip</span></span>
                 </span>
                 <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>Click here</a>
             </div>
-            <div class="menu__item">
+            {{-- <div class="menu__item">
                 <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">Couple</span></span>
                 </span>
                 <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>Click here</a>
@@ -118,173 +118,62 @@
                 <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">Personal</span></span>
                 </span>
                 <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>Click here</a>
-            </div>
+            </div> --}}
         </nav>
         <div class="page page--preview">
             <div class="gridwrap">
                 <div class="grid grid--layout-1">
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/1.jpg)">
+                    <span class="grid__item tipped" data-title="<em>PET</em><strong>部屋が華やかに</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-01-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/2.jpg)">
+                    </span>
+                    <span class="grid__item tipped" data-title="<em>PET</em><strong>ジャストサイズ</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-02-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/3.jpg)">
+                    </span>
+                    <span class="grid__item tipped" data-title="<em>PET</em><strong>タテヨコ両対応</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-03-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/4.jpg)">
+                    </span>
+                    <span class="grid__item tipped" data-title="<em>PET</em><strong>メッセージカード付</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-04-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/5.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/6.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/7.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/8.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/9.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
+                    </span>
                 </div>
                 <div class="grid grid--layout-2">
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/10.jpg)">
+                    <span class="grid__item tipped" data-title="<em>TRIP</em><strong>部屋が華やかに</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-01-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/11.jpg)">
+                    </span>
+                    <span class="grid__item tipped" data-title="<em>TRIP</em><strong>ジャストサイズ</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-02-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/12.jpg)">
+                    </span>
+                    <span class="grid__item tipped" data-title="<em>TRIP</em><strong>タテヨコ両対応</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-03-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/13.jpg)">
+                    </span>
+                    <span class="grid__item tipped" data-title="<em>TRIP</em><strong>メッセージカード付</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-04-size-m.jpg)">
                         <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/14.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/15.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/16.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/17.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                </div>
-                <div class="grid grid--layout-3">
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/18.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/19.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/20.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/21.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/22.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/23.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/24.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/42.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/43.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                </div>
-                <div class="grid grid--layout-4">
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/25.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/26.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/27.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/28.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/29.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/30.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/31.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/32.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                </div>
-                <div class="grid grid--layout-5">
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/33.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/34.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/35.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/36.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/37.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/38.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/39.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/40.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
-                    <a href="project.html" class="grid__item tipped" data-title="<em>Nature</em><strong>Your Title</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(lp/img/portfolio/41.jpg)">
-                        <div class="grid-item-mask"></div>
-                    </a>
+                    </span>
                 </div>
                 <button class="gridback "><span><i class="fa fa-rotate-left mr-2"></i>go back</span></button>
             </div>
             <!-- /gridwrap -->
             <div class="content mb-5">
                 <div class="content__item">
-                    <p class="lead">友だちに送った写真を自動で保存<br>写真はかんたん操作で、ポチッとアルバム化👌</p>
+                    <p class="lead">スマホに溜まった画像を無料で <b>ずっと残る保存</b><br>保存データをかんたん操作で、ポチッとアルバム化👌</p>
                 </div>
                 <div class="content__item">
-                    <p class="lead">家族アルバムの作成にも days.（デイズ）<br>ぜったい忘れずに、定期的に自動でできるので簡単👌</p>
+                    <p class="lead">グループでシェアした写真を自動で <b>ずっと残る保存</b><br>グループでの写真の共有・編集が超かんたん👌</p>
                 </div>
-                <div class="content__item">
+                {{-- <div class="content__item">
                     <p class="lead">恋人同士でシェアした画像がそのまま記念アルバムに<br>オンラインに “ずっと残る保存” もできる👌</p>
                 </div>
                 <div class="content__item">
                     <p class="lead">パーソナルなフォトダイアリーにも最適<br>手作りスクラップブックもできる👌</p>
-                </div>
+                </div> --}}
             </div>
         </div>
         <!-- /page -->
     </main>
 
-
-
+    {{-- QR code --}}
     @include('sections.qrcode')
+
     <footer class="footer pt-5 pb-5 bg-white text-gray">
         <div class="container">
             <div class="d-flex justify-content-center text-center">
