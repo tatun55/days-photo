@@ -46,7 +46,6 @@
     </header>
 
     @include('sections.toast')
-
     <div class="wrapper bg-white">
         @yield('content')
         <div class="push"></div>
