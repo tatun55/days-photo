@@ -255,16 +255,31 @@ class LineEventController extends Controller
     public function postedPhotoFromUser($event)
     {
         // 作成途中のAlbumを取得、なければ作成
-        $album = Album::firstOrCreate(
-            [
+
+        $album = Album::where('user_id', $event->source->userId)
+            ->where('group_id', null)
+            ->where('status', 'default')
+            ->first();
+
+        if (!$album) {
+            $album = Album::create([
+                'id' => (string) \Str::uuid(),
                 'user_id' => $event->source->userId,
                 'group_id' => null,
-                'status' => 'default',
-            ],
-            [
-                'id' => (string) \Str::uuid(),
-            ]
-        );
+            ]);
+            $flag = true;
+        }
+
+        // $album = Album::firstOrCreate(
+        //     [
+        //         'user_id' => $event->source->userId,
+        //         'group_id' => null,
+        //         'status' => 'default',
+        //     ],
+        //     [
+        //         'id' => (string) \Str::uuid(),
+        //     ]
+        // );
 
         /**
          * ImageSetの序列管理
