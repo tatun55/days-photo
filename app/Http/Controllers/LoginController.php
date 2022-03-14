@@ -75,7 +75,7 @@ class LoginController extends Controller
         }
         Auth::login($user);
 
-        return redirect()->route('home')->with('status', 'ログインに成功しました');
+        return redirect()->route('home')->with('status', 'ログインしました');
     }
 
     /**

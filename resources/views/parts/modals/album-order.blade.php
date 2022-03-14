@@ -35,7 +35,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div id="Carousel3" class="carousel slide" data-ride="carousel">
+                        <div id="Carousel3" class="mt-2 carousel slide" data-ride="carousel">
                             <div class="carousel-indicators">
                                 <button type="button" data-bs-target="#Carousel3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                                 <button type="button" data-bs-target="#Carousel3" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -57,6 +57,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="mb-2 fs-6 text-right"><span class="text-danger">*</span>上はサンプル画像です。</div>
 
                         <div class="text-center mt-2 mb-4">
                             <button class="btn btn-secondary text-white d-block mx-auto" disabled>完成イメージをみる</button>
