@@ -3,6 +3,11 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#212121" />
+    <meta name="msapplication-navbutton-color" content="#212121" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#212121" />
+
     <title>days. かんたんフォト管理</title>
     <meta name="title" content="days. かんたんフォト管理">
     <meta name="description" content="簡単＆無料で、写真がずっと残せるサービスをお探しですか？ 『days.』は新しい ”かんたんフォト管理サービス”。LINE™から友だち登録すると「ずっと残る保存」が無料✨ 「部屋にかざれるアルバム」をポチッと手間なし作成👌" />
