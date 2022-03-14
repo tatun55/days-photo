@@ -126,7 +126,7 @@
                     <span class="grid__item tipped" data-title="<em>PET</em><strong>部屋が華やかに</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-01-size-m.jpg)">
                         <div class="grid-item-mask"></div>
                     </span>
-                    <span class="grid__item tipped" data-title="<em>PET</em><strong>ジャストサイズ</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-02-size-m.jpg)">
+                    <span class="grid__item tipped" data-title="<em>PET</em><strong>ちょうどいいサイズ</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-02-size-m.jpg)">
                         <div class="grid-item-mask"></div>
                     </span>
                     <span class="grid__item tipped" data-title="<em>PET</em><strong>タテヨコ両対応</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/pet-03-size-m.jpg)">
@@ -140,7 +140,7 @@
                     <span class="grid__item tipped" data-title="<em>TRIP</em><strong>部屋が華やかに</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-01-size-m.jpg)">
                         <div class="grid-item-mask"></div>
                     </span>
-                    <span class="grid__item tipped" data-title="<em>TRIP</em><strong>ジャストサイズ</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-02-size-m.jpg)">
+                    <span class="grid__item tipped" data-title="<em>TRIP</em><strong>ちょうどいいサイズ</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-02-size-m.jpg)">
                         <div class="grid-item-mask"></div>
                     </span>
                     <span class="grid__item tipped" data-title="<em>TRIP</em><strong>タテヨコ両対応</strong>" data-tipper-options='{"direction":"bottom","follow":"true","margin":25}' style="background-image: url(img/trip-03-size-m.jpg)">
@@ -150,7 +150,7 @@
                         <div class="grid-item-mask"></div>
                     </span>
                 </div>
-                <button class="gridback "><span><i class="fa fa-rotate-left mr-2"></i>go back</span></button>
+                <button class="gridback"><span><i class="fa fa-rotate-left mr-2"></i>back</span></button>
             </div>
             <!-- /gridwrap -->
             <div class="content mb-5">

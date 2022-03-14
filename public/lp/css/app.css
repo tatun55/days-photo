@@ -101,33 +101,93 @@ a.link:hover {
     font-weight: 600;
 }
 
-@media screen and (max-width:960px) {
+
+/* イントロ画面 */
+
+.gridwrap {
+    display: grid;
+    /* max-width: calc(100% - 80px); */
+    margin: 0 auto;
+    grid-template-columns: 100%;
+    /* grid-template-rows: 1.75rem calc(100%); */
+    /* grid-template-rows: 100vh; */
+    position: relative;
+    /* padding: 8rem 5vw 0; */
+    padding: 27vh 0;
+    pointer-events: none;
+    height: 136vh;
+    grid-template-rows: 48vh;
+    max-width: none;
+}
+
+.grid {
+    --gridgap: 1vw;
+}
+
+grid__item tipped tipper-attached:hover {
+    all: unset;
+}
+
+.grid--layout-1 .grid__item:first-child,
+.grid--layout-2 .grid__item:first-child {
+    grid-area: 2 / 1 / 5 / 5;
+}
+
+.grid--layout-1 .grid__item:nth-child(2),
+.grid--layout-2 .grid__item:nth-child(2) {
+    grid-area: 1 / 5 / 5 / 12;
+}
+
+.grid--layout-1 .grid__item:nth-child(3),
+.grid--layout-2 .grid__item:nth-child(3) {
+    grid-area: 5 / 2 / 8 / 7;
+}
+
+.grid--layout-1 .grid__item:nth-child(4),
+.grid--layout-2 .grid__item:nth-child(4) {
+    grid-area: 5 / 7 / 7 / 10;
+}
+
+@media (max-width: 1200px) {
     .grid {
-        height: calc(var(--grigheight) * 0.9);
-        grid-template-rows: repeat(10, calc(var(--gridheight) / 12 - var(--gridgap)));
+        height: calc(var(--gridheight) * 0.5);
+        grid-template-rows: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
         grid-template-columns: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
     }
 }
 
-@media screen and (max-width:800px) {
+@media (max-width: 768px) {
     .grid {
-        height: calc(var(--grigheight) * 0.9);
-        grid-template-rows: repeat(10, calc(var(--gridheight) / 12 - var(--gridgap)));
-        grid-template-columns: repeat(10, calc(var(--gridwidth) / 8 - var(--gridgap)));
-    }
-}
-
-@media screen and (max-width:640px) {
-    h5 {
-        font-size: 4vw;
-    }
-    .lead {
-        font-size: 3.2vw;
+        --gridgap: 10vw;
     }
     .grid {
-        height: calc(var(--grigheight) * 0.8);
-        grid-template-rows: repeat(10, calc(var(--gridheight) / 14 - var(--gridgap)));
-        grid-template-columns: repeat(10, calc(var(--gridwidth) / 6 - var(--gridgap)));
+        height: calc(var(--gridheight) * 0.5);
+        grid-template-rows: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
+        grid-template-columns: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
+    }
+    .gridwrap {
+        height: 232vh;
+        grid-template-rows: 56vh;
+        max-width: none;
+    }
+    .grid--layout-1 .grid__item:first-child,
+    .grid--layout-2 .grid__item:first-child {
+        grid-area: 1 / 1 / 9 / 12;
+    }
+    .grid--layout-1 .grid__item:nth-child(2),
+    .grid--layout-2 .grid__item:nth-child(2) {
+        grid-area: 9 / 1 / 18 / 12;
+    }
+    .grid--layout-1 .grid__item:nth-child(3),
+    .grid--layout-2 .grid__item:nth-child(3) {
+        grid-area: 18 / 1 / 26 / 12;
+    }
+    .grid--layout-1 .grid__item:nth-child(4),
+    .grid--layout-2 .grid__item:nth-child(4) {
+        grid-area: 26 / 1 / 34 / 12;
+    }
+    .gridback {
+        margin-top: -50vh;
     }
 }
 
@@ -144,48 +204,12 @@ a.link:hover {
     html {
         font-size: 13px;
     }
-}
-
-grid__item tipped tipper-attached:hover {
-    all: unset;
-}
-
-.grid--layout-1 .grid__item:first-child {
-    grid-area: 1 / 1 / 4 / 5;
-}
-
-.grid--layout-1 .grid__item:nth-child(2) {
-    grid-area: 1 / 5 / 4 / 9;
-}
-
-.grid--layout-1 .grid__item:nth-child(3) {
-    grid-area: 4 / 1 / 7 / 5;
-}
-
-.grid--layout-1 .grid__item:nth-child(4) {
-    grid-area: 4 / 5 / 7 / 9;
-}
-
-.grid--layout-2 .grid__item:first-child {
-    grid-area: 1 / 1 / 4 / 5;
-}
-
-.grid--layout-2 .grid__item:nth-child(2) {
-    grid-area: 1 / 5 / 4 / 9;
-}
-
-.grid--layout-2 .grid__item:nth-child(3) {
-    grid-area: 4 / 1 / 7 / 5;
-}
-
-.grid--layout-2 .grid__item:nth-child(4) {
-    grid-area: 4 / 5 / 7 / 9;
-}
-
-.gridwrap {
-    height: 150vh;
-    grid-template-rows: 50vh;
-    max-width: none;
+    h5 {
+        font-size: 4vw;
+    }
+    .lead {
+        font-size: 3.2vw;
+    }
 }
 
 
