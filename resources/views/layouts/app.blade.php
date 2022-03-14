@@ -16,8 +16,6 @@
 
     <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
-    <link type="text/css" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
     @isset($photoSwipe)
         <link rel="stylesheet" href="{{ asset('photoswipe/v5/photoswipe.css') }}" />
     @endisset
