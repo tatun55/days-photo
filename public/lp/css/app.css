@@ -161,13 +161,13 @@ grid__item tipped tipper-attached:hover {
         --gridgap: 10vw;
     }
     .grid {
-        height: calc(var(--gridheight) * 0.5);
+        height: calc(var(--gridheight) * 0.65);
         grid-template-rows: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
         grid-template-columns: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
     }
     .gridwrap {
         height: 232vh;
-        grid-template-rows: 56vh;
+        grid-template-rows: 64vh;
         max-width: none;
     }
     .grid--layout-1 .grid__item:first-child,
