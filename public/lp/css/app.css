@@ -115,7 +115,7 @@ a.link:hover {
     /* padding: 8rem 5vw 0; */
     padding: 27vh 0;
     pointer-events: none;
-    height: 136vh;
+    height: 152vh;
     grid-template-rows: 48vh;
     max-width: none;
 }
@@ -130,12 +130,12 @@ grid__item tipped tipper-attached:hover {
 
 .grid--layout-1 .grid__item:first-child,
 .grid--layout-2 .grid__item:first-child {
-    grid-area: 2 / 1 / 5 / 5;
+    grid-area: 1 / 5 / 5 / 12;
 }
 
 .grid--layout-1 .grid__item:nth-child(2),
 .grid--layout-2 .grid__item:nth-child(2) {
-    grid-area: 1 / 5 / 5 / 12;
+    grid-area: 2 / 1 / 5 / 5;
 }
 
 .grid--layout-1 .grid__item:nth-child(3),
