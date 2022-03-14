@@ -73,6 +73,12 @@ class LineEventController extends Controller
                                     $this->isRegisted($event->source->userId) && $this->postedPhotoFromGroup($event);
                                     break;
                             }
+                            break;
+                        case 'text':
+                            if ($event->message->text === '使い方') {
+                                $this->usage($event);
+                            }
+                            break;
                     }
                     break;
             }
@@ -587,5 +593,39 @@ class LineEventController extends Controller
         $hash = hash_hmac('sha256', $httpRequestBody, $channelSecret, true);
         $signature = base64_encode($hash);
         return $signatureRequested === $signature;
+    }
+
+    public function usage($event)
+    {
+        $bot = $this->initBot();
+        $multiMessage = new MultiMessageBuilder();
+
+        $message = "『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、「💎ずっと残る保存」ができる✨\n\n✅ 機能②\nグループに招待すると、グループでも「💎ずっと残る保存」が可能✨\n\n✅ 機能③\nかんたん操作で「📔部屋にかざれるミニアルバム」をポチッと注文✨\n\nほかにも様々な便利機能を準備中です💪";
+        $array = [
+            'type' => 'text',
+            'text' => $message,
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $multiMessage->add($rawMessage);
+
+        $array = [
+            "type" => "template",
+            "altText" => "α版の説明書(PDF)",
+            "template" => [
+                "type" => "buttons",
+                "text" => "現在のバージョンはα版です。詳しい使い方は、下の説明書(PDF)からご覧いただけます。",
+                "actions" => [
+                    [
+                        "type" => "uri",
+                        "label" => "α版の説明書(PDF)",
+                        "uri" => "https://days-photo.s3.ap-northeast-1.amazonaws.com/days.+%E3%80%9C%E3%81%8B%E3%82%93%E3%81%9F%E3%82%93%E3%83%95%E3%82%A9%E3%83%88%E7%AE%A1%E7%90%86%E3%80%9C+%CE%B1%E7%89%88%E4%BD%BF%E3%81%84%E6%96%B9.pdf"
+                    ],
+                ]
+            ]
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $multiMessage->add($rawMessage);
+
+        $bot->replyMessage($event->replyToken, $multiMessage);
     }
 }
