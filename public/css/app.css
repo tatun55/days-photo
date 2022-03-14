@@ -103,7 +103,11 @@ main {
 }
 
 .nav-item.nav-link {
-    color: #636363;
+    color: #848484;
+}
+
+.nav-item.nav-link:hover {
+    color: #6dc234;
 }
 
 .nav-item.nav-link.active {
