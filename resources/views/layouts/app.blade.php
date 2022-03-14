@@ -39,7 +39,9 @@
                         </ul>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="{{ route('cart') }}" class="text-primary"><span class="fa fa-shopping-cart me-2 fs-5 position-relative">@if(\Auth::user()->cartItems()->get()->isNotEmpty())<span class="badge-num"></span>@endif</span></a>
+                        @auth
+                            <a href="{{ route('cart') }}" class="text-primary"><span class="fa fa-shopping-cart me-2 fs-5 position-relative">@if(\Auth::user()->cartItems()->get()->isNotEmpty())<span class="badge-num"></span>@endif</span></a>
+                        @endauth
                     </div>
                 </div>
             @endisset
