@@ -3,11 +3,12 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>days.</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <meta name="title" content="days. - かんたんフォト管理 - ">
-    <meta name="author" content="COLORBOX Inc.">
-    <meta name="description" content="いつか消えてしまう、あの写真も、ずっと残る。 days.は新しいタイプの “かんたんフォト管理” サービス。ずっと残る保存が無料✅ 部屋にかざれるアルバムがスグに✅">
+    <title>days. かんたんフォト管理</title>
+    <meta name="title" content="days. かんたんフォト管理">
+    <meta name="description" content="簡単＆無料で、写真がずっと残せるサービスをお探しですか？ 『days.』は新しい ”かんたんフォト管理サービス”。LINE™から友だち登録すると「ずっと残る保存」が無料✨ 「部屋にかざれるアルバム」をポチッと手間なし作成👌" />
+    <meta name="author" content="days.運営">
+    <meta name="keywords" content="写真をずっと残す方法,オンラインストレージ,チェキ,カード,アルバム,写真,友達,カップル,卒業,記念,思い出,スクラップブック,album,photo," />
+
     <link type="text/css" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
     @isset($photoSwipe)
