@@ -10,8 +10,5 @@ class ImageSet extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = [
-        'id',
-        'count',
-    ];
+    protected $guarded = [];
 }

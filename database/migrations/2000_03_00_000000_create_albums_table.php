@@ -16,12 +16,11 @@ class CreateAlbumsTable extends Migration
         Schema::create('albums', function (Blueprint $table) {
             $table->string('id', 36)->primary();
             $table->enum('status', ['default', 'uploading', 'uploaded'])->default('default');
-            $table->string('line_user_id', 33)->index();
+            $table->string('user_id', 33)->index()->nullable();
+            $table->string('group_id', 33)->index()->nullable();
             $table->string('title', 50)->nullable();
             $table->unsignedSmallInteger('total')->default(0);
-            $table->date('date_to_delete')->nullable();
-            $table->string('cover', 36)->default(null)->nullable();
-            $table->softDeletes();
+            $table->string('cover')->default(null)->nullable();
             $table->timestamps();
         });
     }

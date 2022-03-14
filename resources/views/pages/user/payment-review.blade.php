@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app',["isReview"=>true])
 
 @section('content')
 <main>
@@ -124,87 +124,14 @@
                         </div>
                     </div>
 
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">ご注文内容</h5>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"> </th>
-                                        <th scope="col">商品名</th>
-                                        <th scope="col">単価(税込)</th>
-                                        <th scope="col" class="text-center">数量</th>
-                                        <th scope="col" class="text-right">小計</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><img class="confirmation-item" src="./02_files/sample1.jpg"></td>
-                                        <td>コロンビア・ビルバオ コーヒー豆</td>
-                                        <td class="text-right">￥2,000</td>
-                                        <td class="text-right">1</td>
-                                        <td class="text-right">￥2,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td><img class="confirmation-item" src="./02_files/sample2.jpg"></td>
-                                        <td>コーヒーカップ</td>
-                                        <td class="text-right">￥500</td>
-                                        <td class="text-right">1</td>
-                                        <td class="text-right">￥500</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    @include('sections.cart.item-info',['isReview'=> true])
+
 
                 </div>
 
                 <!-- Sidebar Widgets Column -->
                 <div class="col-md-4">
-                    <div class="card mb-4">
-                        <form method="post" action="{{ route('amazon-pay.checkout') }}">
-                            @csrf
-                            <input type="hidden" name="checkout_session_id" value="{{ $response->checkoutSessionId }}">
-                            <div class="card-body" id="highlight2">
-                                <h5>お支払い金額</h5>
-
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>商品合計</td>
-                                            <td class="text-right">￥2,500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>送料</td>
-                                            <td class="text-right">￥500</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>総合計</strong></td>
-                                            <td class="text-right"><strong>￥3,000</strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <div>
-                                    <button id="placeorder" class="btn btn-primary" type="submit">購入する</button>
-                                </div>
-
-                                <div class="mt-3">
-                                    <p>※デモサイトです</p>
-                                    <p class="mb-0">※会員登録・課金はされません</p>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-
-                    {{-- <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">配送方法</h5>
-                            <p>指定なし</p>
-                            <button class="btn btn-gray-200 float-end">変更</button>
-                        </div>
-                    </div> --}}
+                    @include('sections.cart.total-price',['isReview'=> true])
                 </div>
 
             </div>

@@ -20,46 +20,64 @@
 <body>
     <header class="header-global">
         <nav id="navbar-main" aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg nav-theme-white navbar-light mt-2">
-            <div class="container position-relative">
-                <a class="brand-name me-lg-5 px-2 px-lg-0" href="{{ route('home') }}">days.</a>
-                <div class="navbar-collapse collapse me-auto" id="navbar_global">
-                    <div class="navbar-collapse-header">
-                        <div class="row">
-                            <div class="col-6 collapse-brand"><a href="/">days.</a></div>
-                            <div class="col-6 collapse-close"><a href="#navbar_global" class="fas fa-times" data-bs-toggle="collapse" data-bs-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" title="close" aria-label="Toggle navigation"></a></div>
+            @isset($isReview)
+                <div class="container position-relative">
+                    <span class="brand-name me-lg-5 px-2 px-lg-0">days.</span>
+                </div>
+            @else
+                <div class="container position-relative">
+                    <a class="brand-name me-lg-5 px-2 px-lg-0" href="{{ route('home') }}">days.</a>
+                    <div class="navbar-collapse collapse me-auto" id="navbar_global">
+                        <div class="navbar-collapse-header">
+                            <div class="row">
+                                <div class="col-6 collapse-brand"><a href="/">days.</a></div>
+                                <div class="col-6 collapse-close"><a href="#navbar_global" class="fas fa-times" data-bs-toggle="collapse" data-bs-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" title="close" aria-label="Toggle navigation"></a></div>
+                            </div>
                         </div>
+                        <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                        </ul>
                     </div>
-                    <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-                    </ul>
+                    <div class="d-flex align-items-center">
+                        <a href="{{ route('cart') }}" class="text-primary"><span class="fa fa-shopping-cart me-2 fs-5 position-relative">@if(\Auth::user()->cartItems()->get()->isNotEmpty())<span class="badge-num"></span>@endif</span></a>
+                    </div>
                 </div>
-                <div class="d-flex align-items-center">
-                    <a class="text-primary"><span class="fas fa-shopping-cart me-4"></span></a>
-                </div>
-            </div>
+            @endisset
         </nav>
     </header>
 
     @include('sections.toast')
-
     <div class="wrapper bg-white">
         @yield('content')
         <div class="push"></div>
     </div>
 
     <footer class="footer pt-5 pb-5 bg-white text-gray">
+
+
         <div class="container">
+
+
             <div class="row">
-                <div class="d-flex justify-content-center mb-4">
-                    <a class="px-2" href="{{ route('terms') }}" type="button">利用規約</a>
-                    <a class="px-2" href="{{ route('pp') }}" type="button">プライバシーポリシー</a>
-                    <a class="px-2" href="{{ route('ld') }}" type="button">特定商取引法表示</a>
-                </div>
-                <div class="col-md-12 text-center">
-                    <div class="brand mb-1"><small>2022 - ©</small><a class="btn-light px-2 d-inline-block" href="https://days.photo">days.</a><small>かんたんフォト管理</small></div>
-                    <div class="produce">produced by <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></div>
-                </div>
+                @isset($isReview)
+                    <div class="col-md-12 text-center">
+                        <div class="brand mb-1"><small>2022 - ©</small><span class="btn-light px-2 d-inline-block">days.</span><small>かんたんフォト管理</small></div>
+                        <div class="produce">produced by <span class="btn-light">COLORBOX Inc.</span></div>
+                    </div>
+                @else
+                    <div class="d-flex justify-content-center mb-4">
+                        <a class="px-2" href="{{ route('terms') }}" type="button">利用規約</a>
+                        <a class="px-2" href="{{ route('pp') }}" type="button">プライバシーポリシー</a>
+                        <a class="px-2" href="{{ route('ld') }}" type="button">特定商取引法表示</a>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <div class="brand mb-1"><small>2022 - ©</small><a class="btn-light px-2 d-inline-block" href="https://days.photo">days.</a><small>かんたんフォト管理</small></div>
+                        <div class="produce">produced by <a class="btn-light" href="https://colorbox.tech">COLORBOX Inc.</a></div>
+                    </div>
+                @endisset
+
             </div>
         </div>
+
     </footer>
 
     <!-- Core -->
@@ -77,6 +95,7 @@
     <!-- Pixel JS -->
     <script src="{{ asset('assets/js/pixel.js') }}"></script>
     <script src="{{ asset('js/toast.js') }}" type="module"></script>
+    @include('sections.modal')
     @isset($photoSwipe)
         @include('sections.photoswipe.script')
     @endisset

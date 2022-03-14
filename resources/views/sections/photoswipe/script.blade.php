@@ -1,34 +1,35 @@
 <script type="module">
     import PhotoSwipeLightbox from '{{ asset('photoswipe/v5/photoswipe-lightbox.esm.js') }}';
 
-const items=@json($items);
+const dataSource=@json($dataSource);
 const url='https://days-photo.s3.ap-northeast-1.amazonaws.com';
 
 const options= {
     showHideAnimationType: 'fade',
     pswpModule: '{{ asset('photoswipe/v5/photoswipe.esm.js') }}',
-    preload: [1, 2]
+    preload: [1, 2],
+    dataSource: dataSource
 };
 const lightbox=new PhotoSwipeLightbox(options);
 
 // total count of items
-lightbox.on('numItems', (e)=> {
-    e.numItems=Object.keys(items).length;
-});
+// lightbox.on('numItems', (e)=> {
+//     e.numItems=Object.keys(items).length;
+// });
 
 // generate data event
-lightbox.on('itemData', (e) => {
-    let index = e.index + 1;
-    let id = items[index].id;
-    let width = items[index]["width"];
-    let height = items[index]["height"];
-    e.itemData = {
-        src: `${url}/l/${id}.jpg`, // biggest size one
-        srcset: `${url}/l/${id}.jpg 1920w, ${url}/m/${id}.jpg 960w`,
-        w: width,
-        h: height
-    };
-});
+// lightbox.on('itemData', (e) => {
+//     let index = e.index + 1;
+//     let id = items[index].id;
+//     let width = items[index]["width"];
+//     let height = items[index]["height"];
+//     e.itemData = {
+//         src: `${url}/l/${id}.jpg`, // biggest size one
+//         srcset: `${url}/l/${id}.jpg 1920w, ${url}/m/${id}.jpg 960w`,
+//         w: width,
+//         h: height
+//     };
+// });
 
 // custumize button
 lightbox.on('uiRegister', function() {
@@ -60,7 +61,7 @@ lightbox.init();
 
 
 var slideShowEvent=function (e) {
-    let i = e.target.querySelector('img').getAttribute('data-index') - 1;
+    var i = e.currentTarget.querySelector('img').getAttribute('data-index') - 0;
     lightbox.loadAndOpen(i);
 };
 
@@ -100,7 +101,7 @@ function selectMode() {
     selectDesc.classList.add('show');
     cancelBtn.classList.add('show');
     removeSlideShowEvents();
-    document.querySelectorAll('form#items-form input[name="items[]"]').forEach(elem=> {
+    document.querySelectorAll('form#items-form input[name="photo_ids[]"]').forEach(elem=> {
         // var itemIndex=elem.querySelector('img').getAttribute('data-index');
         // var checkbox=document.createElement('input');
         // checkbox.name='items';
@@ -115,7 +116,7 @@ function selectMode() {
 
 function isAnyCheckboxChecked() {
     var flag = false;
-    var itemInputs=document.querySelectorAll('form#items-form input[name="items[]"]');
+    var itemInputs=document.querySelectorAll('form#items-form input[name="photo_ids[]"]');
     for(let itemInput of itemInputs) {
         if(itemInput.checked) {
             console.log('there is checked one.');
@@ -150,7 +151,7 @@ function normalMode() {
     cancelBtn.classList.remove('show');
     moveBtn.classList.remove('show');
     archiveBtn.classList.remove('show');
-    document.querySelectorAll('form#items-form input[name="items[]"]').forEach(elem=> {
+    document.querySelectorAll('form#items-form input[name="photo_ids[]"]').forEach(elem=> {
         elem.checked = false;
         elem.setAttribute('disabled','');
         elem.removeEventListener("change", isAnyCheckboxChecked, false)

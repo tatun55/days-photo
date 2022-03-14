@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\ImageFromUser;
+use App\Models\Photo;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -60,8 +60,8 @@ class ReIndex extends Command
         $now = Carbon::now()->toDateTimeString();
 
         // Generate $arrayToDelete
-        $count = ImageFromUser::where('album_id', 'a405a965-5eeb-4af4-9816-f1a9e371829f')->onlyTrashed()->count();
-        $imagesToDelete = ImageFromUser::where('album_id', 'a405a965-5eeb-4af4-9816-f1a9e371829f')->orderBy('index', 'asc')->whereIn('index', $indexesToDelete)->get()->toArray();
+        $count = Photo::where('album_id', 'a405a965-5eeb-4af4-9816-f1a9e371829f')->onlyTrashed()->count();
+        $imagesToDelete = Photo::where('album_id', 'a405a965-5eeb-4af4-9816-f1a9e371829f')->orderBy('index', 'asc')->whereIn('index', $indexesToDelete)->get()->toArray();
         foreach ($imagesToDelete as $key => $value) {
             $merged = array_merge($value, [
                 'index' => $key + 1 + $count,
@@ -73,7 +73,7 @@ class ReIndex extends Command
         }
         // dd($arrayToDelete);
 
-        $imagesNotToDelete = ImageFromUser::where('album_id', 'a405a965-5eeb-4af4-9816-f1a9e371829f')->orderBy('index', 'asc')->whereNotIn('index', $indexesToDelete)->get()->toArray();
+        $imagesNotToDelete = Photo::where('album_id', 'a405a965-5eeb-4af4-9816-f1a9e371829f')->orderBy('index', 'asc')->whereNotIn('index', $indexesToDelete)->get()->toArray();
         foreach ($imagesNotToDelete as $key => $value) {
             $merged = array_merge($value, [
                 'index' => $key + 1,
@@ -87,6 +87,6 @@ class ReIndex extends Command
 
         $arrayMerged = array_merge($arrayToDelete, $arrayNotToDelete);
 
-        ImageFromUser::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
+        Photo::upsert($arrayMerged, 'id', ['index', 'deleted_at']);
     }
 }

@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ImageFromUser;
-use App\Models\LineUser;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,13 +16,13 @@ class MyAccountSeeder extends Seeder
      */
     public function run()
     {
-        LineUser::create([
+        User::create([
             "id" => 'U359c48cffd2121dcb99513ee5fdf43f8',
             "name" => "たかい",
             "avatar" => "https://profile.line-scdn.net/0hGgGb2ZXcGEh6GzeHQORnH0ZeFiUNNR4AAilUfl0SFCsFI1tME30CKVceFChXeVdLFi9VKAxMRXEE"
         ]);
 
-        // // ImageFromUser data
+        // // Photo data
         // $filePath = storage_path('image_from_user.json');
         // $json = file_get_contents($filePath);
         // $data = json_decode($json, true);

@@ -3,15 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\AlbumUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AlbumController extends Controller
 {
-    public function show(Album $album)
+    public function show(Album $album, Request $request)
     {
-        $items = $album->images()->where('line_user_id', Auth::user()->id)->get(['id', 'index', 'width', 'height'])->keyBy('index');
-        return view('pages.user.album.show', compact(['album', 'items']));
+        $flagModal = $request->has('modal'); // from line quick reply button
+        $photos = $album->photos()
+            ->whereHas('users', function ($q) {
+                $q->where('user_id', Auth::user()->id)->where('is_archived', false);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $dataSource = $this->getDataSource($album->id, $photos);
+        return view('pages.user.album.show', compact(['album', 'photos', 'dataSource', 'flagModal']));
+    }
+
+    public function trashbox(Album $album)
+    {
+        $photos = $album->photos()
+            ->whereHas('users', function ($q) {
+                return $q->where('user_id', Auth::user()->id)->where('is_archived', true);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $dataSource = $this->getDataSource($album->id, $photos);
+        return view('pages.user.album.trash', compact('album', 'photos', 'dataSource'));
+    }
+
+    private function getDataSource($albumId, $photos)
+    {
+        $path = \Storage::disk('s3')->url($albumId);
+        $dataSource = [];
+        foreach ($photos as $key => $value) {
+            $dataSource[] = [
+                'srcset' => "{$path}/{$value->id}/l.jpg 1920w, {$path}/{$value->id}/m.jpg 960w",
+                'src' => "{$path}/{$value->id}/l.jpg",
+                'w' => $value->width,
+                'h' => $value->height,
+            ];
+        }
+        return $dataSource;
     }
 
     public function title(Request $request, Album $album)
@@ -21,21 +56,21 @@ class AlbumController extends Controller
         return back()->with('status', 'タイトルを変更しました');
     }
 
-    public function delete(Album $album)
+    public function archive(Album $album)
     {
-        $album->delete();
+        $album->users()->syncWithoutDetaching([Auth::user()->id => ['is_archived' => true]]);
         return redirect('home')->with('status', 'アルバムをアーカイブに移動しました');
     }
 
-    public function forceDelete(Album $album)
+    public function detach(Album $album)
     {
-        $album->forceDelete();
+        $album->users()->detach(Auth::user()->id);
         return redirect('home')->with('status', 'アルバムを完全に削除しました');
     }
 
     public function restore(Album $album)
     {
-        $album->restore();
+        $album->users()->syncWithoutDetaching([Auth::user()->id => ['is_archived' => false]]);
         return redirect('home')->with('status', 'アルバムを元に戻しました');
     }
 }

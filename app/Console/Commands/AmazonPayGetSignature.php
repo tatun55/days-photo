@@ -37,16 +37,15 @@ class AmazonPayGetSignature extends Command
      */
     public function handle()
     {
-        // dd(config('services.amazon_pay.public_key_id'));
         $amazonpay_config = array(
             'public_key_id' => config('services.amazon_pay.public_key_id'),
-            'private_key'   => storage_path('AmazonPay_SANDBOX-AGD5WXBVODNZLYLNPJJEQBUU.pem'),
+            'private_key'   => storage_path('AmazonPay_LIVE-AH43ZKTFUKLSJ5GEU2VKUWE5.pem'),
             'region'        => 'JP',
-            'sandbox'       => true
+            // 'sandbox'       => true
         );
 
         $client = new \Amazon\Pay\API\Client($amazonpay_config);
-        $payload = '{"scopes": ["name", "email", "phoneNumber", "billingAddress"],"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/amazon-pay/review"}}';
+        $payload = '{"scopes": ["name", "email", "phoneNumber", "billingAddress"],"storeId":"amzn1.application-oa2-client.9f751aa7eed74bcaab087e055526b188","webCheckoutDetails":{"checkoutReviewReturnUrl":"https://days.photo/order/review"}}';
         $signature = $client->generateButtonSignature($payload);
         echo $signature . "\n";
     }

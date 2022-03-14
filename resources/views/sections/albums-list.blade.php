@@ -8,7 +8,7 @@
                             <a href="{{ route('albums.show',$album->id) }}" class="album-thumbnail-link">
                                 <div class="img-wrapper-1x1">
                                     <div class="img-content">
-                                        <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
+                                        <img class="rounded" src="{{ $album->cover }}">
                                     </div>
                                 </div>
                             </a>
@@ -17,7 +17,7 @@
                             <span class="album-thumbnail-link">
                                 <div class="img-wrapper-1x1">
                                     <div class="img-content">
-                                        <img class="rounded" src="{{ \Storage::disk('s3')->url("/s/{$album->cover}.jpg") }}">
+                                        <img class="rounded" src="{{ $album->cover }}">
                                     </div>
                                 </div>
                             </span>
@@ -58,9 +58,14 @@
                             <span class="me-3"><span class="far fa-clock me-2"></span>{{ $album->created_at->format('Y-m-d H:i') }}</span>
                             @switch($type)
                                 @case('home')
-                                    <a href="{{ route('albums.show',$album->id) }}" class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->images_count }}</a>
+                                    <a href="{{ route('albums.show',$album->id) }}" class="text-secondary"><span class="fa fa-camera me-2"></span>{{ $album->photos_count }}</a>
                                     @break
                             @endswitch
+                        </div>
+                        <div>
+                            @if($album->group_id !== null)
+                                <span class="badge bg-primary px-2">グループ</span>
+                            @endif
                         </div>
                     </div>
                 </li>

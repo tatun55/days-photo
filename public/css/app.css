@@ -102,10 +102,15 @@ main {
     border-bottom: 1px solid #E5E7EB;
 }
 
+.nav-item.nav-link {
+    color: #636363;
+}
+
 .nav-item.nav-link.active {
     border: 1px solid #E5E7EB;
     background-color: white;
     position: relative;
+    color: #1F2937;
 }
 
 .nav-item.nav-link.active:before {
@@ -114,7 +119,7 @@ main {
     bottom: -2px;
     left: 0;
     width: 100%;
-    border-bottom: 2px solid white;
+    border-bottom: 4px solid white;
     z-index: 11;
 }
 
@@ -153,7 +158,7 @@ main {
 
 .brand-name {
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-left: .4rem;
 }
 
@@ -161,19 +166,18 @@ main {
 /* テーブル調整 */
 
 @media (max-width: 768px) {
-    #section-ld .table,
-    #section-ld .table td,
-    #section-ld .table th {
+    .table-two-colums,
+    .table-two-colums td,
+    .table-two-colums th {
         border-collapse: collapse;
-        text-align: center;
     }
-    #section-ld .table th {
+    .table-two-colums th {
         display: block;
         width: 100%;
         border: 0;
         padding: 1.5rem 0.5rem .1rem;
     }
-    #section-ld .table td {
+    .table-two-colums td {
         display: block;
         width: 100%;
         padding: 0 0.5rem 1.5rem;
@@ -184,6 +188,149 @@ main {
     /* max-width: 25% !important; */
     width: 6rem !important;
     text-align: right;
+}
+
+
+/* カート用のテーブル */
+
+#table-responsive-wrapper {
+    max-width: 750px;
+    padding: 0 10px;
+    margin: 20px auto;
+    font-size: 14px
+}
+
+#table-responsive-wrapper table {
+    width: 100%
+}
+
+#table-responsive-wrapper table th {
+    text-align: center
+}
+
+@media screen and (min-width: 768px) {
+    #table-responsive-wrapper table {
+        table-layout: fixed
+    }
+    #table-responsive-wrapper table td,
+    #table-responsive-wrapper table th {
+        padding: 10px;
+        border: 1px solid #eee,
+    }
+    #table-responsive-wrapper table td a,
+    #table-responsive-wrapper table th a {
+        margin: 0 3px
+    }
+    #table-responsive-wrapper table thead>tr>th {
+        background-color: #fafafa
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #table-responsive-wrapper table {
+        display: block
+    }
+    #table-responsive-wrapper table thead {
+        display: none
+    }
+    #table-responsive-wrapper table tbody,
+    #table-responsive-wrapper table td,
+    #table-responsive-wrapper table th,
+    #table-responsive-wrapper table tr {
+        display: block;
+        width: 100%
+    }
+    #table-responsive-wrapper table tbody a,
+    #table-responsive-wrapper table td a,
+    #table-responsive-wrapper table th a,
+    #table-responsive-wrapper table tr a {
+        margin: 0 3px
+    }
+    #table-responsive-wrapper table tr {
+        border-bottom: 1px solid #eee;
+        margin-bottom: 5px
+    }
+    #table-responsive-wrapper table th {
+        padding: 10px 10px 5px;
+        font-weight: 700;
+        font-size: 16px
+    }
+    #table-responsive-wrapper table td {
+        position: relative;
+        padding: 10px 10px 10px calc(30% + 10px);
+        border-top: 1px solid #eee;
+        border-left: 1px solid #eee;
+        border-right: 1px solid #eee;
+        background-color: #fff
+    }
+    #table-responsive-wrapper table td:before {
+        content: attr(aria-label);
+        position: absolute;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        width: 30%;
+        height: 100%;
+        padding: 10px;
+        border-right: 1px solid #eee;
+        background-color: #fafafa
+    }
+}
+
+div.table-img-wrapper {
+    width: 100px !important;
+    height: 100px !important;
+    overflow: hidden;
+}
+
+div.table-img-wrapper img {
+    object-fit: cover !important;
+}
+
+
+/* バッチ */
+
+.badge-num {
+    position: absolute;
+    display: inline-block;
+    top: -4px;
+    right: -4px;
+    background: #F00;
+    color: white;
+    z-index: 29999;
+    font-size: 7px;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    line-height: 10px;
+}
+
+
+/* プリンター画面 */
+
+.badge-num-printer {
+    position: absolute;
+    display: inline-block;
+    top: -8px;
+    left: -8px;
+    background: #6dc234;
+    color: white;
+    z-index: 999;
+    font-size: 14px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 16px;
+}
+
+.printer::before {
+    opacity: .5;
+}
+
+.printer.available::before {
+    opacity: 1;
 }
 
 
@@ -202,9 +349,11 @@ ol li {
 /* トースト調整 */
 
 .toast {
-    /* max-width: 95%; */
     margin: 0 8px;
 }
+
+
+/* 文字の縁取り */
 
 .text-white-shadow {
     text-shadow: 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242;
@@ -216,6 +365,14 @@ ol li {
 
 .text-black-shadow {
     text-shadow: 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff, 0 0 0.1rem #fff;
+}
+
+
+/* カルーセル */
+
+.carousel-indicators .active {
+    background: #fff;
+    background-clip: padding-box;
 }
 
 

@@ -7,7 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use App\Models\LineUser;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Jdenticon\Identicon;
 
@@ -59,23 +59,23 @@ class LoginController extends Controller
 
         $providedUser = Socialite::driver('line')->user();
 
-        $user = LineUser::find($providedUser->id);
+        $user = User::find($providedUser->id);
 
         if (!$user) {
-            $user = LineUser::create([
+            $user = User::create([
                 'id' => $providedUser->id,
                 'name' => $providedUser->name ?? 'ノーネーム',
                 'avatar' => $providedUser->avatar ?? asset('img/q.svg'),
             ]);
             $res = Http::withHeaders(['Authorization' => 'Bearer ' . config('services.line.messaging_api.access_token')])
-                ->post("https://api.line.me/v2/bot/user/U359c48cffd2121dcb99513ee5fdf43f8/linkToken");
+                ->post("https://api.line.me/v2/bot/user/{$providedUser->id}/linkToken");
             $linkToken = $res->object()->linkToken;
             $nonce = \Str::random(24);
             return redirect("https://access.line.me/dialog/bot/accountLink?linkToken={$linkToken}&nonce={$nonce}");
         }
         Auth::login($user);
 
-        return redirect()->route('home')->with('status', 'ログインに成功しました');
+        return redirect()->route('home')->with('status', 'ログインしました');
     }
 
     /**

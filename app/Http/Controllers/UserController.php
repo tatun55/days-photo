@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,9 +11,15 @@ class UserController extends Controller
 {
     public function home()
     {
-        $albums = Album::query()
-            ->where('line_user_id', Auth::user()->id)
-            ->withCount('images')
+        $userId = Auth::user()->id;
+        $albums = Auth::user()
+            ->albums()
+            ->where('is_archived', false)
+            ->withCount(['photos' => function ($query) use ($userId) {
+                $query->whereHas('users', function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->where('is_archived', false);
+                });
+            }])
             ->orderBy('created_at', 'desc')
             ->get();
         return view('pages.user.home', compact('albums'));
@@ -20,12 +27,29 @@ class UserController extends Controller
 
     public function trashbox(Album $album)
     {
-        $albums = Album::where('line_user_id', Auth::user()->id)->orderBy('deleted_at', 'desc')->onlyTrashed()->withCount('images')->get();
+        $userId = Auth::user()->id;
+        $albums = Auth::user()
+            ->albums()
+            ->where('is_archived', true)
+            ->withCount(['photos' => function ($query) use ($userId) {
+                $query->whereHas('users', function ($query) use ($userId) {
+                    $query->where('user_id', $userId)->where('is_archived', false);
+                });
+            }])
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('pages.user.trash', compact('albums'));
     }
 
-    public function profile()
+    public function account()
     {
-        return view('pages.user.profile.address');
+        $orders = Order::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        return view('pages.user.account.history', compact('orders'));
+    }
+
+    public function setting()
+    {
+        $printers = Auth::user()->printers()->get();
+        return view('pages.user.setting.printer', compact('printers'));
     }
 }

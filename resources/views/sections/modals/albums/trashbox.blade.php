@@ -20,7 +20,7 @@
 </div>
 <div class="modal fade" id="modal-delete-{{ $album->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form method="POST" action="{{ route('albums.delete',$album->id) }}" class="modal-content">
+        <form method="POST" action="{{ route('albums.archive',$album->id) }}" class="modal-content">
             @csrf
             @method('delete')
             <div class="modal-header">

@@ -2,17 +2,16 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Album;
 use Illuminate\Console\Command;
 
-class MyTest extends Command
+class GetGroupSummary extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:myTest';
+    protected $signature = 'command:getGroupSummary';
 
     /**
      * The console command description.
@@ -38,11 +37,9 @@ class MyTest extends Command
      */
     public function handle()
     {
-        $ids = Album::orderBy('created_at', 'desc')->first()->images()->pluck('id');
-        $urls = [];
-        foreach ($ids as $key => $value) {
-            $urls[] = \Storage::disk('s3')->url("o/{$value}.jpg");
-        }
-        dump($urls);
+        $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(config('services.line.messaging_api.access_token'));
+        $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => config('services.line.messaging_api.channel_secret')]);
+        $response = $bot->getGroupSummary('C5929593a295f2ccbb04a198be5836600');
+        dump($response);
     }
 }

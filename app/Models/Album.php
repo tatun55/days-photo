@@ -7,19 +7,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Album extends Model
 {
-    use SoftDeletes;
-
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = [
-        'id',
-        'line_user_id',
-    ];
+    protected $guarded = [];
 
-    public function images()
+    public function photos()
     {
-        return $this->hasMany(ImageFromUser::class);
+        return $this->hasMany(Photo::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }
