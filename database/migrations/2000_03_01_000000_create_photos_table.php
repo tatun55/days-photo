@@ -18,7 +18,6 @@ class CreatePhotosTable extends Migration
             $table->string('album_id', 36)->index();
             $table->foreign('album_id')->references('id')->on('albums')->onDelete('cascade');
             $table->string('message_id', 36);
-            $table->unsignedTinyInteger('index');
             $table->unsignedSmallInteger('width')->nullable();
             $table->unsignedSmallInteger('height')->nullable();
             $table->timestamps();
