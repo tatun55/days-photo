@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         if (config('app.env') !== 'production') {
-            $deleteFlag = true && $this->deleteAllS3Files();
+            // $deleteFlag = true && $this->deleteAllS3Files();
             $this->call(MyAccountSeeder::class);
         }
     }

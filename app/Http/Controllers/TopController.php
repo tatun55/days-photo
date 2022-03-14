@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MessageRequest;
+use App\Models\ContactMessage;
+
 class TopController extends Controller
 {
     public function welcome()
@@ -27,5 +30,16 @@ class TopController extends Controller
     public function about()
     {
         return view('pages.about');
+    }
+
+    public function contact()
+    {
+        return view('pages.contact');
+    }
+
+    public function storeMessage(MessageRequest $request)
+    {
+        ContactMessage::create($request->validated());
+        return back()->with('contact_completed', true);
     }
 }

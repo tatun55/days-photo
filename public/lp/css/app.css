@@ -242,3 +242,11 @@ grid__item tipped tipper-attached:hover {
 .grid__item .grid-item-mask {
     background: rgba(0, 0, 0, 0);
 }
+
+
+/* お問い合わせ */
+
+#ajaxsuccess {
+    display: block;
+    margin: 24px 0;
+}

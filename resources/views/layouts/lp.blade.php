@@ -69,8 +69,8 @@
                     <li class="nav__list-item"><a href="/home">home</a></li>
                 @endauth
                 <li class="nav__list-item active-nav"><a href="/">intro</a></li>
-                {{-- <li class="nav__list-item"><a href="{{ route('about') }}">about</a></li>
-                <li class="nav__list-item"><a href="/">contact</a></li> --}}
+                {{-- <li class="nav__list-item"><a href="{{ route('about') }}">about</a></li> --}}
+                <li class="nav__list-item"><a href="{{ route('contact') }}">contact</a></li>
             </ul>
         </div>
         <div class="nav__footer">
