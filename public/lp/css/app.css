@@ -148,9 +148,15 @@ grid__item tipped tipper-attached:hover {
     grid-area: 5 / 7 / 7 / 10;
 }
 
+.grid {
+    height: calc(var(--gridheight) * 1);
+    grid-template-rows: repeat(10, calc(var(--gridwidth) / 15 - var(--gridgap)));
+    grid-template-columns: repeat(10, calc(var(--gridwidth) / 15 - var(--gridgap)));
+}
+
 @media (max-width: 1200px) {
     .grid {
-        height: calc(var(--gridheight) * 0.5);
+        height: calc(var(--gridheight) * 0.8);
         grid-template-rows: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
         grid-template-columns: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
     }
