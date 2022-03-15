@@ -255,7 +255,6 @@ class LineEventController extends Controller
     public function postedPhotoFromUser($event)
     {
         // 作成途中のAlbumを取得、なければ作成
-
         $album = Album::where('user_id', $event->source->userId)
             ->where('group_id', null)
             ->where('status', 'default')
@@ -296,6 +295,10 @@ class LineEventController extends Controller
                 $imageSet->delete();
                 $album->increment('total', $imageSetTotal);
                 $this->replyForPostedPhoto($album->total, $album->id, $event->replyToken);
+            } else {
+                // 画像の送信が完了して止まった場合（画像受信メッセージとクイックリプライが返ってこない）
+                // 送信完了したのに、受信メッセージとボタンが返ってこない場合、こちらをクリック
+                // 送信完了時にボタンが表示されないとき用
             }
         } else {
             $album->increment('total', 1);
