@@ -13,9 +13,6 @@
     <meta name="description" content="簡単＆無料で、写真がずっと残せるサービスをお探しですか？ 『days.』は新しい ”かんたんフォト管理サービス”。LINE™から友だち登録すると「ずっと残る保存」が無料✨ 「部屋にかざれるアルバム」をポチッと手間なし作成👌" />
     <meta name="author" content="days.運営">
     <meta name="keywords" content="写真をずっと残す方法,オンラインストレージ,チェキ,カード,アルバム,写真,友達,カップル,卒業,記念,思い出,スクラップブック,album,photo," />
-
-    {{-- <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
-    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" /> --}}
     <link type="text/css" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('css/pixel.css') }}" rel="stylesheet">
     @isset($photoSwipe)

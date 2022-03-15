@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>days. -かんたんフォト管理-</title>
+    <title>days. かんたんフォト管理</title>
     <meta name="title" content="days. かんたんフォト管理">
     <meta name="description" content="簡単＆無料で、写真がずっと残せるサービスをお探しですか？ 『days.』は新しい ”かんたんフォト管理サービス”。LINE™から友だち登録すると「ずっと残る保存」が無料✨ 「部屋にかざれるアルバム」をポチッと手間なし作成👌" />
     <meta name="author" content="days.運営">

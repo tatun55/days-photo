@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('printer/abailable', [PriterController::class, 'available'])->name('user.printer.available');
     Route::delete('printer/{printer}', [PriterController::class, 'delete'])->name('printer.delete');
 
+    // Route::post('albums/store', [AlbumController::class, 'store'])->name('albums.store');
+
     Route::post('albums/{album}/restore', [AlbumController::class, 'restore'])->withTrashed()->name('albums.restore');
     Route::get('albums/{album}', [AlbumController::class, 'show'])->name('albums.show');
     Route::delete('albums/{album}', [AlbumController::class, 'archive'])->name('albums.archive');

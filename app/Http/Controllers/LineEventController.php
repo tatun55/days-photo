@@ -64,6 +64,7 @@ class LineEventController extends Controller
                 case 'message':
                     switch ($event->message->type) {
                         case 'image':
+                        case 'video':
                             $this->verifySignature($request);
                             switch ($event->source->type) {
                                 case 'user':
@@ -76,6 +77,8 @@ class LineEventController extends Controller
                             break;
                         case 'text':
                             if ($event->message->text === '使い方') {
+                                $this->usage($event);
+                            } else {
                                 $this->usage($event);
                             }
                             break;
@@ -110,6 +113,12 @@ class LineEventController extends Controller
                 $message = "追加したい画像を送信してください✨";
                 $bot = $this->initBot();
                 $bot->replyText($event->replyToken, $message);
+                break;
+            case 'upload-completed':
+                $album = Album::findOrFail($data->id);
+                if ($album->photos()->isNotEmpty()) {
+                    $this->replyForPostedPhoto($album->photos()->count(), $album->id, $event->replyToken);
+                }
                 break;
             case 'start-saving':
                 if ($this->isRegisted($event->source->userId)) {
@@ -172,6 +181,7 @@ class LineEventController extends Controller
         $album->status = 'uploading';
         $album->title = $title;
         $photos = $album->photos()->get();
+
         $album->cover = \Storage::disk('s3')->url("/{$albumId}/{$photos[0]->id}/s.jpg");
         $album->save();
 
@@ -220,15 +230,6 @@ class LineEventController extends Controller
                             'uri' => route('albums.show', $albumId),
                         ]
                     ],
-                    [
-                        'type' => 'action',
-                        'action' => [
-                            'type' => 'postback',
-                            'label' => '✖️ なにもしない',
-                            'data' => "action=nothing&id={$albumId}",
-                            'text' => "なにもしない",
-                        ]
-                    ],
                 ]
             ]
         ];
@@ -240,10 +241,30 @@ class LineEventController extends Controller
     {
         if ($event->link->result === 'ok') {
             $bot = $this->initBot();
-            $multiMessage = new MultiMessageBuilder();
-            $text = "アカウント登録が完了しました 🎉\n\n『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、「💎ずっと残る保存」ができる✨\n\n✅ 機能②\nグループに招待すると、グループでも「💎ずっと残る保存」が可能✨\n\n✅ 機能③\nかんたん操作で「📔部屋にかざれるミニアルバム」をポチッと注文✨\n\nほかにも様々な便利機能を準備中です";
-            $multiMessage->add(new TextMessageBuilder($text));
-            $bot->replyMessage($event->replyToken, $multiMessage);
+            // $multiMessage = new MultiMessageBuilder();
+            // $text = "アカウント登録が完了しました 🎉\n\n『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、「💎ずっと残る保存」ができる✨\n\n✅ 機能②\nグループに招待すると、グループでも「💎ずっと残る保存」が可能✨\n\n✅ 機能③\nかんたん操作で「📔部屋にかざれるミニアルバム」をポチッと注文✨\n\nほかにも様々な便利機能を準備中です";
+            // $multiMessage->add(new TextMessageBuilder($text));
+
+            $bot = $this->initBot();
+            $message = "アカウント登録が完了しました 🎉\n\n『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、「💎ずっと残る保存」ができる✨\n\n✅ 機能②\nグループに招待すると、グループでも「💎ずっと残る保存」が可能✨\n\n✅ 機能③\nかんたん操作で「📔部屋にかざれるミニアルバム」をポチッと注文✨\n\nほかにも様々な便利機能を準備中です💪";
+            $array = [
+                'type' => 'text',
+                'text' => $message,
+                'quickReply' => [
+                    'items' => [
+                        [
+                            'type' => 'action',
+                            'action' => [
+                                'type' => 'cameraRoll',
+                                'label' => '画像を送信する',
+                            ]
+                        ],
+                    ]
+                ]
+            ];
+            $rawMessage = new RawMessageBuilder($array);
+
+            $bot->replyMessage($event->replyToken, $rawMessage);
         }
     }
 
@@ -260,13 +281,14 @@ class LineEventController extends Controller
             ->where('status', 'default')
             ->first();
 
+        $firstFlag = false;
         if (!$album) {
             $album = Album::create([
                 'id' => (string) \Str::uuid(),
                 'user_id' => $event->source->userId,
                 'group_id' => null,
             ]);
-            $flag = true;
+            $firstFlag = true;
         }
 
         // $album = Album::firstOrCreate(
@@ -299,6 +321,9 @@ class LineEventController extends Controller
                 // 画像の送信が完了して止まった場合（画像受信メッセージとクイックリプライが返ってこない）
                 // 送信完了したのに、受信メッセージとボタンが返ってこない場合、こちらをクリック
                 // 送信完了時にボタンが表示されないとき用
+                if ($firstFlag) { // 最初の画像を受信したとき
+                    $this->uploadCompleteBtn($album->id, $event->replyToken);
+                }
             }
         } else {
             $album->increment('total', 1);
@@ -307,12 +332,40 @@ class LineEventController extends Controller
         }
 
         // 投稿された画像情報を保存
-        $photo = Photo::create([
-            'id' => (string) \Str::uuid(),
-            'album_id' => $album->id,
-            'message_id' => $event->message->id,
-            'index' => $index,
-        ]);
+        if ($event->message->type === 'image') {
+            $photo = Photo::create([
+                'id' => (string) \Str::uuid(),
+                'album_id' => $album->id,
+                'message_id' => $event->message->id,
+            ]);
+        }
+    }
+
+    public function uploadCompleteBtn($albumId, $replyToken)
+    {
+        $bot = $this->initBot();
+        $multiMessage = new MultiMessageBuilder();
+
+        $array = [
+            "type" => "template",
+            "altText" => "送信完了ボタン",
+            "template" => [
+                "type" => "buttons",
+                "title" => "🖼️ 画像を連続受信中...",
+                "text" => "画像送信を一部キャンセルし、保存ボタンがでないとき用の手動完了ボタンです",
+                "actions" => [
+                    [
+                        "type" => "postback",
+                        "label" => "✅ 送信完了",
+                        "data" => "action=upload-completed&id={$albumId}",
+                    ],
+                ]
+            ]
+        ];
+        $rawMessage = new RawMessageBuilder($array);
+        $multiMessage->add($rawMessage);
+
+        $bot->replyMessage($replyToken, $multiMessage);
     }
 
     public function postedPhotoFromGroup($event)
@@ -359,7 +412,6 @@ class LineEventController extends Controller
             'id' => (string) \Str::uuid(),
             'album_id' => $album->id,
             'message_id' => $event->message->id,
-            'index' => $index,
         ]);
 
         // who can access this album and photo
@@ -389,7 +441,8 @@ class LineEventController extends Controller
         $bot = $this->initBot();
         $array = [
             'type' => 'text',
-            'text' => "画像を受信しました（トータル {$total}枚）",
+            // 'text' => "✅ 画像を受信しました（トータル {$total}枚）",
+            'text' => "✅ 画像を受信しました",
             'quickReply' => [
                 'items' => [
                     [
@@ -398,7 +451,6 @@ class LineEventController extends Controller
                             'type' => 'postback',
                             'label' => '💎 ずっと残る保存',
                             'data' => "action=save&id={$albumId}",
-                            'text' => "保存",
                         ]
                     ],
                     // [
@@ -413,19 +465,25 @@ class LineEventController extends Controller
                     [
                         'type' => 'action',
                         'action' => [
-                            'type' => 'postback',
-                            'label' => '🖼️ 画像を追加',
-                            'data' => "action=add&id={$albumId}",
-                            'text' => "画像を追加",
+                            'type' => 'cameraRoll',
+                            'label' => '画像を追加',
                         ]
                     ],
+                    // [
+                    //     'type' => 'action',
+                    //     'action' => [
+                    //         'type' => 'postback',
+                    //         'label' => '🖼️ 画像を追加',
+                    //         'data' => "action=add&id={$albumId}",
+                    //         'text' => "画像を追加",
+                    //     ]
+                    // ],
                     [
                         'type' => 'action',
                         'action' => [
                             'type' => 'postback',
                             'label' => '❌ キャンセル',
                             'data' => "action=cancel&id={$albumId}",
-                            'text' => "キャンセル",
                         ]
                     ],
                 ]
@@ -637,6 +695,17 @@ class LineEventController extends Controller
                         "type" => "uri",
                         "label" => "α版の説明書(PDF)",
                         "uri" => "https://days-photo.s3.ap-northeast-1.amazonaws.com/days.+%E3%80%9C%E3%81%8B%E3%82%93%E3%81%9F%E3%82%93%E3%83%95%E3%82%A9%E3%83%88%E7%AE%A1%E7%90%86%E3%80%9C+%CE%B1%E7%89%88%E4%BD%BF%E3%81%84%E6%96%B9.pdf"
+                    ],
+                ]
+            ],
+            'quickReply' => [
+                'items' => [
+                    [
+                        'type' => 'action',
+                        'action' => [
+                            'type' => 'cameraRoll',
+                            'label' => '画像を送信する',
+                        ]
                     ],
                 ]
             ]

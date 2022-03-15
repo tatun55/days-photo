@@ -17,6 +17,8 @@
                             <a href="{{ route('trashbox') }}" class="nav-item nav-link"><span class="fas fa-trash me-1"></span>アーカイブ</a>
                         </div>
                     </nav>
+                    {{-- <button class="btn btn-outline-gray-800 mb-4 ms-2" data-bs-toggle="modal" data-bs-target="#modal-post-album">💎 ずっと残るアルバム作成</button> --}}
+
                     @include('sections.albums-list',['type'=>'home'])
                 </div>
 
@@ -25,3 +27,5 @@
     </div>
 </main>
 @endsection
+
+@section('script')

@@ -391,7 +391,12 @@ ol li {
 .slideshow-menu-btn-icon:before {
     font-size: 24px !important;
     line-height: 36px;
-    text-shadow: 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242, 0 0 0.05rem #424242 !important;
+    text-shadow: 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242, 0 0 0.1rem #424242 !important;
+    -webkit-text-shadow: 1px 0 0 #424242, 1px 1px 0 #424242, 0 1px 0 #424242, -1px 1px 0 #424242, -1px 0 0 #424242, -1px -1px 0 #424242, 0 -1px 0 #424242, 1px -1px 0 #424242 !important;
+}
+
+.slideshow-menu-btn-icon {
+    -webkit-text-shadow: 1px 0 0 #424242, 1px 1px 0 #424242, 0 1px 0 #424242, -1px 1px 0 #424242, -1px 0 0 #424242, -1px -1px 0 #424242, 0 -1px 0 #424242, 1px -1px 0 #424242 !important;
 }
 
 .pswp__button--arrow--next,

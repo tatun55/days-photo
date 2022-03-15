@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AlbumController extends Controller
 {
+    public function store(Request $request)
+    {
+        dd($request->file('files'));
+    }
+
     public function show(Album $album, Request $request)
     {
         $flagModal = $request->has('modal'); // from line quick reply button
