@@ -17,12 +17,12 @@
         <div class="menu__item">
             <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">pet</span></span>
             </span>
-            <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>Click here</a>
+            <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>click</a>
         </div>
         <div class="menu__item">
             <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">trip</span></span>
             </span>
-            <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>Click here</a>
+            <a class="menu__item-link"><i class="fa fa-long-arrow-right mr-2"></i>click</a>
         </div>
         {{-- <div class="menu__item">
             <span class="menu__item-textwrap"><span class="menu__item-text"><span class="menu__item-text-in">Couple</span></span>

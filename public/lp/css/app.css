@@ -165,8 +165,6 @@ grid__item tipped tipper-attached:hover {
 @media (max-width: 768px) {
     .grid {
         --gridgap: 10vw;
-    }
-    .grid {
         height: calc(var(--gridheight) * 0.65);
         grid-template-rows: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
         grid-template-columns: repeat(10, calc(var(--gridwidth) / 10 - var(--gridgap)));
@@ -174,7 +172,8 @@ grid__item tipped tipper-attached:hover {
     .gridwrap {
         height: 232vh;
         grid-template-rows: 64vh;
-        max-width: none;
+        /* max-width: none; */
+        /* grid-template-columns: 00vh; */
     }
     .grid--layout-1 .grid__item:first-child,
     .grid--layout-2 .grid__item:first-child {
@@ -195,6 +194,10 @@ grid__item tipped tipper-attached:hover {
     .gridback {
         margin-top: -50vh;
     }
+}
+
+.menu__item-link {
+    text-shadow: 1px 0 0 #fff, 1px 1px 0 #fff, 0 1px 0 #fff, -1px 1px 0 #fff, -1px 0 0 #fff, -1px -1px 0 #fff, 0 -1px 0 #fff, 1px -1px 0 #fff;
 }
 
 
