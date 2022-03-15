@@ -646,7 +646,7 @@ class LineEventController extends Controller
             $regist_button
         ];
         $buttonTemplage = new ButtonTemplateBuilder("下記ご確認いただき、同意できる場合に「ユーザー登録」にお進みください。", $actions);
-        $templateMessage = new TemplateMessageBuilder('テンプレートタイトル', $buttonTemplage);
+        $templateMessage = new TemplateMessageBuilder('ユーザー登録をお願いします', $buttonTemplage);
         $multiMessage->add($templateMessage);
         return $multiMessage;
     }

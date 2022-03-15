@@ -86,8 +86,9 @@
                                 </div>
                             </div>
                         </div>
-
-                        @if($album->photos()->count() > 25)
+                        @if($album->photos()->whereHas('users', function ($q) {
+                            $q->where('user_id', Auth::user()->id)->where('is_archived', false);
+                            })->count() > 25)
                             <div class="text-center">
                                 <small class="text-danger">ミニアルバムを作成するには、写真を25枚以下にしてください</small>
                             </div>
