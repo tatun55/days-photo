@@ -54,7 +54,6 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="save" id="save2-{{ $album->id }}" value="0" @if($album->group->users[0]->pivot->auto_saving === 0) checked @endif>
                             <label class="form-check-label" for="save2-{{ $album->id }}">自分がシェア投稿した画像を保存しない</label>
-                            {{-- <label class="form-check-label" for="save3"><input class="form-check-input" type="radio" name="save" id="save3" value="0">グループに自分がシェア投稿した画像を保存しない</label> --}}
                         </div>
                     </div>
                     <div class="modal-footer">

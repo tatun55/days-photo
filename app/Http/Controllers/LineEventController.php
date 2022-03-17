@@ -380,11 +380,16 @@ class LineEventController extends Controller
             ->where('status', 'default')
             ->firstOrFail();
 
-        // TODO: グループユーザーのauto_savingをチェックする
-        // $isAutoSaving = AlbumUser::where('user_id', $event->source->userId)->where('album_id', $album->id)->first()->auto_saving;
-        // if (!$isAutoSaving) {
-        //     return;
-        // }
+        $userId = $event->source->userId;
+        $autoSavingFlag = Group::findOrFail($event->source->groupId)
+            ->users()
+            ->where('user_id', $userId)
+            ->where('auto_saving', true)
+            ->exists();
+
+        if (!$autoSavingFlag) {
+            return;
+        }
 
         if (!$album) {
             $summary = $this->getGroupSummary($event->source->groupId);
