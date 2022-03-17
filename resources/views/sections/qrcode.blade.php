@@ -8,7 +8,7 @@
                             <div>
                                 <img class="qrcode" src="https://qr-official.line.me/sid/L/645yuzex.png">
                             </div>
-                            <div><a class="link" href="https://lin.ee/O6NF5rk"><small>LINE友だち登録用リンク</small></a></div>
+                            <div class="mb-3" style="margin-top: -10px"><a class="link" href="https://lin.ee/O6NF5rk"><small>LINE友だち登録用リンク</small></a></div>
                             {{-- <img class="qrcode m-2" src="https://dummyimage.com/640x640/cccccc/ffffff&text=現在準備中"> --}}
                         </div>
                         <div class="text-center text-md-left">
