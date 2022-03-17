@@ -76,12 +76,15 @@ class LineEventController extends Controller
                             }
                             break;
                         case 'text':
-                            if ($event->message->text === '使い方') {
-                                $this->usage($event);
-                            } else {
-                                $this->usage($event);
+                            switch ($event->source->type) {
+                                case 'user':
+                                    if ($event->message->text === '使い方') {
+                                        $this->usage($event);
+                                    } else {
+                                        $this->usage($event);
+                                    }
+                                    break;
                             }
-                            break;
                     }
                     break;
             }
@@ -352,7 +355,7 @@ class LineEventController extends Controller
             "template" => [
                 "type" => "buttons",
                 "title" => "🖼️ 画像を連続受信中...",
-                "text" => "画像送信を一部キャンセルし、保存ボタンがでないとき用の手動完了ボタンです",
+                "text" => "画像送信をキャンセルした場合、保存ボタンが出ません。その場合のみ、下の「送信完了」を押してください",
                 "actions" => [
                     [
                         "type" => "postback",

@@ -5,7 +5,10 @@
                 @guest
                     <div class="d-md-flex d-block justify-content-center align-items-center">
                         <div class="text-center">
-                            <img class="qrcode" src="https://qr-official.line.me/sid/L/645yuzex.png">
+                            <div>
+                                <img class="qrcode" src="https://qr-official.line.me/sid/L/645yuzex.png">
+                            </div>
+                            <div><a class="link" href="https://lin.ee/O6NF5rk"><small>LINE友だち登録用リンク</small></a></div>
                             {{-- <img class="qrcode m-2" src="https://dummyimage.com/640x640/cccccc/ffffff&text=現在準備中"> --}}
                         </div>
                         <div class="text-center text-md-left">

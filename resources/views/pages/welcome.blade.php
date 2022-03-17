@@ -4,7 +4,7 @@
 <div class="hero container">
     <div class="row">
         <div class="col-md-12 parallax-fade-top">
-            <h5 class="text-center mt-22">いつか消えてしまう、あの写真も、ずっと残る。</h5>
+            <h5 class="text-center mt-22">思い出が整理されてずっと残る、小さな幸せ、安心感。</h5>
             <p class="lead text-center">『days.』は新しいタイプの かんたんフォト管理 サービス<br>”ずっと残る保存” や ”部屋に飾れるミニアルバム” がスグに</p>
         </div>
     </div>

@@ -50,7 +50,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily', 'epson'],
+            'channels' => ['daily'],
             'ignore_exceptions' => false,
         ],
 
@@ -63,7 +63,7 @@ return [
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
+            'level' => env('LOG_LEVEL', 'error'),
             'days' => 14,
             'permission' => 0666,
         ],
