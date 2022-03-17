@@ -37,6 +37,7 @@
             </form>
         </div>
     </div>
+
     @if($album->group_id !== null)
         <div class="modal fade" id="modal-save-setting-{{ $album->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-save-setting-{{ $album->id }}" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">

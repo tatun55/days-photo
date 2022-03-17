@@ -92,6 +92,6 @@ class AlbumController extends Controller
             ]);
         };
 
-        return redirect('home')->with('status', '保存設定を変更しました');
+        return back()->with('status', '保存設定を変更しました');
     }
 }

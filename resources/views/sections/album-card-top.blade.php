@@ -23,10 +23,12 @@
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu d-lg-none">
-                    <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-album-{{ $album->id }}"><span class="me-2"><span class="fas fa-book-open"></span></span>ミニアルバムを作る</button>
                     @if($album->group_id === null)
                         <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-title"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更</button>
                         <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-delete"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動</button>
+                    @else
+                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-album-{{ $album->id }}"><span class="me-2"><span class="fas fa-book-open"></span></span>ミニアルバムを作る</button>
+                        <button type="button" class="list-group-item list-group-item-action border-0" data-bs-toggle="modal" data-bs-target="#modal-save-setting-{{ $album->id }}"><span class="fas fa-cog me-2"></span>保存設定</button>
                     @endif
                 </div>
             </div>
@@ -38,6 +40,9 @@
                 <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-album-{{ $album->id }}"><span class="me-2"><span class="fas fa-book-open"></span></span>ミニアルバムを作る<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
                 @if($album->group_id === null)
                     <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-title"><span class="me-2"><span class="fas fa-edit"></span></span>タイトル変更<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
+                    <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-delete"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
+                @else
+                    <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-save-setting-{{ $album->id }}"><span class="me-2"><span class="fas fa-cog"></span></span>保存設定<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
                     <a type="button" class="d-flex list-group-item border-0 list-group-item-action" data-bs-toggle="modal" data-bs-target="#modal-delete"><span class="me-2"><span class="fas fa-trash"></span></span>アーカイブへ移動<span class="icon icon-xs ms-auto"><span class="fas fa-chevron-right"></span></span></a>
                 @endif
             </div>
