@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\AlbumUser;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,5 +78,20 @@ class AlbumController extends Controller
     {
         $album->users()->syncWithoutDetaching([Auth::user()->id => ['is_archived' => false]]);
         return redirect('home')->with('status', 'アルバムを元に戻しました');
+    }
+
+    public function autoSaving(Album $album, Request $request)
+    {
+        if ($request->save === "0") {
+            Group::find($album->group_id)->users()->updateExistingPivot(Auth::user()->id, [
+                'auto_saving' => false,
+            ]);
+        } else {
+            Group::find($album->group_id)->users()->updateExistingPivot(Auth::user()->id, [
+                'auto_saving' => true,
+            ]);
+        };
+
+        return redirect('home')->with('status', '保存設定を変更しました');
     }
 }

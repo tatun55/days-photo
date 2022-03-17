@@ -8,6 +8,7 @@ use App\Models\Photo;
 use App\Models\ImageSet;
 use App\Models\User;
 use App\Models\Album;
+use App\Models\AlbumUser;
 use App\Models\Group;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -373,10 +374,17 @@ class LineEventController extends Controller
 
     public function postedPhotoFromGroup($event)
     {
+
         $album = Album::query()
             ->where('group_id', $event->source->groupId)
             ->where('status', 'default')
-            ->first();
+            ->firstOrFail();
+
+        // TODO: グループユーザーのauto_savingをチェックする
+        // $isAutoSaving = AlbumUser::where('user_id', $event->source->userId)->where('album_id', $album->id)->first()->auto_saving;
+        // if (!$isAutoSaving) {
+        //     return;
+        // }
 
         if (!$album) {
             $summary = $this->getGroupSummary($event->source->groupId);

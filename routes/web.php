@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('albums/{album}/detach', [AlbumController::class, 'detach'])->withTrashed()->name('albums.detach');
     Route::put('albums/{album}/title', [AlbumController::class, 'title'])->name('albums.title');
     Route::get('albums/{album}/trashbox', [AlbumController::class, 'trashbox'])->name('albums.trashbox');
+    Route::post('albums/{album}/auto-saving', [AlbumController::class, 'autoSaving'])->name('albums.auto-saving');
 
     Route::put('albums/{album}/photos', [PhotoController::class, 'action'])->name('albums.photos.action');
 

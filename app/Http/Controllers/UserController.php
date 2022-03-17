@@ -20,6 +20,11 @@ class UserController extends Controller
                     $query->where('user_id', $userId)->where('is_archived', false);
                 });
             }])
+            ->with(['group' => function ($query) use ($userId) {
+                $query->with('users', function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                });
+            }])
             ->orderBy('created_at', 'desc')
             ->get();
         return view('pages.user.home', compact('albums'));

@@ -11,6 +11,8 @@ class Album extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    // protected $table = 'album_user';
+
     protected $guarded = [];
 
     public function photos()
@@ -21,5 +23,15 @@ class Album extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * Get the group associated with the Album
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
     }
 }
