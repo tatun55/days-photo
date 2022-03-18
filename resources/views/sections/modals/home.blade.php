@@ -1,4 +1,4 @@
-@foreach($albums as $album)
+@foreach($albums as $i => $album)
 
     <div class="modal fade" id="modal-title-{{ $album->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-title-{{ $album->id }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -50,11 +50,11 @@
                     <div class="modal-body">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="save" id="save1-{{ $album->id }}" value="1" @if($album->group->users[0]->pivot->auto_saving === 1) checked @endif>
-                            <label for="save1-{{ $album->id }}">自分がシェア投稿した画像を保存</label>
+                            <label for="save1-{{ $album->id }}">自分がグループに投稿した画像を保存する</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="save" id="save2-{{ $album->id }}" value="0" @if($album->group->users[0]->pivot->auto_saving === 0) checked @endif>
-                            <label class="form-check-label" for="save2-{{ $album->id }}">自分がシェア投稿した画像を保存しない</label>
+                            <label class="form-check-label" for="save2-{{ $album->id }}">自分がグループに投稿した画像を保存しない</label>
                         </div>
                     </div>
                     <div class="modal-footer">

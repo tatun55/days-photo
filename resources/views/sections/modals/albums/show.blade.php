@@ -51,11 +51,11 @@
                     @endphp
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="save" id="save1-{{ $album->id }}" value="1" @if($autoSaving===1) ) checked @endif>
-                        <label for="save1-{{ $album->id }}">自分がシェア投稿した画像を保存</label>
+                        <label for="save1-{{ $album->id }}">自分がグループに投稿した画像を保存する</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="save" id="save2-{{ $album->id }}" value="0" @if($autoSaving===0) ) checked @endif>
-                        <label class="form-check-label" for="save2-{{ $album->id }}">自分がシェア投稿した画像を保存しない</label>
+                        <label class="form-check-label" for="save2-{{ $album->id }}">自分がグループに投稿した画像を保存しない</label>
                     </div>
                 </div>
                 <div class="modal-footer">
