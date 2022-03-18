@@ -65,7 +65,7 @@ class LineEventController extends Controller
                 case 'message':
                     switch ($event->message->type) {
                         case 'image':
-                        case 'video':
+                            // case 'video':
                             $this->verifySignature($request);
                             switch ($event->source->type) {
                                 case 'user':
@@ -120,7 +120,7 @@ class LineEventController extends Controller
                 break;
             case 'upload-completed':
                 $album = Album::findOrFail($data->id);
-                if ($album->photos()->isNotEmpty()) {
+                if ($album->photos()->get()->isNotEmpty()) {
                     $this->replyForPostedPhoto($album->photos()->count(), $album->id, $event->replyToken);
                 }
                 break;
@@ -244,7 +244,7 @@ class LineEventController extends Controller
     public function accountLinked($event)
     {
         if ($event->link->result === 'ok') {
-            $bot = $this->initBot();
+            // $bot = $this->initBot();
             // $multiMessage = new MultiMessageBuilder();
             // $text = "アカウント登録が完了しました 🎉\n\n『days.』は、新しいタイプの ”かんたんフォト管理” サービス。\n\n✅ 機能①\nこのアカウントに画像をまとめて送信すると、「💎ずっと残る保存」ができる✨\n\n✅ 機能②\nグループに招待すると、グループでも「💎ずっと残る保存」が可能✨\n\n✅ 機能③\nかんたん操作で「📔部屋にかざれるミニアルバム」をポチッと注文✨\n\nほかにも様々な便利機能を準備中です";
             // $multiMessage->add(new TextMessageBuilder($text));
@@ -374,13 +374,8 @@ class LineEventController extends Controller
 
     public function postedPhotoFromGroup($event)
     {
-
-        $album = Album::query()
-            ->where('group_id', $event->source->groupId)
-            ->where('status', 'default')
-            ->firstOrFail();
-
         $userId = $event->source->userId;
+
         $autoSavingFlag = Group::findOrFail($event->source->groupId)
             ->users()
             ->where('user_id', $userId)
@@ -390,6 +385,11 @@ class LineEventController extends Controller
         if (!$autoSavingFlag) {
             return;
         }
+
+        $album = Album::query()
+            ->where('group_id', $event->source->groupId)
+            ->where('status', 'default')
+            ->first();
 
         if (!$album) {
             $summary = $this->getGroupSummary($event->source->groupId);
@@ -563,16 +563,19 @@ class LineEventController extends Controller
 
     public function memberJoined($event)
     {
+        $bot = $this->initBot();
         $array = [
             'type' => 'text',
-            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、トーク内画像の「💎ずっと残る保存」が開始できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
+            'text' => "こんにちは、かんたんフォト管理の『days.』です。\n\n下のボタン①→②の手順で、画像の「💎ずっと残る保存」が開始できます。\n※メンバーそれぞれが行う必要があります\n※いつでも停止できます\n\n❗注意\nLINEのアルバム機能で投稿された画像は保存されません。",
         ];
         $rawMessage = new RawMessageBuilder($array);
+
+        $multiMessage = new MultiMessageBuilder();
         $multiMessage->add($rawMessage);
 
         $array = [
             "type" => "template",
-            "altText" => "This is a buttons template",
+            "altText" => "画像の保存を開始できます",
             "template" => [
                 "type" => "buttons",
                 "text" => "登録済なら②のみ",
